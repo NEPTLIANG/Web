@@ -8,6 +8,9 @@
 </head>
 <body>
 
+	<a name="head"></a>
+	<!--生成一个名为head的锚点用于回到页首-->
+
 	<h1>h1 蛤蛤蛤蛤蛤</h1>
 	<h2>h2 too young, too simple</h2>
 
@@ -118,8 +121,55 @@
 	<var>i</var>,<var>j</var>,<var>k(变量)var</var>通常作为循环计数器变量
 	
 	<br/>
-	<a href="http://www.github.com/NEPTLIANG"><b>我的GayHub主页(粗体字链接b)(在本窗口打开(默认))(href参数填链接)a</b></a><br/>
-	<a href="http://neptliang.wordpress.com" target="_blank">我的WordPress主页(terget参数填"_blank"在新窗口打开)(herf参数填链接)a</a><br/>
-	<a href="http://www.lofter.com/neptliang"><img src="./HA.png" alt="我的Lofter主页(图像链接,用img,src参数填图像路径,alt参数填标题)"
+	<a href="http://www.github.com/NEPTLIANG"><b>我的GayHub主页(粗体字链接b)(在本窗口打开(默认))(href参数填URL)a</b></a><br/>
+	<a href="http://neptliang.wordpress.com" target="_blank">我的WordPress主页(terget参数填"_blank"在新窗口打开)(herf参数填URL)a</a><br/>
+	<a href="http://neptliang.lofter.com"><img src="./HA.png" alt="我的Lofter主页(图像链接,(herf参数填URL)(包含img元素,src参数填图像相对路径,alt参数填标题)a)"/></a><br/>
+	<a href="index.html">本地链接(href参数填文件名/相对路径)a</a><br/>
+	<a href="mailto:NEPTLIANG@outlook.com">写信给我</a>
+	<a href="demo.html#head">回到页首(锚点链接)</a>
+	
+	<br/>
+	<ul>
+		<li>too young</li>
+		<li>too simple</li>
+		<li>somtimes naive无序列表ul</li>
+	<ul>
+
+	<ol start="2" type="I">
+		<li>红红火火</li>
+		<li>恍恍惚惚</li>
+		<li>蛤蛤蛤蛤有序列表(start参数为2表示从2开始,type参数为I表示用罗马数字计数)ol</li>
+	</ol>
+
+	<dl>
+	<!--列表,只能包含dt和dd两种子元素dl-->
+		<dt>你们啊(标题列表项dt)</dt>
+		<dd>不要听得风</dd>
+		<dt>是得雨(标题列表项,只能包含文本,图像,超链接,文本格式化元素,表单控件元素等)</dt>
+		<dt>江来宣传上出了偏差(标题列表项dt)</dt>
+		<dd>你们是要负泽的</dd>
+		<dd>民白不民白?(普通列表项dd)</dd>
+	</dl>
+
+	<br/>
+	<img src="logo.png" width="144" height="144" alt="LOGO(img元素定义图像,src参数填路径,alt参数填提示文本,width,height参数分别填宽,高)"/><br/>
+
+	<br/>
+	<table style="width:400px" border="1">
+		<caption>各手机品牌UI名称(表格标题caption)(table元素定义表格)</caption>
+		<tr>
+			<th>品牌</th>
+			<th>UI名称(表头th)</th>
+		</tr>
+		<tr>
+			<td>小米</td>
+			<td>MIUI</td>
+		</tr/>
+		<tr>
+			<td>一加</td>
+			<td>氢OS(单元格td)(tr元素定义表格行,包含单元格)</td>
+		</tr>
+	</table>
+	
 </body>
 </html>
