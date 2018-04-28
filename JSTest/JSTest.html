@@ -4,7 +4,19 @@
 		<meta charset="utf-8">
 		<title></title>
 
-		<!--对象的使用-->
+        <!--变量声明测试，测试在函数内不用var声明局部变量的情况-->
+        <script type="text/javascript">
+            function test()  //别漏了函数名；别犯”面函数“之类的错误
+            {
+                var a = 1 ;
+                b = 2 ;
+            }
+            test() ;  //别忘了调用函数；别忘了先调用函数再输出结果
+            document.write( "<h1>在函数内用var声明的变量a（局部变量）不能在函数外输出，\n提示”ReferenceError: a is not defined“</h1>") ;
+            document.write( "<h1>在函数内不用var声明的变量b（全局变量）可以在函数外输出，输出结果：" + b + "</h1>" ) ;
+        </script>
+
+		<!--  对象的使用
 		<script>
 			var me = {  //定义对象me
 					name:"虫也",  //定义属性name,属性值为虫也
@@ -14,6 +26,7 @@
 			}
 			document.write("<h1>" + me.name + ":" + me.say() + "</h1>" );  //使用点号引用对象的属性和方法，在调用对象方法时应在函数名称后面补加小括号
 		</script>
+        -->
 
 		
 		<!--  在HTML页面中引入js文件
@@ -21,7 +34,7 @@
 		<script>
 			var str = "JavaScript编程语言";
 			document.write("<h2>" + str + "</h2>");  //输出变量的值
-			document.write("<p>实际长度=" + strlen(str) + "字节</p>");  //调用函数
+			document.write("<p>实际长度=" + strlen(str) + "字节</p>");  //调用JS文件中的函数
 		</script>
 		-->
 		
