@@ -4,7 +4,14 @@
 		<meta charset="utf-8">
 		<title></title>
 
-        <!--变量声明测试，测试在函数内不用var声明局部变量的情况-->
+        <script type="text/javascript">
+            for ( var i=0 ; i<10 ; i++ )
+            {
+                alert("Fxck!") ;
+            }
+        </script>
+
+        <!--变量声明测试，测试在函数内不用var声明变量的情况
         <script type="text/javascript">
             function test()  //别漏了函数名；别犯”面函数“之类的错误
             {
@@ -15,6 +22,7 @@
             document.write( "<h1>在函数内用var声明的变量a（局部变量）不能在函数外输出，\n提示”ReferenceError: a is not defined“</h1>") ;
             document.write( "<h1>在函数内不用var声明的变量b（全局变量）可以在函数外输出，输出结果：" + b + "</h1>" ) ;
         </script>
+        -->
 
 		<!--  对象的使用
 		<script>
