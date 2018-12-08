@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link type="text/css" href="test.css" rel="stylesheet">
+        <style type="text/css">
+            .big{
+                padding : 15px ;
+                /*margin : 5px ;*/
+                border-width : 1px ;
+                border-style : solid ;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 big">
+                    <h1>标题</h1>
+                    <p>欢迎！</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 big"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px; border-width:1px; border-style:solid">-->
+                    <h3>导航栏</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9 big"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px border-width:1px; border-style:solid">-->
+                    <h3>题目</h3>
+                    <form action="test.jsp">
+                        <input type="checkbox" name="choose" value="a">a</input><br/>
+                        <input type="checkbox" name="choose" value="b">b</input><br/>
+                        <input type="checkbox" name="choose" value="c">c</input><br/>
+                        <input type="checkbox" name="choose" value="d">d</input><br/>
+                        <input type="submit"></input>
+                    </form>
+                </div>
+
+                <div class="col-md-3 big"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px; border-width:1px; border-style:solid">-->
+                    <h3>统计</h3>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                        </tr>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
