@@ -4,9 +4,64 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>标题</title>
- <!--标题-->
+    <!--标题-->
+    <style type="text/css">
+        body
+        {
+            font : 18px/1.5em "黑体"
+        }
+        .MDInput
+        {
+            /*margin-top : 4px ;
+            margin-bottom : 4px ;
+            margin-left : 8px ;
+            margin-right : 8px ;*/
+            font-size : 18px ;
+            margin : 8px 0px ;
+            /*padding-top : 8px ;
+            padding-bottom : 8px ;
+            padding-left : 12px ;
+            padding-right : 12px ;*/
+            padding : 8px 4px ;
+            /*padding : 5px ;*/
+            /*border-top-width : 0px ;
+            border-left-width : 0px ;
+            border-right-width : 0px ;
+            border-bottom : 3px solid blue ;*/
+            border-style: solid ;
+            border-color: #00F ;
+            border-width: 0px 0px 3px 0px
+        }
+
+        .pageHome
+        {
+            position : fixed ;
+            right : 32px ;
+            bottom : 32px ;
+            width : 80px ;
+            height : 80px ;
+            font-size : 18px ;
+            text-align : center ;
+            padding : 8px
+        }
+
+        .tableTest
+        {
+            border : 3px solid #bbb ;
+            margin : 64px auto ;
+        }
+        .tableTest td
+        {
+            border : 3px solid #bbb ;
+            margin : 0 ;
+            padding : 16px ;
+        }
+
+    </style>
 </head>
 <body>
+    
+    <button href="#" class="pageHome">回到页首</button> 
 
 	<a name="head"></a>
 	<!--生成一个名为head的锚点用于回到页首-->
@@ -155,7 +210,7 @@
 	<img src="logo.png" width="144" height="144" alt="LOGO(img元素定义图像,src参数填路径,alt参数填提示文本,width,height参数分别填宽,高)"/><br/>
 
 	<br/>
-	<table style="width:400px" border="1">
+	<table class="tableTest">
 		<caption>各手机品牌UI名称(表格标题caption)(table元素定义表格)</caption>
 		<tr>
 			<th>品牌</th>
@@ -164,12 +219,37 @@
 		<tr>
 			<td>小米</td>
 			<td>MIUI</td>
-		</tr/>
+		</tr>
 		<tr>
 			<td>一加</td>
 			<td>氢OS(单元格td)(tr元素定义表格行,包含单元格)</td>
-		</tr>
+	</tr>
 	</table>
-	
+    <div style="position:relative;">
+        <img src="./image.jpg">
+        <div style="float:left; position:absolute; left:50%; bottom:30%"><!--; border:5px solid red">-->
+            <div style="width:-moz-fit-content; background:#FFF; padding:64px; margin:64px auto; position:relative; left:-50%">
+                <div style="text-align:center; font-size:32px; color:#00F; margin:32px">登录</div>
+                <div>
+                    <div style="font-size:12px; color:#00F; margin:24px 0px -8px 0px">用户名</div>
+                    <input class="MDInput" type="text">
+                </div>
+                <div>
+                    <div style="font-size:12px; color:#00F; margin:24px 0px -8px 0px">密码</div>
+                    <input class="MDInput" type="password">
+                </div>
+                <button style="background:#00F; color:#FFF; font-size:18px; padding:16px; border:0px; margin-top:24px; width:40%">重置</button>
+                <button style="float:right; background:#00F; color:#FFF; font-size:18px; padding:16px; border:0px; margin-top:24px; width:40%">登录</button>
+            </div>
+        </div>
+    </div>
+    
+    <!--
+    <div style="position:relative">
+        <img src="./image.jpg" style="height:256px; width:256px">
+        <div style="color:#FFF; position:absolute; bottom:0; padding:32px 24px; font-size:18px">MING</div>
+    </div>
+	-->
+
 </body>
 </html>

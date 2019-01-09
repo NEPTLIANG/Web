@@ -7,11 +7,64 @@
         <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link type="text/css" href="test.css" rel="stylesheet">
         <style type="text/css">
-            .big{
+            body
+            {
+                font-size : 16px ;
+            }
+            .big
+            {
                 padding : 15px ;
-                /*margin : 5px ;*/
+                /* margin : 5px ; */
                 border-width : 1px ;
                 border-style : solid ;
+            }
+            .navigationBar
+            {
+                margin : 0 ;
+                padding : 0
+            }
+            .navigation  /*导航按钮*/
+            {
+                float : left ;
+                width : 20% ;
+                height : 48px ;
+                margin : 0 ;
+                padding : 0 ;
+                border-width : 0 ;
+                text-align : center ;
+                font-size : 20px ;
+                line-height : 48px ;
+                color : #FFF ;
+                background-color : #0B0 ;
+            }
+            .titleBar
+            {
+                border : 0 ;
+                padding : 32px ;
+            }
+            .question
+            {
+                border : 0 ;
+                padding : 32px
+            }
+            .statistics
+            {
+                border : 4px solid #0B0 ;
+                margin : 32px 0 ;
+                padding : 32px
+            }
+            .TF td
+            {
+                width : 20% ;
+                height : 32px ;
+                background : #0B0 ;
+                border : 0 ;
+                margin : 8px ;
+                padding ：4px ;
+                font-size : 18px ;
+                color : #FFF ;
+                text-align : center ;
+                line-height : 32px
             }
         </style>
     </head>
@@ -19,33 +72,38 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-12 big">
-                    <h1>标题</h1>
+                <div class="col-md-12 big titleBar">
+                    <h1>生物测试系统</h1>
                     <p>欢迎！</p>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 big"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px; border-width:1px; border-style:solid">-->
-                    <h3>导航栏</h3>
+            <div class="row"><!-- style="margin:0; padding:0">-->
+                <div class="col-md-12 navigationBar"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px; border-width:1px; border-style:solid">-->
+                    <!-- <h3>导航栏</h3> -->
+                    <div class="navigation">主页</div>
+                    <div class="navigation">题目</div>
+                    <div class="navigation">排名</div>
+                    <div class="navigation">状态</div>
+                    <div class="navigation">竞赛</div>
                 </div>
             </div>
-
+            
             <div class="row">
-                <div class="col-md-9 big"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px border-width:1px; border-style:solid">-->
-                    <h3>题目</h3>
+                <div class="col-md-9 big question"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px border-width:1px; border-style:solid">-->
+                    <h3 style="margin:24px 0">题目</h3>
                     <form action="test.jsp">
                         <input type="checkbox" name="choose" value="a">a</input><br/>
                         <input type="checkbox" name="choose" value="b">b</input><br/>
                         <input type="checkbox" name="choose" value="c">c</input><br/>
                         <input type="checkbox" name="choose" value="d">d</input><br/>
-                        <input type="submit"></input>
+                        <input style="margin:24px 0" type="submit"></input>
                     </form>
                 </div>
 
-                <div class="col-md-3 big"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px; border-width:1px; border-style:solid">-->
-                    <h3>统计</h3>
-                    <table class="table table-bordered">
+                <div class="col-md-3 big statistics"><!-- style="box-shadow:inset 1px -1px 1px #444,inset -1px 1px 1px #444; padding:15px; border-width:1px; border-style:solid">-->
+                    <h3 style="color:#0B0; font-weight:bold">统计</h3>
+                    <table class="table table-bordered TF">
                         <tr>
                             <td>1</td>
                             <td>2</td>
@@ -60,6 +118,7 @@
                             <td>9</td>
                             <td>10</td>
                         </tr>
+                    </table>
                 </div>
             </div>
         </div>
