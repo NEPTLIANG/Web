@@ -6,10 +6,10 @@
         <script type="text/javascript">
         function function1(value1)
         {
-            return (value1==null) ? "null" : typeof(value1) ;
+            return (value1===null) ? "null" : typeof(value1) ;
         }
         
-        value1 = true ;
+        var value1 = undefined ;
         //var value1 ;
         document.write( "变量类型为：" + function1(value1) ) ;
         </script>
