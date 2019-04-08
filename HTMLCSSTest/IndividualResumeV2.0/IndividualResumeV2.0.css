@@ -1,0 +1,241 @@
+body
+{
+    color : #777 ;
+    font-size : 16px ;
+    /* background-color : #0001 ; */
+    /* text-align : center ; */
+    background-image : url(img/bg.png) ;
+    /* background-position : 50% ;
+    background-repeat : no-repeat;
+    background-attachment: fixed; */
+    line-height : 2em ;
+    font-family : 苹方,Roboto,微软雅黑,黑体,Ariva,文泉驿微米黑,文泉驿正黑 ;
+}
+a
+{
+    color : #777 ;
+    text-decoration : none ;
+}
+h2
+{
+    font-size : 24px ;
+    font-weight : normal ;
+    margin : 128px auto 32px auto ;
+}
+h3
+{
+    font-size : 20px ;
+    font-weight : normal ;
+    margin-top : 48px ;
+}
+a:hover
+{
+    color : #000 ;
+}
+a:active
+{
+    color : #333 ;
+}
+/*
+input:active
+{
+    border-bottom : solid 3px #FFF ;
+}
+td:hover
+{
+    background-color : #222 ;
+    border : solid 1px #0FF ; 
+    /* border-style : solid ;
+    border-width : 1px ;
+    border-color : #0FF ;/* 
+}
+textarea:hover
+{
+    background-color : #099 ;
+    box-shadow : 0 0 100px #0FF ;
+}
+textarea:active
+{
+    background-color : #099 ;
+    box-shadow : 0 0 100px #0FF ;
+}
+*/
+.rightIntro
+{
+    background-color : #FFF ;
+    width : 720px ;
+    padding : 0 96px 64px 96px ;
+    margin : 128px auto ;
+    box-shadow : 0 10px 100px #0003 ;
+    border-radius : 16px ;
+}
+.leftBar
+{
+    color : #0FF ;
+    text-align : center ;
+    background-color : #334 ;
+    width : 384px ;
+    height : 10800px ;
+    position : fixed ;
+    margin : 0 ;
+    top : 0 ;
+    left : 0 ;
+    box-shadow : 0 50px 100px #0003 ;
+}
+.leftBar a
+{
+    color : #0FF ;
+}
+.leftBar a:hover
+{
+    color : #FFF ;
+}
+.leftBar a:active
+{
+    color : #077 ;
+}
+.head
+{
+    width : 128px ;
+    height : 128px ;
+    /* border-width : 8px ;
+    border-color : #0FF ;
+    border-style : solid ; */
+    border-radius : 256px ;
+    /* box-shadow : 0 0 32px #0FF ; */
+    margin : 128px auto 0 auto ;
+}
+.name
+{
+    font-size : 32px ;
+    font-weight : normal ;
+    margin : 32px 0 8px 0 ;
+}
+.slogen
+{
+    margin-top : 8px ;
+    color : #099 ;
+}
+.intro
+{
+    margin-top : 32px ;
+    line-height : 32px ;
+}
+.statisDiv
+{
+    margin-top : 64px ;
+    padding : 0 64px ;
+}
+.statistics
+{
+    display : inline-block ;
+    width : 32% ;
+    /* margin-top : 32px ; */
+    text-align : center ;
+}
+.statistics big
+{
+    /* margin-top : 64px ; */
+    font-size : 24px ;
+}
+.statistics p
+{
+    margin-top : 0 ;
+    font-size : 16px ;
+    color : #099 ;
+}
+
+.title
+{
+    font-size : 64px ;
+    font-weight : normal ;
+    text-align : right ;
+    width : 720px ;
+    margin : 128px auto 0 auto ;
+}
+.introBlock
+{
+    display : inline-block ;
+    width : 30% ;
+    padding : 0 64px ;
+}
+/*
+.liTest
+{
+    line-height : 32px ;
+}
+.hardware td
+{
+    background-color : #223 ;
+    border-width : 1px ;
+    border-radius : 10px ;
+    padding : 10px ;
+    margin : 100px ;
+    border-color : rgba(0,255,255,1) ;
+    /*border-style : solid ;*/
+}
+/*.hardware
+{
+    background-color : #335 ;
+    border-width : 10px ;
+    border-color : #0FF ;
+    border-style : solid ;
+}/*
+*/
+/*
+.formPrac div
+{
+    margin : 32px auto ;
+}
+.formPrac input
+{
+    height : 32px ;
+    background-color : rgba(0,0,0,0) ;
+    border-width : 0 0 2px 0 ;
+    border-color : rgb(0,255,255) ;
+    color : rgba(0%,100%,100%,1) ;
+    text-align : center ;
+}
+.formPrac textarea
+{
+    background-color : #334 ;
+    border-width : 3px ;
+    border-color : rgb(0%,100%,100%) ;
+    border-radius : 15px ;
+    color : #0FF ;
+    text-align : center ;
+    box-shadow : 0 0 25px #0FF ;
+    padding : 16px 32px ;
+}
+.formPrac select
+{
+    width : 96px ;
+    height : 48px ;
+    background-color : #334 ;
+    border-width : 0 0 2px 0 ;
+    border-color : #0FF ;
+    color : #0FF ;
+    text-align : center ;
+}
+.btn input
+{
+    width : 192px ;
+    height : 48px ;
+    background-color : #334 ;
+    border-width : 3px ;
+    border-color : #0FF ;
+    border-radius : 256px ;
+    color : #0FF ;
+    text-align : center ;
+}
+.btn input:hover
+{
+    color : #334 ;
+    background-color : #0FF ;
+}
+.btn input:active
+{
+    color : #334 ;
+    background-color : #099 ;
+}
+*/
