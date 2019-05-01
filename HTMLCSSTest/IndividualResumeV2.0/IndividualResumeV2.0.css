@@ -18,10 +18,22 @@ a
 }
 h2
 {
+    /* float : left ; */
     font-size : 24px ;
     font-weight : normal ;
-    margin : 128px auto 32px auto ;
+    margin : 32px auto ;
+    border-left : 8px solid #0003 ;
+    padding : 0 0 0 16px ;
 }
+/*
+.grayBlock
+{
+    float : left ;
+    width : 8px ;
+    height : 24px ;
+    background-color : #0003 ;
+}
+*/
 h3
 {
     font-size : 20px ;
@@ -60,13 +72,40 @@ textarea:active
     box-shadow : 0 0 100px #0FF ;
 }
 */
+.back
+{
+    position : fixed ;
+    right : 32px ;
+    bottom : 32px ;
+    display : block ;
+    width : 64px ;
+    height : 64px ;
+    background-color : #FFFD ;
+    border-radius : 256px ;
+    box-shadow : 0 0 8px #0003 ;
+    text-align : center ;
+    line-height : 32px ;
+}
+.back:hover
+{
+    box-shadow : 0 0 16px #0003 ;
+}
+.back:active
+{
+    box-shadow : 0 0 0 #0003 ;
+}
+.back img
+{
+    width : 32px ;
+    margin : 16px 0 ;
+}
 .rightIntro
 {
-    background-color : #FFF ;
+    /* background-color : #FFF ; */
     width : 720px ;
-    padding : 0 96px 64px 96px ;
+    padding : 0 ;
     margin : 128px auto ;
-    box-shadow : 0 10px 100px #0003 ;
+    /* box-shadow : 0 10px 100px #0003 ; */
     border-radius : 16px ;
 }
 .leftBar
@@ -80,7 +119,7 @@ textarea:active
     margin : 0 ;
     top : 0 ;
     left : 0 ;
-    box-shadow : 0 50px 100px #0003 ;
+    box-shadow : 0 0 8px #0003 ;
 }
 .leftBar a
 {
@@ -129,7 +168,7 @@ textarea:active
 .statistics
 {
     display : inline-block ;
-    width : 32% ;
+    width : 80px ;
     /* margin-top : 32px ; */
     text-align : center ;
 }
@@ -150,14 +189,28 @@ textarea:active
     font-size : 64px ;
     font-weight : normal ;
     text-align : right ;
-    width : 720px ;
-    margin : 128px auto 0 auto ;
+    margin : 128px auto 32px auto ;
+    padding : 32px ;
 }
 .introBlock
 {
-    display : inline-block ;
-    width : 30% ;
-    padding : 0 64px ;
+    /* display : inline-block ; */
+    float : left ;
+    width : 320px ;
+    margin : 16px 16px 256px 16px ;
+}
+.smallCard
+{
+    background-color : #FFFD ;
+    width : 198px ;
+    padding : 64px ;
+    margin-top : 32px ;
+    border-radius : 8px ;
+    box-shadow : 0 4px 8px #0003 ;
+}
+.smallCard:hover
+{
+    box-shadow : 0 4px 64px #0003 ;
 }
 /*
 .liTest
