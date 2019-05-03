@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="UTF-8" />
+        <link href="IndividualResume.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <script type="text/javascript" >
+        function func(sel)
+        {
+            var bg = document.getElementById("bg") ;
+            //var sel = document.getElementById("sel") ;
+            var index = sel.selectedIndex ;  //用select元素的selectedIndex属性可知被选中的选项的索引
+            var opt = sel.options[index] ;  //select元素的option子节点通过.options属性访问；通过.options[index]访问索引为index的option子节点
+            var value = opt.value ;
+            if ( value == "jg" )
+            {
+                bg.background = "src/jg.png" ;
+            }
+            if ( value == "yt" )
+            {
+            bg.background = "src/yt.png" ;
+            }
+            if ( value == "dt" )
+            {
+                bg.background = "src/dt.png" ;
+            }
+        }
+    </script>
+
+    <body background="src/jg.png" id="bg" >
+        
+        <select id="sel" onchange="func(this)" >  <!-- 列表被选中选项变化触发onchange事件，以this参数把当前元素传进js函数里 -->
+            <option value="jg" >极光</option>
+            <option value="yt" >远眺</option>
+            <option value="dt" >灯塔</option>
+        </select>
+
+    </body>
+</html>
