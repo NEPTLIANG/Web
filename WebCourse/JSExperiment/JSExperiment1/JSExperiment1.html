@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+
+    <script type="text/javascript" >
+        function func()
+        {
+            var bg = document.getElementById("bg") ;
+            //var sel = document.getElementById("sel") ;
+            var form1 = document.forms["form1"] ;  //获取文档中name属性值为form1的表单
+            var sel = form1.elements["select1"] ;  //获取表单form1中name属性值为select1的表单元素
+            var index = sel.selectedIndex ;  //通过HTMLSelectElement类型的selectedIndex属性可知被选中的选项的索引
+            var opt = sel.options[index] ;  //通过HTMLSelectElement类型的.options属性访问控件中的<option>元素；通过.options[index]访问索引为index的<option>元素
+            var value = opt.value ;
+            if ( value == "jg" )
+            {
+                bg.background = "src/jg.png" ;
+            }
+            if ( value == "yt" )
+            {
+            bg.background = "src/yt.png" ;
+            }
+            if ( value == "dt" )
+            {
+                bg.background = "src/dt.png" ;
+            }
+        }
+    </script>
+
+    <body background="src/jg.png" id="bg" >
+        
+        <form name="form1" method="post" action="" > 
+            <select id="sel" name="select1" onchange="func()" >  <!-- 被选中选项变化触发onchange事件 -->
+                <option value="jg" >极光</option>
+                <option value="yt" >远眺</option>
+                <option value="dt" >灯塔</option>
+            </select>
+        </form>
+
+    </body>
+</html>

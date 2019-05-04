@@ -1,0 +1,25 @@
+.respond
+{
+    display : inline-block ;
+    color : #0007 ;
+    background-color : #0003 ;
+    width : 128px ;
+    height : 32px ;
+    margin-left : 32px ;
+    border : 1px solid #0007 ;
+}
+.bigBox
+{
+    width : 512px ;
+    margin : 64px ;
+}
+.leftBox
+{
+    float : left ;
+    margin-right : 32px ;
+}
+input
+{
+    height : 25px ;
+    border : 5px solid #000 ;
+}
