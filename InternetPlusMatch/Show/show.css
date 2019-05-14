@@ -1,0 +1,96 @@
+div
+{
+    margin : 0 ;
+    padding : 0 ;
+}
+body
+{
+    font-family : "苹方" , "微软雅黑" ;
+    font-size : 16px ;
+    color : #000B ;
+    margin : 0;
+    padding : 0 ;
+    line-height : 2em ;
+}
+h2
+{
+    font-size : 32px ;
+}
+h3
+{
+    font-size : 28px ;
+}
+h4
+{
+    font-size : 24px ;
+}
+h5
+{
+    font-size : 20px ;
+}
+th
+{
+    padding : 16px ;
+    text-align : center ;
+    font-weight : bold ;
+}
+td
+{
+    padding : 16px ;
+    width : 166px ;
+    text-align : center ;
+}
+td:hover
+{
+    background-color : #0002 ;
+}
+tr
+{
+    border-bottom : 3px solid #0007 ;
+}
+.even
+{
+    background-color : #0001 ;
+}
+.banner
+{
+    background : url(src/bg.png) ;
+    background-position : 50% 100% ;
+    background-repeat : no-repeat ;
+    background-attachment : fixed ;
+    width : 100% ;
+    height : 512px ;
+}
+.bannerTextDiv
+{
+    position : absolute ;
+    width : 1024px ;
+    margin : 128px 256px ;
+}
+.main
+{
+    width : 1024px ;
+    margin : 128px auto ;
+}
+.title
+{
+    font-size : 64px ;
+    color : #fff ;
+}
+.price
+{
+    font-size : 32px ;
+    color : #fffB ;
+}
+.bigCard
+{
+    margin : 32px ;
+    padding : 32px 64px ;
+    border-radius : 8px ;
+    box-shadow : 0 2px 8px #0003 ;
+}
+.bigCard img
+{
+    margin : 32px auto ;
+    width : 512px ;
+}
