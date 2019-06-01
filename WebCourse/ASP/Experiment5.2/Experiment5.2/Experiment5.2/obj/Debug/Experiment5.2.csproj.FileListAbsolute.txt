@@ -1,0 +1,4 @@
+D:\Experiment5.2\Experiment5.2\bin\Experiment5.2.dll
+D:\Experiment5.2\Experiment5.2\bin\Experiment5.2.pdb
+D:\Experiment5.2\Experiment5.2\obj\Debug\Experiment5.2.dll
+D:\Experiment5.2\Experiment5.2\obj\Debug\Experiment5.2.pdb
