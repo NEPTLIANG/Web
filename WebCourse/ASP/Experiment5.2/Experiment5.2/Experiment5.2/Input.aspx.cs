@@ -16,8 +16,18 @@ namespace Experiment5._2
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            string name = Request.Form["txtName"];
-            Response.Redirect("./Ouput.aspx");
+            string coures="";
+            Response.Redirect("./Ouput.aspx"/*?name=" + txtName.Text
+                + "&method=" + rdlMethod.SelectedValue*/);  //用URL传参
+            foreach (ListItem i in cblCoures.Items)
+            {
+                if ( i.Selected )
+                {
+                    coures += i.Text;
+                }
+            }
+            Session["couresSession"] = coures;
+            //Response.Write(Session["couresSession"].ToString());
         }
     }
 }

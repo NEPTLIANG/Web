@@ -14,9 +14,9 @@
     <p>
         姓名：<asp:Label ID="lblName" runat="server"></asp:Label>
     </p>
-    血洗方式：<asp:Label ID="lblStudyMethod" runat="server"></asp:Label>
+    血洗方式：<asp:Label ID="lblMethod" runat="server"></asp:Label>
     <p>
-        课程：<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        课程：<asp:TextBox ID="txtCoures" runat="server"></asp:TextBox>
     </p>
     </form>
 </body>

@@ -17,7 +17,7 @@
         密码：<asp:TextBox ID="txtPasswd" runat="server"></asp:TextBox>
     </p>
     <asp:Button ID="btnLogin" runat="server" onclick="btnLogin_Click" Text="登录" />
-    <asp:Button ID="btnReset" runat="server" Text="重输" />
+    <asp:Button ID="btnReset" runat="server" Text="重输" OnClick="btnReset_Click" />
     </form>
 </body>
 </html>

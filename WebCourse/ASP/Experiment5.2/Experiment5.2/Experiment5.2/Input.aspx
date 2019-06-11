@@ -14,21 +14,21 @@
     
     </div>
     <p>
-        请选择你学习的方式：<asp:RadioButtonList ID="rdlListMethod" runat="server" 
+        请选择你学习的方式：<asp:RadioButtonList ID="rdlMethod" runat="server" 
             RepeatDirection="Horizontal">
             <asp:ListItem Value="qrz">全日制</asp:ListItem>
             <asp:ListItem Value="zd">走读</asp:ListItem>
             <asp:ListItem Value="hs">函授</asp:ListItem>
         </asp:RadioButtonList>
     </p>
-    请选择您所要学习的课程：<asp:CheckBoxList ID="CheckBoxList1" runat="server" 
+    请选择您所要学习的课程：<asp:CheckBoxList ID="cblCoures" runat="server" 
         RepeatDirection="Horizontal">
         <asp:ListItem Value="jsjjc">计算机基础</asp:ListItem>
         <asp:ListItem Value="c">c语言</asp:ListItem>
         <asp:ListItem Value="java">面向对象程序设计</asp:ListItem>
         <asp:ListItem Value="DataStructer">数据结构</asp:ListItem>
         <asp:ListItem Value="sql">数据库</asp:ListItem>
-        <asp:ListItem Value="asp">asp.net</asp:ListItem>
+        <asp:ListItem Value="asp">asp</asp:ListItem>
     </asp:CheckBoxList>
     <asp:Button ID="btnSubmit" runat="server" Text="提交" onclick="btnSubmit_Click" />
     <asp:Button ID="btnReset" runat="server" Text="重置" />
