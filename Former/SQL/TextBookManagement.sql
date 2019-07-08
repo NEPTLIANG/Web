@@ -1,44 +1,44 @@
-CREATE DATABASE	TextbookManagement;  /*´´½¨Êı¾İ¿â*/
+CREATE DATABASE	TextbookManagement;  /*åˆ›å»ºæ•°æ®åº“*/
 
-/*ÇĞ»»µ½Êı¾İ¿â*/
+/*åˆ‡æ¢åˆ°æ•°æ®åº“*/
 USE TextbookManagement;
 
-/*´´½¨±í*/
+/*åˆ›å»ºè¡¨*/
 /*DROP TABLE Book;*/
-/*CREATE TABLE Book			/*¿Î±¾*/
+/*CREATE TABLE Book			/*è¯¾æœ¬*/
 	(bookName varchar(50), 
 	ISBN char(14), 
 	bookPublishingHouse varchar(50), 
 	bookType varchar(20), 
 	demandedQuantity int, 
 	bookInventoryQuantity int);
-CREATE TABLE OrderForm			/*¶©µ¥*/
+CREATE TABLE OrderForm			/*è®¢å•*/
 	(TimeOfPlaceTheOrder datetime,
 	ISBN char(14),
 	bookPrice float,
 	bookPublishingHouse varchar(50),
 	orderQuantity int) ;
 /*DROP TABLE bePutInStorageRecord;*/
-CREATE TABLE bePutInStorageRecord		/*Èë¿â¼ÇÂ¼*/
+CREATE TABLE bePutInStorageRecord		/*å…¥åº“è®°å½•*/
 	(TimeOfbePutInStorage datetime,
 	ISBN char(14),
 	bePutInStorageQuantity int,
 	storageRackNum varchar);
 /*DROP TABLE DeliveryOfCargoFromStorageRecord*/
-CREATE TABLE DeliveryOfCargoFromStorageRecord		/*ÁìÓÃ¼ÇÂ¼*/
+CREATE TABLE DeliveryOfCargoFromStorageRecord		/*é¢†ç”¨è®°å½•*/
 	(TimeOfDeliveryOfCargoFromStorage datetime,
 	ISBN char(14),
 	storageRackNum varchar(10),
 	DeliveryOfCargoFromStorageQuantity int,
 	getClass varchar(10));
-CREATE TABLE Administrator			/*¹ÜÀíÔ±*/
+CREATE TABLE Administrator			/*ç®¡ç†å‘˜*/
 	(adminID varchar(10),
 	adminPwd varchar(20),
 	adminModificationPermission bit,
 	adminRemovePermission bit,
 	adminPhoneNum char(11));*/
 
-/*¸øÁĞÌí¼ÓÍâ¼üÔ¼Êø¡¢Ìí¼Ó·Ç¿ÕÔ¼ÊøºóÌí¼ÓÖ÷¼üÔ¼Êø*/
+/*ç»™åˆ—æ·»åŠ å¤–é”®çº¦æŸã€æ·»åŠ éç©ºçº¦æŸåæ·»åŠ ä¸»é”®çº¦æŸ*/
 ALTER TABLE Book
 	ALTER COLUMN ISBN char(14) NOT NULL;
 ALTER TABLE Book
@@ -74,7 +74,7 @@ ALTER TABLE Administrator
 ALTER TABLE Administrator
 	ADD CONSTRAINT pkAdmin PRIMARY KEY(adminID);
 
-/*²åÈë²âÊÔÊı¾İ*/
+/*æ’å…¥æµ‹è¯•æ•°æ®*/
 INSERT INTO Administrator(adminID, adminPwd, adminModificationPermission, 
 	adminRemovePermission, adminPhoneNum)
 	VALUES('admin', '6f67c16e74d856b6', 1, 
@@ -83,17 +83,17 @@ SELECT * FROM Administrator;
 
 INSERT INTO Book(bookName, ISBN, bookPublishingHouse, bookType, 
 	demandedQuantity, bookInventoryQuantity)
-	VALUES('Êı¾İ¿âÉè¼Æ´ÓÈëÃÅµ½É¾¿âÅÜÂ·', '4444444444444', 'ÅÜÂ·³ö°æÉç', '¼ÆËã»ú',
+	VALUES('æ•°æ®åº“è®¾è®¡ä»å…¥é—¨åˆ°åˆ åº“è·‘è·¯', '4444444444444', 'è·‘è·¯å‡ºç‰ˆç¤¾', 'è®¡ç®—æœº',
 		2048, 2048),
-		('ÉøÍ¸²âÊÔ´ÓÈëÃÅµ½ÈëÓü', '2222222222222', 'ÍÑ·¢³ö°æÉç', '¼ÆËã»ú',
+		('æ¸—é€æµ‹è¯•ä»å…¥é—¨åˆ°å…¥ç‹±', '2222222222222', 'è„±å‘å‡ºç‰ˆç¤¾', 'è®¡ç®—æœº',
 			128, 256),
-		('PHP´ÓÈëÃÅµ½ÈëÍÁ', '3333333333333', 'ÍÑ·¢³ö°æÉç', '¼ÆËã»ú',
+		('PHPä»å…¥é—¨åˆ°å…¥åœŸ', '3333333333333', 'è„±å‘å‡ºç‰ˆç¤¾', 'è®¡ç®—æœº',
 			2048, 2048),
-		('Ëû¸Ä±äÁËÖĞ¹ú', '1111111111111', 'ÈüÍ§³ö°æÉç', 'Éç»á¿ÆÑ§',
+		('ä»–æ”¹å˜äº†ä¸­å›½', '1111111111111', 'èµ›è‰‡å‡ºç‰ˆç¤¾', 'ç¤¾ä¼šç§‘å­¦',
 			1024, 512),
-		('Ã«Ôó¶«Ñ¡¼¯£¨µÚÎå¾í£©', '5555555555555', 'Ì«×æ³ö°æÉç', 'Éç»á¿ÆÑ§',
+		('æ¯›æ³½ä¸œé€‰é›†ï¼ˆç¬¬äº”å·ï¼‰', '5555555555555', 'å¤ªç¥–å‡ºç‰ˆç¤¾', 'ç¤¾ä¼šç§‘å­¦',
 			128, 256),
-		('Ã¤É®¼¼ÄÜ·ÖÎöÓëÊµÀıÏê½â', '6666666666666', 'µÂÂêÎ÷ÑÇ³ö°æÉç', 'ÌåÓı',
+		('ç›²åƒ§æŠ€èƒ½åˆ†æä¸å®ä¾‹è¯¦è§£', '6666666666666', 'å¾·ç›è¥¿äºšå‡ºç‰ˆç¤¾', 'ä½“è‚²',
 			128, 256);
 SELECT * FROM Book;
 
@@ -103,9 +103,9 @@ SELECT @date2=GETDATE();
 SELECT @date3=GETDATE();
 SELECT @date1, @date2, @date3;
 INSERT INTO OrderForm(TimeOfPlaceTheOrder, ISBN, bookPrice, bookPublishingHouse, orderQuantity)
-	VALUES(@date1, '4444444444444', 200, 'ÅÜÂ·³ö°æÉç', 2048),
-		(@date2,  '6666666666666', 180, 'µÂÂêÎ÷ÑÇ³ö°æÉç', 128),
-		(@date3, '2222222222222', 160, 'ÍÑ·¢³ö°æÉç', 128);
+	VALUES(@date1, '4444444444444', 200, 'è·‘è·¯å‡ºç‰ˆç¤¾', 2048),
+		(@date2,  '6666666666666', 180, 'å¾·ç›è¥¿äºšå‡ºç‰ˆç¤¾', 128),
+		(@date3, '2222222222222', 160, 'è„±å‘å‡ºç‰ˆç¤¾', 128);
 SELECT Book.bookName, OrderForm.* 
 	FROM OrderForm JOIN Book ON OrderForm.ISBN=Book.ISBN;
 
@@ -119,36 +119,36 @@ SELECT Book.bookName, bePutInStorageRecord.*
 INSERT INTO DeliveryOfCargoFromStorageRecord(TimeOfDeliveryOfCargoFromStorage, ISBN, 
 	storageRackNum, DeliveryOfCargoFromStorageQuantity, getClass)
 	VALUES(GETDATE(), '6666666666666', 
-		'B', 90, '17¼Æ¿Æ2°à');
+		'B', 90, '17è®¡ç§‘2ç­');
 SELECT Book.bookName, DeliveryOfCargoFromStorageRecord.*
 	FROM DeliveryOfCargoFromStorageRecord JOIN Book 
 	ON DeliveryOfCargoFromStorageRecord.ISBN=Book.ISBN;
 
-/*´æ´¢¹ı³Ì*/
-/*EXECUTE sp_help QueryBookRecord;  /*²éÑ¯´æ´¢¹ı³ÌĞÅÏ¢*/
-DROP PROCEDURE QueryBookRecord;*/  /*É¾³ı´æ´¢¹ı³Ì*/
-/*DROP PROCEDURE QueryOrderFormbyType;*/  /*É¾³ı´æ´¢¹ı³Ì*/
-/*CREATE PROCEDURE QueryOrderFormbyType			/*²éÑ¯Ä³ÖÖÊé¼®µÄÈ«²¿¼ÇÂ¼*/
+/*å­˜å‚¨è¿‡ç¨‹*/
+/*EXECUTE sp_help QueryBookRecord;  /*æŸ¥è¯¢å­˜å‚¨è¿‡ç¨‹ä¿¡æ¯*/
+DROP PROCEDURE QueryBookRecord;*/  /*åˆ é™¤å­˜å‚¨è¿‡ç¨‹*/
+/*DROP PROCEDURE QueryOrderFormbyType;*/  /*åˆ é™¤å­˜å‚¨è¿‡ç¨‹*/
+/*CREATE PROCEDURE QueryOrderFormbyType			/*æŸ¥è¯¢æŸç§ä¹¦ç±çš„å…¨éƒ¨è®°å½•*/
 	@type varchar(50)
 AS
 BEGIN
 	/*DECLARE @name varchar(50);
-	SELECT @name='Êı¾İ¿âÉè¼Æ´ÓÈëÃÅµ½É¾¿âÅÜÂ·';*/
+	SELECT @name='æ•°æ®åº“è®¾è®¡ä»å…¥é—¨åˆ°åˆ åº“è·‘è·¯';*/
 	SELECT Book.bookType, Book.bookName, OrderForm.*
 	FROM OrderForm JOIN Book ON Book.ISBN=OrderForm.ISBN
 	WHERE Book.bookType=@type;
 END*/
-EXECUTE QueryOrderFormbyType @type='Éç»á¿ÆÑ§';
+EXECUTE QueryOrderFormbyType @type='ç¤¾ä¼šç§‘å­¦';
 
 /*INSERT INTO OrderForm(TimeOfPlaceTheOrder, ISBN, bookPrice, bookPublishingHouse, orderQuantity)
-	VALUES(GETDATE(),  '6666666666666', 180, 'µÂÂêÎ÷ÑÇ³ö°æÉç', 128);
+	VALUES(GETDATE(),  '6666666666666', 180, 'å¾·ç›è¥¿äºšå‡ºç‰ˆç¤¾', 128);
 INSERT INTO DeliveryOfCargoFromStorageRecord(TimeOfDeliveryOfCargoFromStorage, ISBN, 
 	storageRackNum, DeliveryOfCargoFromStorageQuantity, getClass)
 	VALUES(GETDATE(), '6666666666666', 
-		'B', 90, '17¼Æ¿Æ2°à');*/
+		'B', 90, '17è®¡ç§‘2ç­');*/
 /*EXECUTE sp_help CountRecord;
 DROP PROCEDURE CountRecord;*/
-/*CREATE PROCEDURE CountRecord			/*Í³¼Æ¸÷ÖÖ½Ì²ÄµÄ¶©¹º¡¢µ½»õºÍ·¢·ÅÊıÁ¿*/
+/*CREATE PROCEDURE CountRecord			/*ç»Ÿè®¡å„ç§æ•™æçš„è®¢è´­ã€åˆ°è´§å’Œå‘æ”¾æ•°é‡*/
 	@name varchar(50)
 	AS
 	BEGIN
@@ -163,20 +163,20 @@ DROP PROCEDURE CountRecord;*/
 			FROM DeliveryOfCargoFromStorageRecord JOIN Book ON DeliveryOfCargoFromStorageRecord.ISBN=Book.ISBN
 			WHERE Book.bookName=@name;
 		/*SET @count = @count1+@count2+@count3;*/
-		SELECT @count1 AS ¶©¹ºÊıÁ¿, @count2 AS µ½»õÊıÁ¿, @count3 AS ·¢·ÅÊıÁ¿;
+		SELECT @count1 AS è®¢è´­æ•°é‡, @count2 AS åˆ°è´§æ•°é‡, @count3 AS å‘æ”¾æ•°é‡;
 	END*/
-EXECUTE CountRecord 'Ã¤É®¼¼ÄÜ·ÖÎöÓëÊµÀıÏê½â';
+EXECUTE CountRecord 'ç›²åƒ§æŠ€èƒ½åˆ†æä¸å®ä¾‹è¯¦è§£';
 
-/*´¥·¢Æ÷*/
+/*è§¦å‘å™¨*/
 /*INSERT INTO Book(bookName, ISBN, bookPublishingHouse, bookType, 
 	demandedQuantity, bookInventoryQuantity)
-	VALUES('Ò»¾Å°ËËÄ', '7777777777777', 'Ô¤ÑÔ³ö°æÉç', 'Ğ¡Ëµ',
+	VALUES('ä¸€ä¹å…«å››', '7777777777777', 'é¢„è¨€å‡ºç‰ˆç¤¾', 'å°è¯´',
 		2048, 2048);
 SELECT * FROM Book;
 INSERT INTO OrderForm(TimeOfPlaceTheOrder, ISBN, bookPrice, 
 	bookPublishingHouse, orderQuantity)
 	VALUES(GETDATE(), '7777777777777', 200, 
-		'Ô¤ÑÔ³ö°æÉç', 2048);
+		'é¢„è¨€å‡ºç‰ˆç¤¾', 2048);
 SELECT Book.bookName, OrderForm.* 
 	FROM OrderForm JOIN Book ON OrderForm.ISBN=Book.ISBN;
 DELETE
@@ -185,7 +185,7 @@ DELETE
 SELECT * FROM Book;
 SELECT Book.bookName, OrderForm.* 
 	FROM OrderForm JOIN Book ON OrderForm.ISBN=Book.ISBN;*/
-/*CREATE TRIGGER tr_DelBook			/*É¾³ıÊé¼®×Ô¶¯É¾³ı¶ÔÓ¦µÄ¼ÇÂ¼*/
+/*CREATE TRIGGER tr_DelBook			/*åˆ é™¤ä¹¦ç±è‡ªåŠ¨åˆ é™¤å¯¹åº”çš„è®°å½•*/
 	ON Book
 	FOR DELETE
 	AS
@@ -211,7 +211,7 @@ INSERT INTO bePutInStorageRecord(TimeOfbePutInStorage, ISBN,
 SELECT Book.bookName, bePutInStorageRecord.*
 	FROM bePutInStorageRecord JOIN Book ON bePutInStorageRecord.ISBN=Book.ISBN;
 SELECT * FROM Book;*/
-/*CREATE TRIGGER tr_alterInStor			/*Èë¿âÊ±×Ô¶¯ĞŞ¸Ä¿â´æÊıÁ¿*/
+/*CREATE TRIGGER tr_alterInStor			/*å…¥åº“æ—¶è‡ªåŠ¨ä¿®æ”¹åº“å­˜æ•°é‡*/
 	ON bePutInStorageRecord
 	FOR INSERT
 	AS
@@ -235,18 +235,18 @@ SELECT * FROM Book;*/
 
 /*INSERT INTO Book(bookName, ISBN, bookPublishingHouse, bookType, 
 	demandedQuantity, bookInventoryQuantity)
-	VALUES('Ò»¾Å°ËËÄ', '7777777777777', 'Ô¤ÑÔ³ö°æÉç', 'Ğ¡Ëµ',
+	VALUES('ä¸€ä¹å…«å››', '7777777777777', 'é¢„è¨€å‡ºç‰ˆç¤¾', 'å°è¯´',
 		2048, 2048);
 SELECT * FROM Book;
 INSERT INTO DeliveryOfCargoFromStorageRecord(TimeOfDeliveryOfCargoFromStorage, ISBN, 
 	storageRackNum, DeliveryOfCargoFromStorageQuantity, getClass)
 	VALUES(GETDATE(), '7777777777777', 
-		'B', 90, '17¼Æ¿Æ2°à');
+		'B', 90, '17è®¡ç§‘2ç­');
 SELECT Book.bookName, DeliveryOfCargoFromStorageRecord.*
 	FROM DeliveryOfCargoFromStorageRecord JOIN Book 
 	ON DeliveryOfCargoFromStorageRecord.ISBN=Book.ISBN;
 SELECT * FROM Book;*/
-/*CREATE TRIGGER tr_alterOutStor		/*³ö¿âÊ±×Ô¶¯ĞŞ¸Ä¿â´æÊıÁ¿*/
+/*CREATE TRIGGER tr_alterOutStor		/*å‡ºåº“æ—¶è‡ªåŠ¨ä¿®æ”¹åº“å­˜æ•°é‡*/
 	ON DeliveryOfCargoFromStorageRecord
 	FOR INSERT
 	AS
