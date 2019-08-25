@@ -42,6 +42,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+        </asp:DropDownList>
         <div>
             <div class="card">
                 <div class="h2">
