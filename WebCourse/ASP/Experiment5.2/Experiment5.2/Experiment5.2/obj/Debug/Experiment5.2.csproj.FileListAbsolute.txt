@@ -1,0 +1,11 @@
+D:\Experiment5.2\Experiment5.2\bin\Experiment5.2.dll
+D:\Experiment5.2\Experiment5.2\bin\Experiment5.2.pdb
+D:\Experiment5.2\Experiment5.2\obj\Debug\Experiment5.2.dll
+D:\Experiment5.2\Experiment5.2\obj\Debug\Experiment5.2.pdb
+C:\Users\MING\web\WebCourse\ASP\Experiment5.2\Experiment5.2\Experiment5.2\obj\Debug\Experiment5.2.csprojAssemblyReference.cache
+C:\Users\MING\web\WebCourse\ASP\Experiment5.2\Experiment5.2\Experiment5.2\obj\Debug\Experiment5.2.csproj.CoreCompileInputs.cache
+C:\Users\MING\web\WebCourse\ASP\Experiment5.2\Experiment5.2\Experiment5.2\obj\Debug\Experiment5.2.dll
+C:\Users\MING\web\WebCourse\ASP\Experiment5.2\Experiment5.2\Experiment5.2\obj\Debug\Experiment5.2.pdb
+C:\Users\MING\web\WebCourse\ASP\Experiment5.2\Experiment5.2\Experiment5.2\bin\Experiment5.2.dll.config
+C:\Users\MING\web\WebCourse\ASP\Experiment5.2\Experiment5.2\Experiment5.2\bin\Experiment5.2.dll
+C:\Users\MING\web\WebCourse\ASP\Experiment5.2\Experiment5.2\Experiment5.2\bin\Experiment5.2.pdb
