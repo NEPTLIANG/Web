@@ -4,7 +4,7 @@
  */
 var invalidTransactions = function (transactions) {
     eval(transactions);
-    var tranArray = new Array();
+    var tranArray = [];
     for (var i = 0; i < transactions.length; i++) {
         tranArray.push(Array());
         for (var j = 0; j < 4; j++) {
@@ -14,8 +14,8 @@ var invalidTransactions = function (transactions) {
             transactions[i] = transactions[i].substring(divisionIndex + 1, transactions[i].length);
             tranArray[i].push(subVal);
         }
-        tranArray[i].push(tranArray[i][3] > 1000 ? true : false);
+        tranArray[i].push(tranArray[i][3] > 1000);
     }
-}
+};
 
 invalidTransactions("transactions = [\"alice,20,800,mtv\",\"alice,50,100,beijing\"]");
