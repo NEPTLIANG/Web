@@ -1,0 +1,423 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20191010.102304.2947.0.001.json",
+    "dumpEventTime": "2019-10-10T10:23:04Z",
+    "dumpEventTimeStamp": "1570674184819",
+    "processId": 2947,
+    "cwd": "/home/ming/Git/web/JavaScript/LeetCode1184-20190908q1-UnAc",
+    "commandLine": [
+      "/usr/bin/node",
+      "/home/ming/Git/web/JavaScript/LeetCode1184-20190908q1-UnAc/LeetCode20190908q1-UnAc.js"
+    ],
+    "nodejsVersion": "v12.9.1",
+    "glibcVersionRuntime": "2.29",
+    "glibcVersionCompiler": "2.29",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "linux",
+    "componentVersions": {
+      "node": "12.9.1",
+      "v8": "7.6.303.29-node.15",
+      "uv": "1.31.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.39.2",
+      "napi": "4",
+      "llhttp": "1.1.4",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1c",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v12.9.1/node-v12.9.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.9.1/node-v12.9.1.tar.gz"
+    },
+    "osName": "Linux",
+    "osRelease": "4.19.69-1-MANJARO",
+    "osVersion": "#1 SMP PREEMPT Thu Aug 29 08:51:46 UTC 2019",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed": 3706,
+        "user": 453100,
+        "nice": 24600,
+        "sys": 73800,
+        "idle": 11931800,
+        "irq": 14300
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed": 3986,
+        "user": 458000,
+        "nice": 67000,
+        "sys": 90100,
+        "idle": 11879000,
+        "irq": 8700
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed": 3908,
+        "user": 413100,
+        "nice": 40600,
+        "sys": 78400,
+        "idle": 11932500,
+        "irq": 24600
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed": 3876,
+        "user": 432600,
+        "nice": 52600,
+        "sys": 89600,
+        "idle": 11924500,
+        "irq": 8500
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed": 3882,
+        "user": 426800,
+        "nice": 27400,
+        "sys": 71700,
+        "idle": 11962400,
+        "irq": 8500
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed": 3888,
+        "user": 420300,
+        "nice": 20600,
+        "sys": 75000,
+        "idle": 11943600,
+        "irq": 28200
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed": 3865,
+        "user": 433800,
+        "nice": 37000,
+        "sys": 69100,
+        "idle": 11926700,
+        "irq": 27100
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed": 3926,
+        "user": 429500,
+        "nice": 46600,
+        "sys": 77600,
+        "idle": 11946700,
+        "irq": 7800
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "wlp3s0",
+        "internal": false,
+        "mac": "80:c5:f2:d2:44:55",
+        "address": "10.12.39.179",
+        "netmask": "255.255.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "wlp3s0",
+        "internal": false,
+        "mac": "80:c5:f2:d2:44:55",
+        "address": "fe80::3ed0:a8e9:b07:600c",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 3
+      }
+    ],
+    "host": "neptune"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x0000561e1358b07a",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, v8::Local<v8::String>) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e134596e8",
+      "symbol": "node::OnFatalError(char const*, char const*) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e135bdb12",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e135bdd78",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e1373ff56",
+      "symbol": " [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e1371bdbf",
+      "symbol": " [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e13875b81",
+      "symbol": " [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e1388aa88",
+      "symbol": " [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e13a01731",
+      "symbol": "v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000561e13d7d6d9",
+      "symbol": " [/usr/bin/node]"
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2506084352,
+    "totalCommittedMemory": 2473799240,
+    "usedMemory": 2471450752,
+    "availableMemory": 17404904,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 31744,
+        "capacity": 261832,
+        "used": 31432,
+        "available": 230400
+      },
+      "new_space": {
+        "memorySize": 33554432,
+        "committedMemory": 2032664,
+        "capacity": 16757248,
+        "used": 0,
+        "available": 16757248
+      },
+      "old_space": {
+        "memorySize": 1683456,
+        "committedMemory": 1431520,
+        "capacity": 1680904,
+        "used": 1263648,
+        "available": 417256
+      },
+      "code_space": {
+        "memorySize": 425984,
+        "committedMemory": 174752,
+        "capacity": 151968,
+        "used": 151968,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 266240,
+        "committedMemory": 236464,
+        "capacity": 166800,
+        "used": 166800,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 1567330304,
+        "committedMemory": 1567330304,
+        "capacity": 1567322568,
+        "used": 1567322568,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 3456,
+        "used": 3456,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 902512640,
+        "committedMemory": 902512640,
+        "capacity": 902510880,
+        "used": 902510880,
+        "available": 0
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 1.29145,
+    "kernelCpuSeconds": 0.657051,
+    "cpuConsumptionPercent": 97.4252,
+    "maxRss": 2503667712,
+    "pageFaults": {
+      "IORequired": 172,
+      "IONotRequired": 663410
+    },
+    "fsActivity": {
+      "reads": 40712,
+      "writes": 0
+    }
+  },
+  "uvthreadResourceUsage": {
+    "userCpuSeconds": 1.29109,
+    "kernelCpuSeconds": 0.633712,
+    "cpuConsumptionPercent": 96.2402,
+    "fsActivity": {
+      "reads": 40712,
+      "writes": 0
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "PATH": "/home/ming/Downloads/jdk-11.0.2/bin:/home/ming/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl",
+    "XAUTHORITY": "/home/ming/.Xauthority",
+    "XMODIFIERS": "@im=fcitx",
+    "GDMSESSION": "xfce",
+    "XDG_DATA_DIRS": "/home/ming/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/usr/share",
+    "GTK_IM_MODULE": "fcitx",
+    "DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+    "XDG_CURRENT_DESKTOP": "XFCE",
+    "QT_AUTO_SCREEN_SCALE_FACTOR": "0",
+    "MAIL": "/var/spool/mail/ming",
+    "SSH_AGENT_PID": "1059",
+    "MOZ_PLUGIN_PATH": "/usr/lib/mozilla/plugins",
+    "COLORTERM": "true",
+    "SESSION_MANAGER": "local/neptune:@/tmp/.ICE-unix/1007,unix/neptune:/tmp/.ICE-unix/1007",
+    "LOGNAME": "ming",
+    "PWD": "/home/ming/Git/web/JavaScript/LeetCode1184-20190908q1-UnAc",
+    "SHELL": "/bin/bash",
+    "OLDPWD": "/opt/webstorm/bin",
+    "GTK_MODULES": "canberra-gtk-module:canberra-gtk-module",
+    "PANEL_GDK_CORE_DEVICE_EVENTS": "0",
+    "XDG_SESSION_PATH": "/org/freedesktop/DisplayManager/Session0",
+    "XDG_SESSION_DESKTOP": "xfce",
+    "SHLVL": "1",
+    "FORCE_COLOR": "true",
+    "QT_IM_MODULE": "fcitx",
+    "JAVA_HOME": "/home/ming/Downloads/jdk-11.0.2",
+    "ELECTRON_NO_ATTACH_CONSOLE": "true",
+    "XDG_CONFIG_DIRS": "/etc/xdg",
+    "XDG_SEAT_PATH": "/org/freedesktop/DisplayManager/Seat0",
+    "LANG": "zh_CN.utf8",
+    "DEBUG_COLORS": "true",
+    "XDG_SESSION_ID": "2",
+    "XDG_SESSION_TYPE": "x11",
+    "npm_config_color": "always",
+    "DISPLAY": ":0.0",
+    "MOCHA_COLORS": "1",
+    "_": "/home/ming/Downloads/jdk-11.0.2/bin/java",
+    "XDG_SESSION_CLASS": "user",
+    "XDG_GREETER_DATA_DIR": "/var/lib/lightdm-data/ming",
+    "DESKTOP_SESSION": "xfce",
+    "USER": "ming",
+    "CLASSPATH": "/opt/webstorm/lib/bootstrap.jar:/opt/webstorm/lib/extensions.jar:/opt/webstorm/lib/util.jar:/opt/webstorm/lib/jdom.jar:/opt/webstorm/lib/log4j.jar:/opt/webstorm/lib/trove4j.jar:/opt/webstorm/lib/jna.jar",
+    "GTK2_RC_FILES": "/home/ming/.gtkrc-2.0",
+    "XDG_MENU_PREFIX": "xfce-",
+    "XDG_SEAT": "seat0",
+    "SSH_AUTH_SOCK": "/tmp/ssh-dVYtXnyP6EJB/agent.1058",
+    "EDITOR": "/usr/bin/nano",
+    "QT_QPA_PLATFORMTHEME": "qt5ct",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "XDG_VTNR": "7",
+    "HOME": "/home/ming"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": 65536,
+      "hard": 65536
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 1048576,
+      "hard": 1048576
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": "unlimited"
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 30952,
+      "hard": 30952
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "linux-vdso.so.1",
+    "/usr/lib/libz.so.1",
+    "/usr/lib/libuv.so.1",
+    "/usr/lib/libcares.so.2",
+    "/usr/lib/libnghttp2.so.14",
+    "/usr/lib/libcrypto.so.1.1",
+    "/usr/lib/libssl.so.1.1",
+    "/usr/lib/libicui18n.so.64",
+    "/usr/lib/libicuuc.so.64",
+    "/usr/lib/libdl.so.2",
+    "/usr/lib/librt.so.1",
+    "/usr/lib/libstdc++.so.6",
+    "/usr/lib/libm.so.6",
+    "/usr/lib/libgcc_s.so.1",
+    "/usr/lib/libpthread.so.0",
+    "/usr/lib/libc.so.6",
+    "/usr/lib/libnsl.so.2",
+    "/usr/lib/libicudata.so.64",
+    "/lib64/ld-linux-x86-64.so.2",
+    "/usr/lib/libtirpc.so.3",
+    "/usr/lib/libgssapi_krb5.so.2",
+    "/usr/lib/libkrb5.so.3",
+    "/usr/lib/libk5crypto.so.3",
+    "/usr/lib/libcom_err.so.2",
+    "/usr/lib/libkrb5support.so.0",
+    "/usr/lib/libkeyutils.so.1",
+    "/usr/lib/libresolv.so.2"
+  ]
+}
