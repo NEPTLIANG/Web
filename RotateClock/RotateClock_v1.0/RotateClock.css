@@ -1,0 +1,87 @@
+body {
+    background: #000f1f;
+    color: #00ffff;
+    text-shadow: rgba(0, 255, 255, 50) 0 0 1em;
+    font-size: 32px;
+}
+
+.father {
+    position: absolute;
+    top: 600px;
+    left: 1600px;
+}
+
+#wheelOfSeconds {
+    /*top: 400px;*/
+    left: 1024px;
+    position: absolute;
+    /*font-size: 32px;*/
+    display: inline;
+    /* transform: rotate(360deg); */
+    /* transform: skew(30deg, -10deg); */
+    transform-origin: -1024px;
+    animation: rotate 60s infinite linear;
+}
+
+#wheelOfMinutes {
+    /*top: 400px;*/
+    left: 768px;
+    position: absolute;
+    /*font-size: 32px;*/
+    display: inline;
+    /* transform: rotate(360deg); */
+    /* transform: skew(30deg, -10deg); */
+    transform-origin: -768px;
+    animation: rotate 3600s infinite linear;
+}
+
+#wheelOfHours {
+    /*top: 400px;*/
+    left: 512px;
+    position: absolute;
+    /*font-size: 32px;*/
+    display: inline;
+    /* transform: rotate(360deg); */
+    /* transform: skew(30deg, -10deg); */
+    transform-origin: -512px;
+    animation: rotate 86400s infinite linear;
+}
+
+#time {
+    font-size: 128px;
+    position: relative;
+    left: -50%;
+    top: 128px;
+}
+
+#date {
+    font-size: 48px;
+    position: relative;
+    left: -50%;
+    top: 128px;
+    text-align: center;
+}
+
+.seconds {
+    transform-origin: -1024px;
+    position: fixed;
+    width: 256px;
+}
+
+.minutes {
+    transform-origin: -768px;
+    position: fixed;
+    width: 256px;
+}
+
+.hours {
+    transform-origin: -512px;
+    position: fixed;
+    width: 256px;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(-360deg);
+    }
+}
