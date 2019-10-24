@@ -1,5 +1,4 @@
 body {
-    /*background: #000f1f;*/
     background: #000;
     color: #00ffff;
     text-shadow: rgba(0, 255, 255, 50) 0 0 1em;
@@ -21,7 +20,7 @@ body {
     /* transform: rotate(360deg); */
     /* transform: skew(30deg, -10deg); */
     transform-origin: -1024px;
-    animation: rotate 60s infinite linear;
+    /*animation: rotate 60s infinite linear;*/
 }
 
 #wheelOfMinutes {

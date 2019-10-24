@@ -108,3 +108,7 @@ function changeStyle() {
 }
 
 setInterval(changeStyle, 100);
+
+function mouse() {
+    // var x =
+}

@@ -24,7 +24,7 @@ for (i = 0; i < 60; i++) {
     // minutes.innerHTML = "第" + i.toString() + "秒";
     if (i === 0) {
         seconds[i].innerHTML = "整";
-        minutes[i].innerHTML = "零分";
+        minutes[i].innerHTML = "";
     }
     if (i > 0 && i <= 10) {
         seconds[i].innerHTML = "零" + num[i] + "秒";
@@ -96,15 +96,34 @@ function changeStyle() {
     hours[(hour + 24 - 1) % 24].style.color = "#0ff";
     hours[(hour + 24 - 1) % 24].style.color = "rgba(0, 255, 255, 50) 0 0 1em";
     minutes[minute].style.color = "#fff";
-    minutes[minute].style.textShadow = "rgba(255, 255, 255, 100) 0 0 1em";
+    minutes[minute].style.textShadow = "rgba(255, 255, 255, 50) 0 0 1em";
     minutes[(minute + 60 - 1) % 60].style.color = "#0ff";
     minutes[(minute + 60 - 1) % 60].style.color = "rgba(0, 255, 255, 50) 0 0 1em";
-    seconds[second].style.color = "#fff";
-    seconds[second].style.textShadow = "rgba(255, 255, 255, 50) 0 0 1em";
-    // seconds[second].style.fontSize = "48px";
+    seconds[(second + 60 + 0) % 60].style.color = "#fff";
+    seconds[(second + 60 + 0) % 60].style.textShadow = "rgba(255, 255, 255, 50) 0 0 1em";
     seconds[(second + 60 - 1) % 60].style.color = "#0ff";
     seconds[(second + 60 - 1) % 60].style.color = "rgba(0, 255, 255, 50) 0 0 1em";
-    // seconds[(second + 60 - 1) % 60].style.fontSize = "32px";
 }
 
-setInterval(changeStyle, 100);
+// function rotateWheel();
+
+setInterval(changeStyle, 10);
+var t = 0, s = 0, step = 1;
+setInterval(function () {
+    wheelOfSeconds.style.transform = "rotate(-" + ((s * 6) / 50) + "deg)";
+    if (t < 50) {
+        s++;
+    }
+    t = (t + 1) % 100;
+    // s += (1 / 2) * 5 * t * t;
+    // wheelOfSeconds.style.transform = "rotate(-" + (s * 6) / 1000 + "deg)";
+    // t = 0;
+    // if (t <= 0) {
+    //     step = 1;
+    // }
+    // if (t >= 10) {
+    //     step = -1;
+    // }
+    // t += step;
+    console.log(t + " " + s);
+}, 10);
