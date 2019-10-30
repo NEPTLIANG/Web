@@ -3,6 +3,7 @@
  * @return {number}
  */
 var balancedStringSplit = function (s) {
+    //第158场力扣周赛——1221. 分割平衡字符串——UnAc
     //Test case: LLLLRRLLRRLLRRRR
     var numOfRequirementR = 0;
     var numOfRequirementL = 0;
@@ -13,13 +14,13 @@ var balancedStringSplit = function (s) {
     var result = 0;
     for (var indexOfChar in s) {
         // if (s[indexOfChar] === "R" && !numOfRequirementR) {
-        if (s[indexOfChar] === "R" && ) {
+        if (s[indexOfChar] === "R" &&) {
             numOfRequirementL++;
             // isCounting = false;
             // numOfRequirement = 0;
         }
         // if (s[indexOfChar] === "L" && numOfRequirementL) {
-        if (s[indexOfChar] === "L" && ) {
+        if (s[indexOfChar] === "L" &&) {
             numOfRequirementL--;
             if (!numOfRequirementL) {
                 result++;

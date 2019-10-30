@@ -7,7 +7,7 @@ class Solution
      * @param String[] $folder
      * @return String[]
      */
-    function removeSubfolders($folder)
+    function removeSubfolders($folder)  //第159场力扣周赛第2题——1233. 删除子文件夹——UnAc
     {
 //        eval($folder);  //注意参数是字符串数组而不是字符串啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊傻逼
         for ($indexOfItem = 0; $indexOfItem < sizeof($folder); $indexOfItem++) {  //sizeof返回数组长度

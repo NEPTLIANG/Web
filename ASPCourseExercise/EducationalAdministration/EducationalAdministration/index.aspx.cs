@@ -14,8 +14,8 @@ namespace EducationalAdministration
 
         protected void login_Click(object sender, EventArgs e)
         {
-            string username = id.Text;
-            string password = pwd.Text;
+            string username = txtId.Text;
+            string password = txtPwd.Text;
             if (username != null && password != null)
             {
                 string cmdsql = "SELECT * " +
@@ -29,15 +29,23 @@ namespace EducationalAdministration
                     {
                         if (password == myRead["adminPwd"].ToString())
                         {
-                            Response.Write("OK");
+                            Response.Redirect("AdminModule/Admin.aspx");
                         }
                         else
                         {
-                            Response.Write("Wrong");
+                            Response.Write("<script>alert('密码错误')</script>");
                         }
                     }
                     myRead.Close();
                 }
+                else
+                {
+                    Response.Write("<script>alert('未找到用户')</script>");
+                }
+            }
+            else
+            {
+                Response.Write("<script>alert('请输入账户名和密码')</script>");
             }
         }
     }

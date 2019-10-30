@@ -3,8 +3,9 @@
  * @return {number[][]}
  */
 var minimumAbsDifference = function (arr) {
+    //第155场力扣周赛第1题——1200. 最小绝对差——UnAc
     arr.sort(cmp);
-    var coupleArray = new Array();
+    var coupleArray = [];
     for (var row = 0; row < arr.length; row++) {
         for (var col = row; col < arr.length; col++) {
             var newCouple = new Couple(arr[row], arr[col]);
@@ -12,10 +13,10 @@ var minimumAbsDifference = function (arr) {
         }
     }
     coupleArray.sort(cmpByDiff);
-    var resultArray = new Array();
+    var resultArray = [];
     var couple = new Array(coupleArray[0].left, coupleArray[0].right);
     resultArray.push(couple);
-    for (var indexOfCouple = 1; coupleArray[indexOfCouple].different == coupleArray[indexOfCouple - 1].different; indexOfCouple++) {
+    for (var indexOfCouple = 1; coupleArray[indexOfCouple].different === coupleArray[indexOfCouple - 1].different; indexOfCouple++) {
         var couple = new Array(coupleArray[indexOfCouple].left, coupleArray[indexOfCouple].right);
         resultArray.push(couple);
     }

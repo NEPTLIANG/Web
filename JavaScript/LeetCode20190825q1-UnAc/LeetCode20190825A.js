@@ -3,6 +3,7 @@
  * @return {string[]}
  */
 var invalidTransactions = function (transactions) {
+    //第151场力扣周赛第1题——1169. 查询无效交易——UnAc
     eval(transactions);
     var tranArray = [];
     for (var i = 0; i < transactions.length; i++) {

@@ -7,7 +7,7 @@ class Solution
      * @param Integer[][] $coordinates
      * @return Boolean
      */
-    function checkStraightLine($coordinates)
+    function checkStraightLine($coordinates)  //第159场力扣周赛第1题——1232. 缀点成线——Accepted
     {
         $k1 = ($coordinates[0][1] - $coordinates[1][1]) / ($coordinates[0][0] - $coordinates[1][0]);
         $b1 = $coordinates[0][1] - $k1 * $coordinates[0][0];

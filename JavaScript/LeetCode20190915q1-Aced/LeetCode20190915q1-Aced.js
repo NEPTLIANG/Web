@@ -3,6 +3,7 @@
  * @return {number}
  */
 var maxNumberOfBalloons = function (text) {
+    //第154场力扣周赛第1题——1189. “气球” 的最大数量——Accepted
     var text2 = text;
     var targetStr = "balloon";
     var result = text2.split(targetStr.charAt(0)).length - 1;
@@ -10,7 +11,7 @@ var maxNumberOfBalloons = function (text) {
         // text2 = text;
         var thisLetter = targetStr.charAt(indexOfTargetLetter);
         var thisLetterSum = text2.split(thisLetter).length - 1;
-        if (thisLetter == 'l' || thisLetter == 'o') {
+        if (thisLetter === 'l' || thisLetter === 'o') {
             thisLetterSum = Math.floor(thisLetterSum / 2);
         }
         if (thisLetterSum < result) {
@@ -23,6 +24,6 @@ var maxNumberOfBalloons = function (text) {
                 }*/
     }
     return result;
-}
+};
 
 console.log(maxNumberOfBalloons("leetcode"));
