@@ -10,7 +10,7 @@
 namespace EducationalAdministration.AdminModule.CoursesAdmin {
     
     
-    public partial class AddCourses {
+    public partial class AltCourses {
         
         /// <summary>
         /// form1 控件。
@@ -22,13 +22,40 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Label1 控件。
+        /// ddlCourse 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCourse;
+        
+        /// <summary>
+        /// SqlDataSource1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
+        
+        /// <summary>
+        /// btnSelect 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSelect;
+        
+        /// <summary>
+        /// lblCno 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCno;
         
         /// <summary>
         /// txtCno 控件。
@@ -40,6 +67,15 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin {
         protected global::System.Web.UI.WebControls.TextBox txtCno;
         
         /// <summary>
+        /// lblCname 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCname;
+        
+        /// <summary>
         /// txtCname 控件。
         /// </summary>
         /// <remarks>
@@ -47,6 +83,15 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCname;
+        
+        /// <summary>
+        /// lblPcno 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPcno;
         
         /// <summary>
         /// ddlPcno 控件。
@@ -58,13 +103,13 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin {
         protected global::System.Web.UI.WebControls.DropDownList ddlPcno;
         
         /// <summary>
-        /// SqlDataSource2 控件。
+        /// lblTno 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
+        protected global::System.Web.UI.WebControls.Label lblTno;
         
         /// <summary>
         /// ddlTno 控件。
@@ -76,13 +121,13 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin {
         protected global::System.Web.UI.WebControls.DropDownList ddlTno;
         
         /// <summary>
-        /// SqlDataSourceTeacher1 控件。
+        /// SelectTeacher 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceTeacher1;
+        protected global::System.Web.UI.WebControls.SqlDataSource SelectTeacher;
         
         /// <summary>
         /// btnSubmit 控件。
@@ -92,14 +137,5 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSubmit;
-        
-        /// <summary>
-        /// btnClean 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClean;
     }
 }

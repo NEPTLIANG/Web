@@ -24,7 +24,8 @@
         </asp:DropDownList>
         <asp:SqlDataSource ID="SqlDataSourceTeacher1" runat="server" ConnectionString="Data Source=localhost;Initial Catalog=EducationalAdministration;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [tno], [tname] FROM [teacher]"></asp:SqlDataSource>
         <br />
-        <asp:Button ID="btnSubmit" runat="server" Text="提交" />
+        <asp:Button ID="btnSubmit" runat="server" Text="添加" OnClick="btnSubmit_Click" />
+        <asp:Button ID="btnClean" runat="server" OnClick="btnClean_Click" Text="清空" />
     </form>
 </body>
 </html>

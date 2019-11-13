@@ -33,19 +33,19 @@ namespace EducationalAdministration
                         }
                         else
                         {
-                            Response.Write("<script>alert('密码错误')</script>");
+                            Response.Write("<script>alert(\"密码错误\")</script>");
                         }
                     }
                     myRead.Close();
                 }
                 else
                 {
-                    Response.Write("<script>alert('未找到用户')</script>");
+                    Response.Write("<script>alert(\"未找到用户\")</script>");
                 }
             }
             else
             {
-                Response.Write("<script>alert('请输入账户名和密码')</script>");
+                Response.Write("<script>alert(\"请输入账户名和密码\")</script>");
             }
         }
     }
