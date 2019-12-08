@@ -11,14 +11,17 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["identity"] == null || Session["identity"].ToString() != "admin")
+            {
+                Response.Redirect("../../404.aspx");
+            }
         }
 
         protected void btnDel_Click(object sender, EventArgs e)
         {
-            string dno = ddlDno.SelectedValue;
+            string no = ddlDno.SelectedValue;
             string sqlCom = "DELETE FROM department " +
-                "WHERE dno = '" + dno + "'; ";
+                "WHERE no = '" + no + "'; ";
             OperateDataBase operate = new OperateDataBase();
             if (operate.ExceSql(sqlCom))
             {

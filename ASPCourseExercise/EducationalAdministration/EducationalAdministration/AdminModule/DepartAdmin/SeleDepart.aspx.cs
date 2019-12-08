@@ -7,6 +7,10 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["identity"] == null || Session["identity"].ToString() != "admin")
+            {
+                Response.Redirect("../../404.aspx");
+            }
             /*lblDno.Text = ddlDepart.SelectedValue;
             txtDno.Text = lblDno.Text;
             lblDname.Text = ddlDepart.Text;
@@ -21,14 +25,14 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
             lblDname.Text = ddlDepart.Text;
             string cmdsql = "SELECT * " +
                 "FROM department " +
-                "WHERE dno='" + ddlDepart.SelectedValue + "';";
+                "WHERE no='" + ddlDepart.SelectedValue + "';";
             OperateDataBase odb = new OperateDataBase();
             SqlDataReader myRead = odb.ExceRead(cmdsql);
             if (myRead.HasRows)
             {
                 while (myRead.Read())
                 {
-                    lblDname.Text = myRead["dname"].ToString();
+                    lblDname.Text = myRead["name"].ToString();
                 }
                 myRead.Close();
             }
@@ -41,24 +45,17 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
         protected void btnSelect_Click(object sender, EventArgs e)
         {
             lblDno.Text = ddlDepart.SelectedValue;
-            string cmdsql = "SELECT * " +
-                "FROM department " +
-                "WHERE dno='" + ddlDepart.SelectedValue + "';";
+            string cmdsql = "SELECT d.*, t.tname " +
+                "FROM department d, teacher t " +
+                "WHERE d.no='" + ddlDepart.SelectedValue + "' AND d.dean=t.tno;";
             OperateDataBase odb = new OperateDataBase();
             SqlDataReader myRead = odb.ExceRead(cmdsql);
             if (myRead.HasRows)
             {
                 while (myRead.Read())
                 {
-                    lblDname.Text = myRead["dname"].ToString();
-                    if (myRead["dean"].ToString() != "        ")
-                    {
-                        lblDean.Text = myRead["dean"].ToString();
-                    }
-                    else
-                    {
-                        lblDean.Text = "无";
-                    }
+                    lblDname.Text = myRead["name"].ToString();
+                    lblDean.Text = myRead["tname"].ToString();
                 }
                 myRead.Close();
             }

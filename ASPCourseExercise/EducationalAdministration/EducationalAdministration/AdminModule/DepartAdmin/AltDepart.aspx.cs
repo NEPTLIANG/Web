@@ -7,6 +7,10 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["identity"] == null || Session["identity"].ToString() != "admin")
+            {
+                Response.Redirect("../../404.aspx");
+            }
             /*lblDno.Text = ddlCourse.SelectedValue;
             txtDno.Text = lblDno.Text;
             lblDname.Text = ddlCourse.Text;
@@ -17,25 +21,25 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            string dno = txtDno.Text;
-            string dname = txtDname.Text;
+            string no = txtDno.Text;
+            string name = txtDname.Text;
             string dean = ddlDean.SelectedValue;
-            if (dno.Length != 3 || dname.Length > 20 || dean.Length != 4)
+            if (no.Length != 3 || name.Length > 20 || dean.Length != 4)
             {
                 Response.Write("<script>alert('请输入正确的信息');</script>");
             }
             else
             {
-                string sqlCom = "UPDATE department SET dno = '" + txtDno.Text + "', dname = '" + txtDname.Text + "', dean = '" + ddlDean.SelectedValue + "' WHERE dno = '" + ddlDepart.SelectedValue + "'; ";
+                string sqlCom = "UPDATE department SET no = '" + txtDno.Text + "', name = '" + txtDname.Text + "', dean = '" + ddlDean.SelectedValue + "' WHERE no = '" + ddlDepart.SelectedValue + "'; ";
                 OperateDataBase operate = new OperateDataBase();
                 if (operate.ExceSql(sqlCom))
                 {
-                    Response.Write("<sCrIpT>alert(\"部门" + dname + "添加成功\");</script>");
+                    Response.Write("<sCrIpT>alert(\"部门" + name + "添加成功\");</script>");
                     Response.Redirect(".\\AltDepart.aspx");
                 }
                 else
                 {
-                    Response.Write("<sCrIpT>alert(\"部门" + dname + "添加失败\");</script>");
+                    Response.Write("<sCrIpT>alert(\"部门" + name + "添加失败\");</script>");
                 }
             }
         }
@@ -49,14 +53,14 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
             lblDean.Text = ddlDean.Text;
             string cmdsql = "SELECT * " +
                 "FROM department " +
-                "WHERE dno='" + ddlDepart.SelectedValue + "';";
+                "WHERE no='" + ddlDepart.SelectedValue + "';";
             OperateDataBase odb = new OperateDataBase();
             SqlDataReader myRead = odb.ExceRead(cmdsql);
             if (myRead.HasRows)
             {
                 while (myRead.Read())
                 {
-                    lblDname.Text = myRead["dname"].ToString();
+                    lblDname.Text = myRead["name"].ToString();
                     txtDname.Text = lblDname.Text;
                 }
                 myRead.Close();
@@ -72,26 +76,19 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
             lblDno.Text = ddlDepart.SelectedValue;
             txtDno.Text = lblDno.Text;
             lblDean.Text = ddlDean.Text;
-            string cmdsql = "SELECT * " +
-                "FROM department " +
-                "WHERE dno='" + ddlDepart.SelectedValue + "';";
+            string cmdsql = "SELECT d.*, t.tname " +
+                "FROM department d, teacher t " +
+                "WHERE d.no='" + ddlDepart.SelectedValue + "' AND d.dean=t.tno;";
             OperateDataBase odb = new OperateDataBase();
             SqlDataReader myRead = odb.ExceRead(cmdsql);
             if (myRead.HasRows)
             {
                 while (myRead.Read())
                 {
-                    lblDname.Text = myRead["dname"].ToString();
+                    lblDname.Text = myRead["name"].ToString();
                     txtDname.Text = lblDname.Text;
-                    if (myRead["dean"].ToString() != "        ")
-                    {
-                        ddlDean.SelectedValue = myRead["dean"].ToString();
-                        lblDean.Text = ddlDean.Text;
-                    }
-                    else
-                    {
-                        lblDean.Text = "无";
-                    }
+                    ddlDean.SelectedValue = myRead["dean"].ToString();
+                    lblDean.Text = myRead["tname"].ToString();
                 }
                 myRead.Close();
             }

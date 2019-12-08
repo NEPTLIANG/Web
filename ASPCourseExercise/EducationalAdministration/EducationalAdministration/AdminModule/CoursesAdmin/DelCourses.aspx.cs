@@ -11,7 +11,10 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["identity"] == null || Session["identity"].ToString() != "admin")
+            {
+                Response.Redirect("../../404.aspx");
+            }
         }
 
         protected void btnDel_Click(object sender, EventArgs e)

@@ -16,31 +16,92 @@ namespace EducationalAdministration
         {
             string username = txtId.Text;
             string password = txtPwd.Text;
-            if (username != null && password != null)
+            if (username != "" && password != "")
             {
-                string cmdsql = "SELECT * " +
-                    "FROM admin " +
-                    "WHERE adminID='" + username + "'";
-                OperateDataBase odb = new OperateDataBase();
-                SqlDataReader myRead = odb.ExceRead(cmdsql);
-                if (myRead.HasRows)
+                if (rdlIdentity.SelectedValue == "Admin")
                 {
-                    while (myRead.Read())
+                    string cmdsql = "SELECT adminPwd " +
+                        "FROM admin " +
+                        "WHERE adminID='" + username + "'";
+                    OperateDataBase odb = new OperateDataBase();
+                    SqlDataReader myRead = odb.ExceRead(cmdsql);
+                    if (myRead.HasRows)
                     {
-                        if (password == myRead["adminPwd"].ToString())
+                        while (myRead.Read())
                         {
-                            Response.Redirect("AdminModule/Admin.aspx");
+                            if (password == myRead["adminPwd"].ToString())
+                            {
+                                Session.Add("identity", "admin");
+                                Session.Add("id", username);
+                                Response.Redirect("AdminModule/Admin.aspx");
+                            }
+                            else
+                            {
+                                Response.Write("<script>alert(\"密码错误\")</script>");
+                            }
                         }
-                        else
-                        {
-                            Response.Write("<script>alert(\"密码错误\")</script>");
-                        }
+                        myRead.Close();
                     }
-                    myRead.Close();
+                    else
+                    {
+                        Response.Write("<script>alert(\"未找到用户\")</script>");
+                    }
                 }
-                else
+                if (rdlIdentity.SelectedValue == "Teacher")
                 {
-                    Response.Write("<script>alert(\"未找到用户\")</script>");
+                    string cmdsql = "SELECT tpwd FROM teacher " +
+                        "WHERE tno='" + username + "';";
+                    OperateDataBase odb = new OperateDataBase();
+                    SqlDataReader myRead = odb.ExceRead(cmdsql);
+                    if (myRead.HasRows)
+                    {
+                        while (myRead.Read())
+                        {
+                            if (password == myRead["tpwd"].ToString())
+                            {
+                                Session.Add("identity", "teacher");
+                                Session.Add("id", username);
+                                Response.Redirect("TeacherModule/Teacher.aspx");
+                            }
+                            else
+                            {
+                                Response.Write("<script>alert(\"密码错误\")</script>");
+                            }
+                        }
+                        myRead.Close();
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert(\"未找到用户\")</script>");
+                    }
+                }
+                if (rdlIdentity.SelectedValue == "Student")
+                {
+                    string cmdsql = "SELECT spwd FROM student " +
+                        "WHERE sno='" + username + "';";
+                    OperateDataBase odb = new OperateDataBase();
+                    SqlDataReader myRead = odb.ExceRead(cmdsql);
+                    if (myRead.HasRows)
+                    {
+                        while (myRead.Read())
+                        {
+                            if (password == myRead["spwd"].ToString())
+                            {
+                                Session.Add("identity", "student");
+                                Session.Add("id", username);
+                                Response.Redirect("StudentModule/Student.aspx");
+                            }
+                            else
+                            {
+                                Response.Write("<script>alert(\"密码错误\")</script>");
+                            }
+                        }
+                        myRead.Close();
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert(\"未找到用户\")</script>");
+                    }
                 }
             }
             else

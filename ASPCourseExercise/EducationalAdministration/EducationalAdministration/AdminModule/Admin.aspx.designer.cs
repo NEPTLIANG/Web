@@ -7,10 +7,10 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace EducationalAdministration {
+namespace EducationalAdministration.AdminModule {
     
     
-    public partial class Home {
+    public partial class Admin {
         
         /// <summary>
         /// form1 控件。

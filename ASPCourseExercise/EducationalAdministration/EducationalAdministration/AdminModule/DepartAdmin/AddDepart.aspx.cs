@@ -11,30 +11,33 @@ namespace EducationalAdministration.AdminModule.DepartAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["identity"] == null || Session["identity"].ToString() != "admin")
+            {
+                Response.Redirect("../../404.aspx");
+            }
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            string dno = txtDno.Text;
-            string dname = txtDname.Text;
+            string no = txtDno.Text;
+            string name = txtDname.Text;
             string dean = ddlDean.SelectedValue;
-            if (dno.Length != 3 || dname.Length > 20 || dean.Length != 4)
+            if (no.Length != 3 || name.Length > 20 || dean.Length != 4)
             {
                 Response.Write("<script>alert('请输入正确的信息');</script>");
             }
             else
             {
-                string sqlCom = "INSERT INTO department(dno, dname, dean) " +
-                    "VALUES('" + dno + "', '" + dname + "', '" + dean + "'); ";
+                string sqlCom = "INSERT INTO department(no, name, dean) " +
+                    "VALUES('" + no + "', '" + name + "', '" + dean + "'); ";
                 OperateDataBase operate = new OperateDataBase();
                 if (operate.ExceSql(sqlCom))
                 {
-                    Response.Write("<sCrIpT>alert(\"部门" + dname + "添加成功\");</script>");
+                    Response.Write("<sCrIpT>alert(\"部门" + name + "添加成功\");</script>");
                 }
                 else
                 {
-                    Response.Write("<sCrIpT>alert(\"部门" + dname + "添加失败\");</script>");
+                    Response.Write("<sCrIpT>alert(\"部门" + name + "添加失败\");</script>");
                 }
             }
         }

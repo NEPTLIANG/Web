@@ -1,0 +1,32 @@
+﻿body {
+    font-family: 'PingFang SC', 'Microsoft YaHei UI', 'Roboto', Hack, 'Source Code Pro';
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+#Menu1 {
+    margin: 0 20%;
+}
+
+#Menu1 li {
+    background-color: #ffffff;
+    padding: 16px 128px;
+    margin: 8px 0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+#Menu1 li:hover {
+    background-color: #efefef;
+}
+
+#Menu1 a {
+    background-image: none;
+}
+
+.head {
+    margin: 128px 20%;
+}

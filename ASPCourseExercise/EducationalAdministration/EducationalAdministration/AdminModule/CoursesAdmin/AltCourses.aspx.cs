@@ -7,6 +7,10 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["identity"] == null || Session["identity"].ToString() != "admin")
+            {
+                Response.Redirect("../../404.aspx");
+            }
             /*lblCno.Text = ddlCourse.SelectedValue;
             txtCno.Text = lblCno.Text;
             lblCname.Text = ddlCourse.Text;
@@ -75,9 +79,9 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin
             txtCno.Text = lblCno.Text;
             lblPcno.Text = ddlPcno.Text;
             lblTno.Text = ddlTno.Text;
-            string cmdsql = "SELECT * " +
-                "FROM course " +
-                "WHERE cno='" + ddlCourse.SelectedValue + "';";
+            string cmdsql = "SELECT c1.*, c2.cname AS pcname, t.tname " +
+                "FROM course c1 LEFT JOIN course c2 ON c1.pcno=c2.cno , teacher t " +
+                "WHERE t.tno=c1.tno and c1.cno='" + ddlCourse.SelectedValue + "';";
             OperateDataBase odb = new OperateDataBase();
             SqlDataReader myRead = odb.ExceRead(cmdsql);
             if (myRead.HasRows)
@@ -86,17 +90,17 @@ namespace EducationalAdministration.AdminModule.CoursesAdmin
                 {
                     lblCname.Text = myRead["cname"].ToString();
                     txtCname.Text = lblCname.Text;
-                    if (myRead["pcno"].ToString() != "        ")
+                    if (myRead["pcname"].ToString() != "")
                     {
                         ddlPcno.SelectedValue = myRead["pcno"].ToString();
-                        lblPcno.Text = ddlPcno.Text;
+                        lblPcno.Text = myRead["pcname"].ToString();
                     }
                     else
                     {
                         lblPcno.Text = "无";
                     }
                     ddlTno.SelectedValue = myRead["tno"].ToString();
-                    lblTno.Text = ddlTno.Text;
+                    lblTno.Text = myRead["tname"].ToString();
                 }
                 myRead.Close();
             }

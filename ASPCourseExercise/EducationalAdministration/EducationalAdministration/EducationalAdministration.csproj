@@ -105,7 +105,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.aspx" />
     <Content Include="About.aspx" />
+    <Content Include="AdminModule\Style\Admin.css" />
+    <Content Include="AdminModule\Style\SubCSS.css" />
+    <Content Include="StudentModule\Student.aspx" />
+    <Content Include="StudentModule\CoursesAdmin\SeleCourses.aspx" />
+    <Content Include="StudentModule\DepartAdmin\SeleDepart.aspx" />
+    <Content Include="StudentModule\ScoreAdmin\AddScore.aspx" />
+    <Content Include="StudentModule\ScoreAdmin\SeleScore.aspx" />
+    <Content Include="StudentModule\StudentAdmin\AltStudent.aspx" />
+    <Content Include="StudentModule\StudentAdmin\SeleStudent.aspx" />
+    <Content Include="StudentModule\Style\Student.css" />
+    <Content Include="StudentModule\Style\SubCSS.css" />
+    <Content Include="StudentModule\TeacherAdmin\SeleTeacher.aspx" />
+    <Content Include="AdminModule\Admin.aspx" />
+    <Content Include="TeacherModule\Style\Teacher.css" />
+    <Content Include="TeacherModule\Style\SubCSS.css" />
+    <Content Include="TeacherModule\Teacher.aspx" />
+    <Content Include="TeacherModule\CoursesAdmin\SeleCourses.aspx" />
+    <Content Include="TeacherModule\DepartAdmin\SeleDepart.aspx" />
+    <Content Include="TeacherModule\ScoreAdmin\AddScore.aspx" />
+    <Content Include="TeacherModule\ScoreAdmin\SeleScore.aspx" />
+    <Content Include="TeacherModule\StudentAdmin\SeleStudent.aspx" />
+    <Content Include="TeacherModule\TeacherAdmin\AltTeacher.aspx" />
+    <Content Include="TeacherModule\TeacherAdmin\SeleTeacher.aspx" />
+    <Content Include="AdminModule\AdminAdmin\AddAdmin.aspx" />
+    <Content Include="AdminModule\AdminAdmin\AltAdmin.aspx" />
+    <Content Include="AdminModule\AdminAdmin\DelAdmin.aspx" />
+    <Content Include="AdminModule\TeacherAdmin\AddTeacher.aspx" />
+    <Content Include="AdminModule\TeacherAdmin\AltTeacher.aspx" />
+    <Content Include="AdminModule\TeacherAdmin\DelTeacher.aspx" />
+    <Content Include="AdminModule\TeacherAdmin\SeleTeacher.aspx" />
+    <Content Include="AdminModule\StudentAdmin\AddStudent.aspx" />
+    <Content Include="AdminModule\StudentAdmin\AltStudent.aspx" />
+    <Content Include="AdminModule\StudentAdmin\DelStudent.aspx" />
+    <Content Include="AdminModule\StudentAdmin\SeleStudent.aspx" />
+    <Content Include="AdminModule\ScoreAdmin\AddScore.aspx" />
+    <Content Include="AdminModule\ScoreAdmin\AltScore.aspx" />
+    <Content Include="AdminModule\ScoreAdmin\DelScore.aspx" />
+    <Content Include="AdminModule\ScoreAdmin\SeleScore.aspx" />
     <Content Include="AdminModule\DepartAdmin\AddDepart.aspx" />
     <Content Include="AdminModule\DepartAdmin\AltDepart.aspx" />
     <Content Include="AdminModule\DepartAdmin\SeleDepart.aspx" />
@@ -133,7 +172,6 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="AdminModule\Admin.aspx" />
     <Content Include="index.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -170,6 +208,237 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentModule\Student.aspx.cs">
+      <DependentUpon>Student.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentModule\Student.aspx.designer.cs">
+      <DependentUpon>Student.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentModule\CoursesAdmin\SeleCourses.aspx.cs">
+      <DependentUpon>SeleCourses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentModule\CoursesAdmin\SeleCourses.aspx.designer.cs">
+      <DependentUpon>SeleCourses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentModule\DepartAdmin\SeleDepart.aspx.cs">
+      <DependentUpon>SeleDepart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentModule\DepartAdmin\SeleDepart.aspx.designer.cs">
+      <DependentUpon>SeleDepart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentModule\ScoreAdmin\AddScore.aspx.cs">
+      <DependentUpon>AddScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentModule\ScoreAdmin\AddScore.aspx.designer.cs">
+      <DependentUpon>AddScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentModule\ScoreAdmin\SeleScore.aspx.cs">
+      <DependentUpon>SeleScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentModule\ScoreAdmin\SeleScore.aspx.designer.cs">
+      <DependentUpon>SeleScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentModule\StudentAdmin\AltStudent.aspx.cs">
+      <DependentUpon>AltStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentModule\StudentAdmin\AltStudent.aspx.designer.cs">
+      <DependentUpon>AltStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentModule\StudentAdmin\SeleStudent.aspx.cs">
+      <DependentUpon>SeleStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentModule\StudentAdmin\SeleStudent.aspx.designer.cs">
+      <DependentUpon>SeleStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentModule\TeacherAdmin\SeleTeacher.aspx.cs">
+      <DependentUpon>SeleTeacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentModule\TeacherAdmin\SeleTeacher.aspx.designer.cs">
+      <DependentUpon>SeleTeacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherModule\Teacher.aspx.cs">
+      <DependentUpon>Teacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeacherModule\Teacher.aspx.designer.cs">
+      <DependentUpon>Teacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherModule\CoursesAdmin\SeleCourses.aspx.cs">
+      <DependentUpon>SeleCourses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeacherModule\CoursesAdmin\SeleCourses.aspx.designer.cs">
+      <DependentUpon>SeleCourses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherModule\DepartAdmin\SeleDepart.aspx.cs">
+      <DependentUpon>SeleDepart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeacherModule\DepartAdmin\SeleDepart.aspx.designer.cs">
+      <DependentUpon>SeleDepart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherModule\ScoreAdmin\AddScore.aspx.cs">
+      <DependentUpon>AddScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeacherModule\ScoreAdmin\AddScore.aspx.designer.cs">
+      <DependentUpon>AddScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherModule\ScoreAdmin\SeleScore.aspx.cs">
+      <DependentUpon>SeleScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeacherModule\ScoreAdmin\SeleScore.aspx.designer.cs">
+      <DependentUpon>SeleScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherModule\StudentAdmin\SeleStudent.aspx.cs">
+      <DependentUpon>SeleStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeacherModule\StudentAdmin\SeleStudent.aspx.designer.cs">
+      <DependentUpon>SeleStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherModule\TeacherAdmin\AltTeacher.aspx.cs">
+      <DependentUpon>AltTeacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeacherModule\TeacherAdmin\AltTeacher.aspx.designer.cs">
+      <DependentUpon>AltTeacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherModule\TeacherAdmin\SeleTeacher.aspx.cs">
+      <DependentUpon>SeleTeacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeacherModule\TeacherAdmin\SeleTeacher.aspx.designer.cs">
+      <DependentUpon>SeleTeacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\AdminAdmin\AddAdmin.aspx.cs">
+      <DependentUpon>AddAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\AdminAdmin\AddAdmin.aspx.designer.cs">
+      <DependentUpon>AddAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\AdminAdmin\AltAdmin.aspx.cs">
+      <DependentUpon>AltAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\AdminAdmin\AltAdmin.aspx.designer.cs">
+      <DependentUpon>AltAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\AdminAdmin\DelAdmin.aspx.cs">
+      <DependentUpon>DelAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\AdminAdmin\DelAdmin.aspx.designer.cs">
+      <DependentUpon>DelAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\TeacherAdmin\AddTeacher.aspx.cs">
+      <DependentUpon>AddTeacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\TeacherAdmin\AddTeacher.aspx.designer.cs">
+      <DependentUpon>AddTeacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\TeacherAdmin\AltTeacher.aspx.cs">
+      <DependentUpon>AltTeacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\TeacherAdmin\AltTeacher.aspx.designer.cs">
+      <DependentUpon>AltTeacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\TeacherAdmin\DelTeacher.aspx.cs">
+      <DependentUpon>DelTeacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\TeacherAdmin\DelTeacher.aspx.designer.cs">
+      <DependentUpon>DelTeacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\TeacherAdmin\SeleTeacher.aspx.cs">
+      <DependentUpon>SeleTeacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\TeacherAdmin\SeleTeacher.aspx.designer.cs">
+      <DependentUpon>SeleTeacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\StudentAdmin\AddStudent.aspx.cs">
+      <DependentUpon>AddStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\StudentAdmin\AddStudent.aspx.designer.cs">
+      <DependentUpon>AddStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\StudentAdmin\AltStudent.aspx.cs">
+      <DependentUpon>AltStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\StudentAdmin\AltStudent.aspx.designer.cs">
+      <DependentUpon>AltStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\StudentAdmin\DelStudent.aspx.cs">
+      <DependentUpon>DelStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\StudentAdmin\DelStudent.aspx.designer.cs">
+      <DependentUpon>DelStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\StudentAdmin\SeleStudent.aspx.cs">
+      <DependentUpon>SeleStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\StudentAdmin\SeleStudent.aspx.designer.cs">
+      <DependentUpon>SeleStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\ScoreAdmin\AddScore.aspx.cs">
+      <DependentUpon>AddScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\ScoreAdmin\AddScore.aspx.designer.cs">
+      <DependentUpon>AddScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\ScoreAdmin\AltScore.aspx.cs">
+      <DependentUpon>AltScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\ScoreAdmin\AltScore.aspx.designer.cs">
+      <DependentUpon>AltScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\ScoreAdmin\DelScore.aspx.cs">
+      <DependentUpon>DelScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\ScoreAdmin\DelScore.aspx.designer.cs">
+      <DependentUpon>DelScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminModule\ScoreAdmin\SeleScore.aspx.cs">
+      <DependentUpon>SeleScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminModule\ScoreAdmin\SeleScore.aspx.designer.cs">
+      <DependentUpon>SeleScore.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminModule\DepartAdmin\AddDepart.aspx.cs">
       <DependentUpon>AddDepart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -251,13 +520,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="AdminModule\Admin.aspx.cs">
-      <DependentUpon>Admin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminModule\Admin.aspx.designer.cs">
-      <DependentUpon>Admin.aspx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
