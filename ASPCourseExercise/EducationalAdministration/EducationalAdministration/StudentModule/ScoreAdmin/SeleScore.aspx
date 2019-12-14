@@ -12,7 +12,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <h1 class="head" >查询成绩</h1>
+            <h1 class="head" >查询成绩/选课信息</h1>
         </div>
         <div class="left">
         <asp:Menu ID="Menu1" runat="server">

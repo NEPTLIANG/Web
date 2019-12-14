@@ -30,7 +30,6 @@ namespace EducationalAdministration.StudentModule.TeacherAdmin
             {
                 while (myRead.Read())
                 {
-                    lblTno.Text = myRead["tno"].ToString();
                     lblTname.Text = myRead["tname"].ToString();
                     lblGender.Text = myRead["gender"].ToString();
                     lblAge.Text = myRead["age"].ToString();
@@ -56,7 +55,6 @@ namespace EducationalAdministration.StudentModule.TeacherAdmin
             {
                 while (myRead.Read())
                 {
-                    lblTno.Text = myRead["tno"].ToString();
                     lblTname.Text = myRead["tname"].ToString();
                     lblGender.Text = myRead["gender"].ToString();
                     lblAge.Text = myRead["age"].ToString();

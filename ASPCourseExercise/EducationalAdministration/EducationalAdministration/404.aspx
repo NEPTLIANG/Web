@@ -10,7 +10,7 @@
 <body style="font-size: xx-large; font-weight: 700">
     <form id="form1" runat="server">
         <div>
-            请先登录</div>
+            拒绝访问</div>
     </form>
 </body>
 </html>

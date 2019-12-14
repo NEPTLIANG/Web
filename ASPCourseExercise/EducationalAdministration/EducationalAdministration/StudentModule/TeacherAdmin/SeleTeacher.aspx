@@ -39,8 +39,6 @@
             </asp:DropDownList>
             <asp:SqlDataSource ID="SqlDataSourceStudent" runat="server" ConnectionString="Data Source=localhost;Initial Catalog=EducationalAdministration;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [tno], [tname] FROM [teacher]"></asp:SqlDataSource>
             <br />
-            工号：<asp:Label ID="lblTno" runat="server" Text="请在上方选择教师后点击确定按钮"></asp:Label>
-            <br />
             姓名：<asp:Label ID="lblTname" runat="server" Text="请在上方选择教师后点击确定按钮"></asp:Label>
             <br />
             性别：<asp:Label ID="lblGender" runat="server" Text="请在上方选择教师后点击确定按钮"></asp:Label>
