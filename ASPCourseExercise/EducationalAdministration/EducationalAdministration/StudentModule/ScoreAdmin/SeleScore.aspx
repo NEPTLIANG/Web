@@ -35,7 +35,7 @@
         </asp:Menu>
         </div>
         <div class="card">
-            选择课程：<asp:DropDownList ID="ddlCourse" runat="server" DataSourceID="SqlDataSourceDepart" DataTextField="cname" DataValueField="cno" OnSelectedIndexChanged="ddlDepart_SelectedIndexChanged" OnTextChanged="ddlDepart_SelectedIndexChanged">
+            选择课程：<asp:DropDownList ID="ddlCourse" runat="server" DataSourceID="SqlDataSourceDepart" DataTextField="cname" DataValueField="cno">
             </asp:DropDownList>
             &nbsp;&nbsp;&nbsp; 
             <br />

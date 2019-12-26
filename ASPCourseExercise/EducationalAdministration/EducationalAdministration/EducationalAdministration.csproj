@@ -109,6 +109,7 @@
     <Content Include="About.aspx" />
     <Content Include="AdminModule\Style\Admin.css" />
     <Content Include="AdminModule\Style\SubCSS.css" />
+    <Content Include="Static\bg.jpg" />
     <Content Include="StudentModule\Student.aspx" />
     <Content Include="StudentModule\CoursesAdmin\SeleCourses.aspx" />
     <Content Include="StudentModule\DepartAdmin\SeleDepart.aspx" />

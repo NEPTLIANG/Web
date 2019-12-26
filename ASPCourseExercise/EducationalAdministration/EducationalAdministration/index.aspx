@@ -8,13 +8,13 @@
     <title></title>
     <link href="AdminModule/Style/SubCSS.css" type="text/css" rel="stylesheet" />
 </head>
-<body>
+<body id="indexBody">
     <form id="form1" runat="server">
-        <div class="head" style="float: left; margin-top: 256px">
-            <h1>PHP是世界上最好的语言教务管理系统</h1>
+        <div class="head" id="indexTitleDiv" style="float: left; margin-top: 256px">
+            <h1>岭南师范学院教务管理系统</h1>
             <h3>登录</h3>
         </div>
-        <div class="card" style="margin-right: 128px; margin-top: 256px; float: right; width: 20%; text-align: center">
+        <div class="card" id="indexCard" style="margin-right: 128px; margin-top: 256px; float: right; width: 20%; text-align: center">
             账号<asp:TextBox ID="txtId" runat="server"></asp:TextBox>
             <br />
             密码<asp:TextBox ID="txtPwd" runat="server" TextMode="Password"></asp:TextBox>

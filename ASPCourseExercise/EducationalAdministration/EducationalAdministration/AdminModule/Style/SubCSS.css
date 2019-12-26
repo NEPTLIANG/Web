@@ -4,6 +4,19 @@
     line-height: 48px;
 }
 
+#indexBody {
+    background-image: url(../../Static/bg.jpg);
+    background-size: cover;
+}
+
+#indexTitleDiv h1, #indexTitleDiv h3{
+    text-shadow: 0 0 5px #ffffff;
+}
+
+#indexCard {
+    background-color: #ffffff;
+}
+
 h1 {
     font-size: 32px;
     font-weight: bold;

@@ -42,7 +42,7 @@ namespace EducationalAdministration.StudentModule.ScoreAdmin
         protected void btnSelect_Click(object sender, EventArgs e)
         {
             string cmdsql = "SELECT grade FROM score " +
-                "WHERE sno='" + ddlCourse.SelectedValue + "' and cno='" + ddlCourse.SelectedValue + "';";
+                "WHERE sno='" + Session["id"].ToString() + "' and cno='" + ddlCourse.SelectedValue + "';";
             OperateDataBase odb = new OperateDataBase();
             SqlDataReader myRead = odb.ExceRead(cmdsql);
             if (myRead.HasRows)

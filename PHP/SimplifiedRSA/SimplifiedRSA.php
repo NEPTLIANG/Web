@@ -1,9 +1,13 @@
 <?php
-function millerRabinAlgorithm($n, $a)  //Miller-Rabin算法，素性检测
+function millerRabinAlgorithm($n)  //Miller-Rabin算法，素性检测
 {
     $d = 1;
     $nSubOne = decbin($n - 1);
-    for ($i = strlen($nSubOne) - 1; $i >= 0; $i++) {
+    $a = mt_rand(0, $n - 1);
+
+//    $a = 10;
+
+    for ($i = 0; $i < strlen($nSubOne); $i++) {
         $x = $d;
         $d = pow($d, 2) % $n;
         if ($d == 1 && $x != 1 && $x != $n - 1) {
@@ -26,9 +30,11 @@ function getBigPrimeNum()  //选取“大”素数（8到12位）
     while (!($n % 2)) {
         $n = mt_rand((int)pow(2, 8), (int)pow(2, 12));
     }
-    $a = mt_rand(0, $n - 1);
-    for ($i = 0; $i == 1024; $i++) {
-        if (millerRabinAlgorithm($n, $a)) {
+    for ($i = 0; $i < 2; $i++) {
+        if (millerRabinAlgorithm($n)) {
+            while (!($n % 2)) {
+                $n = mt_rand((int)pow(2, 8), (int)pow(2, 12));
+            }
             $i = 0;
         }
     }
@@ -54,7 +60,7 @@ function squareMultiAlgorithm($m, $e, $n)  //“平方-乘”算法，求 M^e mo
 {
     $e = decbin($e);
     $d = 1;
-    for ($i = strlen($e) - 1; $i >= 0; $i--) {
+    for ($i = 0; $i < strlen($e); $i++) {  //注意是从左到右遍历e的二进制形式，不是从右到左
         $d = pow($d, 2) % $n;
 //        echo $d."\n";
         if ($e[$i] == 1) {
@@ -88,17 +94,23 @@ function Dk($c, $pri)  //解密
 //var_dump((int)pow(10, 30));
 $p = getBigPrimeNum();
 $q = getBigPrimeNum();
+//$p = 7;
+//$q = 17;
 $n = $p * $q;
 $fai = ($p - 1) * ($q - 1);
 
+//$fai = 144;
+
 $e = mt_rand(2, $fai);
-while (gcd($fai, $e) != 1) {  //选择e使得gcd(e, fai)=1 （即e与fai互素）
+while (gcd($e, $fai) != 1) {  //选择e使得gcd(e, fai)=1 （即e与fai互素）
     $e = mt_rand(2, $fai);
 }
 
+//$e = 7;
+
 $d = 2;
 //while (((($d % $fai) * ($e % $fai)) % $fai) != 1) {
-while ((($d * $e) % $fai) != 1) {  //计算d使得de与 1 mod fai 同余
+while ((($d * $e) % $fai) != 1 && $d < $fai) {  //计算d使得de与 1 mod fai 同余
     $d++;
 }
 
@@ -121,3 +133,4 @@ $pri = ["p" => $p, "q" => $q, "d" => $d];  //私钥
 $c = Ek(64, $pub);
 $m = Dk($c, $pri);
 var_dump($m);
+var_dump(millerRabinAlgorithm(29));

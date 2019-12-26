@@ -11,7 +11,7 @@
 <body>
     <form id="form1" runat="server">
         <div class="head" >
-            <h1>PHP是世界上最好的语言教务管理系统</h1>
+            <h1>岭南师范学院教务管理系统</h1>
             <h3>学生主页</h3>
         </div>
         <asp:Menu ID="Menu1" runat="server">
