@@ -24,7 +24,7 @@ function millerRabinAlgorithm($n)  //Miller-Rabin算法，素性检测
     return -1;
 }
 
-function getBigPrimeNum()  //选取“大”素数（8到12位）
+function getBigPrimeNum()  //选取“大”素数（8到12位），有BUG，弃用之
 {
     $n = 0;
     while (!($n % 2)) {
@@ -39,6 +39,27 @@ function getBigPrimeNum()  //选取“大”素数（8到12位）
         }
     }
     return $n;
+}
+
+function getSmallPrimeNum()
+{
+    $bottom = pow(2, 8);
+    $top = pow(2, 16);
+//    $nums = range($bottom, $top);
+    $nums = [];
+    for ($i = $bottom; $i <= $top; $i++) {
+        array_push($nums, $i);
+    }
+    $primeNums = [];
+    for ($num = $bottom; $num < $top; $num++) {
+        for ($i = 0; $i * $num <= $top; $i++) {
+            unset($nums[$i * $num + $bottom]);
+        }
+    }
+//    var_dump($nums);
+    foreach ($nums as $num) {
+        array_push($primeNums, $num);
+    }
 }
 
 function gcd($e, $fai)  //辗转相除法，求最大公约数
@@ -92,10 +113,10 @@ function Dk($c, $pri)  //解密
 //phpinfo();
 //var_dump((int)pow(2, 62));
 //var_dump((int)pow(10, 30));
-$p = getBigPrimeNum();
-$q = getBigPrimeNum();
-//$p = 7;
-//$q = 17;
+//$p = getBigPrimeNum();
+//$q = getBigPrimeNum();
+$p = 7;
+$q = 17;
 $n = $p * $q;
 $fai = ($p - 1) * ($q - 1);
 
@@ -130,7 +151,17 @@ while ((($d * $e) % $fai) != 1 && $d < $fai) {  //计算d使得de与 1 mod fai �
 $pub = ["e" => $e, "n" => $n];  //公钥
 $pri = ["p" => $p, "q" => $q, "d" => $d];  //私钥
 
-$c = Ek(64, $pub);
-$m = Dk($c, $pri);
-var_dump($m);
-var_dump(millerRabinAlgorithm(29));
+//$c = Ek(64, $pub);
+//$m = Dk($c, $pri);
+//var_dump($m);
+//var_dump(millerRabinAlgorithm(29));
+getSmallPrimeNum();
+
+echo "fuck";
+
+//echo "<p>公钥{e,n}：</p>"
+//    . "<p id=\"epub\">{" . $pub->e . "," . $pub->n . "}</p>"
+//    . "<p>私钥{p,q,d}：</p>"
+//    . "<p id=\"epri\">{" . $pri->p . "," . $pri->q . "," . $pri->d . "}</p>"
+//    . "<p>密文：</p>"
+//    . "<p id=\"ec\">" . $m . "</p>";

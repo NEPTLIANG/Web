@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RSA加解密</title>
+</head>
+<body>
+<div class="out">
+    <h1>RSA加解密</h1>
+    <form method="post" action="Server/SimplifiedRSA.php">
+        <div class="eCard">
+            <h2>加密</h2>
+            <p>明文：</p>
+            <input type="text" id="em" name="em"/>
+            <input type="submit" value="加密"/>
+            <!--<p>公钥{e,n}：</p>
+            <p id="epub">请输入明文后点击加密</p>
+            <p>私钥{p,q,d}：</p>
+            <p id="epri">请输入明文后点击加密</p>
+            <p>密文：</p>
+            <p id="ec">请输入明文后点击加密</p>-->
+        </div>
+        <div class="dCard">
+            <h2>解密</h2>
+            <p>密文：</p>
+            <input type="text" id="dc" name="dc"/>
+            <p>私钥{p,q,d}：</p>
+            <input type="text" name="dpri" id="dpri"/>
+            <input type="submit" value="解密"/>
+            <!--<p>明文：</p>
+            <p id="dm">请输入密文和私钥后点击解密</p>-->
+        </div>
+    </form>
+</div>
+</body>
+</html>
