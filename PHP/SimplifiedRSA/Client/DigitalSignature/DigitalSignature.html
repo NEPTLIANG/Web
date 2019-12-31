@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RSA加解密</title>
-    <link href="Client/EncryAndDecry/Style/index.css" rel="stylesheet"/>
+    <title>数字签名</title>
+    <link href="Style/index.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="out">
-    <h1>RSA加解密</h1>
+    <h1>数字签名</h1>
     <div class="card">
-        <h2>加密</h2>
-        <form method="post" action="Server/EncryptionResult.php">
-            <span>明文</span>
+        <h2>签名</h2>
+        <form method="post" action="../../Server/DigitalSignature.php">
+            <span>消息</span>
             <input type="text" id="em" name="em"/>
-            <input type="submit" value="加密"/>
+            <input type="submit" value="签名"/>
             <!--<p>公钥{e,n}：</p>
             <p id="epub">请输入明文后点击加密</p>
             <p>私钥{p,q,d}：</p>
@@ -23,14 +23,14 @@
         </form>
     </div>
     <div class="card">
-        <h2>解密</h2>
-        <form method="post" action="Server/DecryptionResult.php">
-            <span>密文</span>
+        <h2>验证</h2>
+        <form method="post" action="../../Server/DigitalSignature.php">
+            <span>签名后的消息</span>
             <input type="text" id="dc" name="dc"/>
             <br/>
-            <span>私钥{p,q,d}</span>
+            <span>公钥{e,n}</span>
             <input type="text" name="dpri" id="dpri"/>
-            <input type="submit" value="解密"/>
+            <input type="submit" value="验证"/>
             <!--<p>明文：</p>
             <p id="dm">请输入密文和私钥后点击解密</p>-->
         </form>

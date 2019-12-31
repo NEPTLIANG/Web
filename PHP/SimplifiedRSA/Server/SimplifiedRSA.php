@@ -95,6 +95,9 @@ function Ek($m, $pub)  //加密
 {
     $e = $pub["e"];
     $n = $pub["n"];
+
+//    $e=560;$n=561;
+
 //    echo $e;
 //    echo pow($m, $e);
 //    return pow($m, $e) % $n;
@@ -115,8 +118,8 @@ function Dk($c, $pri)  //解密
 //var_dump((int)pow(10, 30));
 //$p = getBigPrimeNum();
 //$q = getBigPrimeNum();
-$p = 7;
-$q = 17;
+$p = 9187;
+$q = 10733;
 $n = $p * $q;
 $fai = ($p - 1) * ($q - 1);
 
@@ -151,17 +154,48 @@ while ((($d * $e) % $fai) != 1 && $d < $fai) {  //计算d使得de与 1 mod fai �
 $pub = ["e" => $e, "n" => $n];  //公钥
 $pri = ["p" => $p, "q" => $q, "d" => $d];  //私钥
 
-//$c = Ek(64, $pub);
-//$m = Dk($c, $pri);
-//var_dump($m);
+//$c = Ek(115, $pub);
+//var_dump($c);
+//echo Dk($c, $pri);
+
+//加密
+//$em = $_POST["em"];
+//if ($em > 110) {
+//    echo "<script>alert(/数值过大，暂时只支持2~110/);</script>";
+//    exit(1);
+//}
+//if ($em != "") {
+//    $c = Ek($em, $pub);
+//    echo "<p>公钥{e,n}：</p>"
+//        . "<p id=\"epub\">{" . $pub["e"] . "," . $pub["n"] . "}</p>"
+//        . "<p>私钥{p,q,d}：</p>"
+//        . "<p id=\"epri\">{" . $pri["p"] . "," . $pri["q"] . "," . $pri["d"] . "}</p>"
+//        . "<p>密文：</p>"
+//        . "<p id=\"ec\">" . $c . "</p>";
+//}
+
+////解密
+///*Test case:
+//公钥{e,n}：{43,119}
+//私钥{p,q,d}：//{7,17,67}
+//密文：106*/
+//$dpri = $_POST["dpri"];
+//
+////$dpri = "{7,17,67}";
+//
+//if ($dpri != "") {
+//    $dc = $_POST["dc"];
+//
+////    $dc = 106;
+//
+//    $dpri = substr($dpri, 1, strlen($dpri) - 2);  //取子串：substr($原串, $start, $length)
+//    $dpri = explode(",", $dpri . substr(2, strlen($dc) - 1));  //分割字符串： $数组=explode($分割字符, $字符串)
+//    $pri = ["p" => (int)$dpri[0], "q" => (int)$dpri[1], "d" => (int)$dpri[2]];
+//    $dm = Dk($dc, $pri);
+////    var_dump($dm);
+//    echo "<p>明文：</p>"
+//        . "<p id=\"dm\">" . $dm . "</p>";
+//}
+
 //var_dump(millerRabinAlgorithm(29));
-getSmallPrimeNum();
-
-echo "fuck";
-
-//echo "<p>公钥{e,n}：</p>"
-//    . "<p id=\"epub\">{" . $pub->e . "," . $pub->n . "}</p>"
-//    . "<p>私钥{p,q,d}：</p>"
-//    . "<p id=\"epri\">{" . $pri->p . "," . $pri->q . "," . $pri->d . "}</p>"
-//    . "<p>密文：</p>"
-//    . "<p id=\"ec\">" . $m . "</p>";
+//getSmallPrimeNum();
