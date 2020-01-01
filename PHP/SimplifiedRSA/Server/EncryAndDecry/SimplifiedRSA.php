@@ -1,5 +1,5 @@
 <?php
-function millerRabinAlgorithm($n)  //Miller-Rabin算法，素性检测
+function millerRabinAlgorithm($n)  //按照课本介绍实现的Miller-Rabin算法，素性检测，有BUG，弃用之
 {
     $d = 1;
     $nSubOne = decbin($n - 1);
@@ -24,24 +24,78 @@ function millerRabinAlgorithm($n)  //Miller-Rabin算法，素性检测
     return -1;
 }
 
-function getBigPrimeNum()  //选取“大”素数（8到12位），有BUG，弃用之
+function millerRabinAlgorithmV2($n)  //参照William Stallings所著的《密码编码学与网络安全——原理与实践（第七版）》实现的Miller-Rabin算法，素性检测
+{
+    $k = 1;
+    $q = ($n - 1) / 2;
+    while (pow(2, $k) < $n - 1) {  //找 n-1 = 2^k *q 中的k和q
+        $q = ($n - 1) / 2;
+        while (pow(2, $k) * $q < $n - 1) {
+            if (pow(2, $k) * $q == $n - 1) {
+                break;
+            }
+            $q -= 2;
+        }
+        if (pow(2, $k) * $q == $n - 1) {
+            break;
+        }
+        $k++;
+    }
+    $flags = [];
+    while (true) {
+        $flags = [];
+        for ($times = 0; $times < 10; $times++) {
+            $flag = false;
+            $a = mt_rand(2, $n - 2);
+
+//    $a = 10;
+
+//            if (pow($a, $q) % $n == 1) {  //溢出了，应用平方乘算法
+            if (squareMultiAlgorithm($a, $q, $n) == 1) {
+                $flag = true;  //有可能是素数
+            }
+            for ($j = 0; $j < $k; $j++) {
+                $exponent = pow(2, $j) * $q;
+//                if (pow($a, $exponent) % $n == $n - 1) {
+                if (squareMultiAlgorithm($a, $exponent, $n) == $n - 1) {
+                    $flag = true;  //有可能是素数
+                }
+            }
+            array_push($flags, $flag);  //不是素数
+        }
+        $isTrue = true;
+        foreach ($flags as $flag) {
+            if ($flag != $flags[0]) {
+                $isTrue = false;
+                break;
+            }
+        }
+        if ($isTrue) {
+            break;
+        }
+    }
+    return $flags[0];
+}
+
+function getBigPrimeNum()  //按照课本的方法实现的选取“大”素数（8到12位）
 {
     $n = 0;
     while (!($n % 2)) {
-        $n = mt_rand((int)pow(2, 8), (int)pow(2, 12));
+        $n = mt_rand((int)pow(2, 32), (int)pow(2, 48));
     }
-    for ($i = 0; $i < 2; $i++) {
-        if (millerRabinAlgorithm($n)) {
-            while (!($n % 2)) {
-                $n = mt_rand((int)pow(2, 8), (int)pow(2, 12));
-            }
-            $i = 0;
+//    for ($i = 0; $i < 2; $i++) {
+    while (!millerRabinAlgorithmV2($n)) {
+        $n *= 2;
+        while (!($n % 2)) {
+            $n = mt_rand((int)pow(2, 8), (int)pow(2, 12));
         }
+        $i = 0;
     }
+//    }
     return $n;
 }
 
-function getSmallPrimeNum()
+function getSmallPrimeNum()  //用另一种方式生成小素数，未完成，弃用
 {
     $bottom = pow(2, 8);
     $top = pow(2, 16);
@@ -116,10 +170,10 @@ function Dk($c, $pri)  //解密
 //phpinfo();
 //var_dump((int)pow(2, 62));
 //var_dump((int)pow(10, 30));
-//$p = getBigPrimeNum();
-//$q = getBigPrimeNum();
-$p = 9187;
-$q = 10733;
+$p = getBigPrimeNum();
+$q = getBigPrimeNum();
+//$p = 9187;
+//$q = 10733;
 $n = $p * $q;
 $fai = ($p - 1) * ($q - 1);
 
@@ -197,5 +251,5 @@ $pri = ["p" => $p, "q" => $q, "d" => $d];  //私钥
 //        . "<p id=\"dm\">" . $dm . "</p>";
 //}
 
-//var_dump(millerRabinAlgorithm(29));
+//var_dump(millerRabinAlgorithmV2(29));
 //getSmallPrimeNum();
