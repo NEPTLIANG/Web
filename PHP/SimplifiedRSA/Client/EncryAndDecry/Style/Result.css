@@ -14,22 +14,6 @@ h2 {
     font-size: 24px;
 }
 
-.out {
-    width: 60%;
-    margin: 64px auto;
-    vertical-align: center;
-}
-
-.card {
-    /*float: left;*/
-    /*width: 40%;*/
-    /*width: fit-content;*/
-    margin: 128px 64px;
-    padding: 64px 168px;
-    border-radius: 8px;
-    box-shadow: 0 16px 64px #dfdfdf;
-}
-
 input {
     text-align: center;
     margin: 4px 0;
@@ -46,4 +30,26 @@ input[type="text"] {
 
 input[type="submit"] {
     width: 96px;
+}
+
+.out {
+    width: 60%;
+    margin: 64px auto;
+    vertical-align: center;
+}
+
+.card {
+    /*float: left;*/
+    /*width: 40%;*/
+    /*width: fit-content;*/
+    margin: 128px 64px;
+    padding: 64px 168px;
+    border-radius: 8px;
+    box-shadow: 0 16px 64px #dfdfdf;
+}
+
+.result {
+    font-weight: bold;
+    font-size: 20px;
+    line-break: anywhere;
 }

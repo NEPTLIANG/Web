@@ -10,7 +10,7 @@
     <h1>RSA加解密</h1>
     <div class="card">
         <h2>加密</h2>
-        <form method="post" action="Server/EncryptionResult.php">
+        <form method="post" action="Server/EncryAndDecry/EncryptionResult.php">
             <span>明文</span>
             <input type="text" id="em" name="em"/>
             <input type="submit" value="加密"/>
@@ -24,7 +24,7 @@
     </div>
     <div class="card">
         <h2>解密</h2>
-        <form method="post" action="Server/DecryptionResult.php">
+        <form method="post" action="Server/EncryAndDecry/DecryptionResult.php">
             <span>密文</span>
             <input type="text" id="dc" name="dc"/>
             <br/>
@@ -35,6 +35,7 @@
             <p id="dm">请输入密文和私钥后点击解密</p>-->
         </form>
     </div>
+    <a href="Client/DigitalSignature/DigitalSignature.html" style="float: right; color: #7f7f7f">加密 & 解密</a>
 </div>
 </body>
 </html>

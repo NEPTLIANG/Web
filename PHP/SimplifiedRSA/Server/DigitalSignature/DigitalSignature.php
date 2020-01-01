@@ -1,13 +1,13 @@
 <?php
-include("SimplifiedRSA.php");  //获取秘钥、加解密函数
+include("../EncryAndDecry/SimplifiedRSA.php");  //获取秘钥、加解密函数
 //$groupingLen = strlen(decbin($pub["n"])) - 1;  //设加密分组长度为比n的长度小1位
 
 function signature($m, $pri)
 {
     $groupingLen = strlen(decbin($pri["p"] * $pri["q"])) - 1;  //设加密分组长度为比n的长度小1位
     $hash = hash("sha256", $m);  //通过SHA256产生64位16进制散列码
-    echo $hash . "\n";
-    echo strlen($hash) . "\n";
+//    echo $hash . "\n";
+//    echo strlen($hash) . "\n";
     $binHash = "";  //二进制形式的散列码
     for ($i = 0; $i < strlen($hash); $i++) {  //将16进制散列码逐位转为4位2进制形式的字符串
         $binChar = decbin(hexdec($hash[$i]));
@@ -16,9 +16,9 @@ function signature($m, $pri)
         }
         $binHash = $binHash . $binChar;
     }
-    echo $binHash . "\n";
+//    echo $binHash . "\n";
     $hashLen = strlen($binHash);  //二进制散列码的长度
-    echo $hashLen . "\n";
+//    echo $hashLen . "\n";
 //echo hexdec("7f");
 //echo dechex(15);
 //echo pow(2, 20) - 1;
@@ -28,23 +28,23 @@ function signature($m, $pri)
 //echo strlen(decbin($c)) . "\n";
 //echo Dk($c, $pri);
 //$groupingLen = 8;
-    echo $groupingLen . "\n";
+//    echo $groupingLen . "\n";
     while (strlen($binHash) % $groupingLen != 0) {  //若二进制散列码总长度不是分组长度的整数倍，后补0
         $binHash = $binHash . "0";
     }
-    echo $binHash . "\n";
+//    echo $binHash . "\n";
     $groups = [];  //二进制散列码分组
     for ($group = 0; $group * $groupingLen < strlen($binHash); $group++) {  //对二进制散列码进行分组
         $str = substr($binHash, $group * $groupingLen, $groupingLen);
         array_push($groups, $str);
 //    echo substr($binHash, $group * $groupingLen, $groupingLen) . ",";
     }
-    var_dump($groups);
+//    var_dump($groups);
 //echo strlen($groups[0]);
     $c = "";  //二进制形式的密文
     foreach ($groups as $group) {  //加密二进制散列码分组后将二进制形式的结果分组连接起来作为签名
         $group = bindec($group);
-        echo $group . "\n";
+//        echo $group . "\n";
 //        function Dk($c, $pri)  //解密
 //        {
 //            $d = $pri["d"];
@@ -67,13 +67,13 @@ function signature($m, $pri)
 //    echo $cGroup ."\n";
 //    echo strlen($cGroup) . "\n";
     }
-    var_dump($c);
+//    var_dump($c);
     $numOfGroup = strlen($c) / 4;
     $hexC = "";  //十六进制形式密文
     for ($i = 0; $i < strlen($c) / 4; $i++) {  //把二进制密文转为十六进制
         $hexC = $hexC . dechex(bindec(substr($c, $i * 4, 4)));
     }
-    var_dump($hexC);
+//    var_dump($hexC);
     return $hexC;
 }
 
@@ -116,7 +116,7 @@ function verify($hexC, $pub)
         array_push($groups, $group);
 //    echo substr($binHash, $group * $groupingLen, $groupingLen) . ",";
     }
-    var_dump($groups);
+//    var_dump($groups);
     $dBinHash = substr($dBinHash, 0, 65 * 4);
     $dHash = "";
     for ($i = 0; $i < 64; $i++) {
@@ -125,7 +125,3 @@ function verify($hexC, $pub)
 //    echo $dHash . "\n";
     return $dHash;
 }
-
-$c = signature("Hello", $pri);
-echo "fuck";
-//echo verify($c, $pub);

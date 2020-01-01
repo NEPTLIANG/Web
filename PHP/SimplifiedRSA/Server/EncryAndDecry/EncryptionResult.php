@@ -22,7 +22,7 @@ if ($em != "") {
 <head>
     <meta charset="UTF-8">
     <title>RSA加解密</title>
-    <link href="../Client/EncryAndDecry/Style/Result.css" rel="stylesheet"/>
+    <link href="../../Client/EncryAndDecry/Style/Result.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="out">
