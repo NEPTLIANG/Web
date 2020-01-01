@@ -77,7 +77,7 @@ function millerRabinAlgorithmV2($n)  //参照William Stallings所著的《密码
     return $flags[0];
 }
 
-function getBigPrimeNum()  //按照课本的方法实现的选取“大”素数（8到12位）
+function getBigPrimeNum()  //按照课本的方法实现的选取“大”素数（32到48位）
 {
     $n = 0;
     while (!($n % 2)) {
