@@ -5,11 +5,15 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
-		}
+		}, {
+            "path": "pages/practical-experience/practical-experience"
+        }, {
+            "path": "pages/practical-experience/practical-experience-show"
+        }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "智慧学工",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}

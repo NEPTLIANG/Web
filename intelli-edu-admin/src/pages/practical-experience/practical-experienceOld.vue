@@ -5,7 +5,7 @@
             <view class="inputTitle">单位名称/公司名称</view>
             <input type="text" name="practice_unit" placeholder="请输入公司名称"/>
             <view class="inputTitle">就职状态</view>
-            <selector-picker name="inauguration_status" :type="全职" @bind-picker-change="getType"></selector-picker>
+            <selector-picker name="inauguration_status"></selector-picker>
             <view class="inputTitle">项目名称</view>
             <input type="text" name="entry_name" placeholder="请输入项目名称"/>
             <view class="inputTitle">担任职位</view>
@@ -42,24 +42,16 @@
         },
         data() {
             return {
-                type: "全职"
             }
         },
         methods: {
-            formSubmit(e) {
-                var formdata = `${JSON.stringify(e.detail.value)},"inauguration_status":"${this.type}"`
-                console.log(formdata)
-                // console.log(JSON.stringify(e.detail.value))
-                // console.log(this.type)
-                // var formdata = e.detail.value
-                // uni.showModal({
-                //     content: '表单数据内容' + JSON.stringify(formdata),
-                //     showCancel: false
-                // });
-            },
-            getType: function(type) {
-                this.type = type
-                console.log(this.type)
+            formSubmit: function(e) {
+                console.log(JSON.stringify(e.detail.value))
+                var formdata = e.detail.value
+                uni.showModal({
+                    content: '表单数据内容' + JSON.stringify(formdata),
+                    showCancel: false
+                });
             }
         }
     }
