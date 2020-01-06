@@ -5,15 +5,15 @@
             <view class="inputTitle">单位名称/公司名称</view>
             <input type="text" name="practice_unit" placeholder="请输入公司名称"/>
             <view class="inputTitle">就职状态</view>
-            <selector-picker name="inauguration_status"></selector-picker>
+            <selector-picker name="inauguration_status" :array="['请选择就职状态', '全职', '实习', '兼职', '社会实践']" :index=0 @bind-picker-change="getType"></selector-picker>
             <view class="inputTitle">项目名称</view>
             <input type="text" name="entry_name" placeholder="请输入项目名称"/>
             <view class="inputTitle">担任职位</view>
             <input type="text" name="practice_position" placeholder="请输入职位名称"/>
             <view class="inputTitle">在职时间</view>
             <view style="margin: 0 auto; width: max-content">
-                <date-picker name="start_time" date="选择入职时间"></date-picker>
-                <date-picker name="end_time" date="选择离职时间" style="float: right"></date-picker>
+                <date-picker name="start_time" date="选择入职时间" @bind-date-change="getStartTime"></date-picker>
+                <date-picker name="end_time" date="选择离职时间" style="float: right" @bind-date-change="getEndTime"></date-picker>
             </view>
             <view class="inputTitle">经历描述</view>
             <textarea name="experience_description" placeholder="请详细而具体地描述您的职责范围、工作任务以及取得的成绩等。"></textarea>
@@ -42,16 +42,32 @@
         },
         data() {
             return {
+                type: "请选择就职状态",
+                startTime: "选择入职时间",
+                endTime: "选择离职时间"
             }
         },
         methods: {
-            formSubmit: function(e) {
-                console.log(JSON.stringify(e.detail.value))
-                var formdata = e.detail.value
-                uni.showModal({
-                    content: '表单数据内容' + JSON.stringify(formdata),
-                    showCancel: false
-                });
+            formSubmit(e) {
+                var formdata = `${JSON.stringify(e.detail.value)},"inauguration_status":"${this.type}","start_time":"${this.startTime}","end_time":"${this.endTime}"`
+                console.log(formdata)
+                // console.log(JSON.stringify(e.detail.value))
+                // console.log(this.type)
+                // var formdata = e.detail.value
+                // uni.showModal({
+                //     content: '表单数据内容' + JSON.stringify(formdata),
+                //     showCancel: false
+                // });
+            },
+            getType: function(type) {
+                this.type = type
+                console.log(this.type)
+            },
+            getStartTime: function(time) {
+                this.startTime = time
+            },
+            getEndTime: function(time) {
+                this.endTime = time
             }
         }
     }

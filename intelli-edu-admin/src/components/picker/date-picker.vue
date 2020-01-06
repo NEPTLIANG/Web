@@ -19,6 +19,7 @@
         methods: {
             bindDateChange: function(e) {
                 this.date = e.target.value
+                this.$emit('bind-date-change', this.date);
             },
             getDate(type) {
                 const date = new Date();
@@ -35,6 +36,7 @@
 
 <style>
     .datePicker {
+        font-size: 16rpx;
         text-align: center;
         border: 1rpx #bfbfbf solid;
         width: max-content;

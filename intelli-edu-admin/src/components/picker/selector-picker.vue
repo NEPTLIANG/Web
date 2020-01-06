@@ -8,11 +8,12 @@
 
 <script>
     export default {
+        props: {
+            array: {},
+            index: 0
+        },
         data() {
-            return {
-                array: ['全职', '实习', '兼职', '社会实践'],
-                index: 0,
-            }
+            return {}
         },
         methods: {
             bindPickerChange: function(e) {

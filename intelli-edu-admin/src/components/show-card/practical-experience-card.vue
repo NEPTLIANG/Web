@@ -6,8 +6,8 @@
             <view>项目：{{entry_name}}</view>
             <view class="descript">{{experience_description}}</view>
         </view>
-        <button class="hide">隐藏</button>
-        <navigator class="edit" url="./practical-experience.vue">编辑</navigator>
+        <!-- <button class="hide">隐藏</button> -->
+        <!-- <navigator class="edit" url="./practical-experience">编辑</navigator> -->
     </view>
 </template>
 
@@ -63,6 +63,7 @@
         margin: 8px 0 16px 0;
     }
     .hide {
+        font-size: 16rpx;
         float: left;
         display: inline-block;
         text-align: center;
@@ -81,7 +82,7 @@
         line-height: 64rpx;
         color: #ffffff;
         background-color: #007fff;
-        width: 50%;
+        width: 100%;
         height: 64rpx;
         border-width: 0rpx;
         border-radius: 0rpx;
