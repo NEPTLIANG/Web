@@ -1,4 +1,5 @@
 <template>
+    <!--日期选择器组件-->
     <view class="datePicker">
         <picker mode="date" :value="date" @change="bindDateChange">
             <view>{{date}}</view>
@@ -9,7 +10,7 @@
 <script>
     export default {
         props: {
-            date: {}
+            date: {}  //从父组件接收默认值
         },
         data() {
             return {
@@ -17,11 +18,11 @@
             }
         },
         methods: {
-            bindDateChange: function(e) {
+            bindDateChange: function(e) {  //picker组件选项改变事件处理函数
                 this.date = e.target.value
-                this.$emit('bind-date-change', this.date);
+                this.$emit('bind-date-change', this.date);  //返回选择的日期给父组件
             },
-            getDate(type) {
+            /* getDate(type) {  //获取当前日期值，可用于初始化默认值，此处从父组件接收默认值故弃用之
                 const date = new Date();
                 let year = date.getFullYear();
                 let month = date.getMonth()+1;
@@ -29,7 +30,7 @@
                 month = month>9 ? month : '0'+month;;
                 day = day>9 ? day : '0'+day;
                 return `${year}-${month}-${day}`;
-            }
+            } */
         }
     }
 </script>

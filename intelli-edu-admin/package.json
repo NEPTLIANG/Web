@@ -35,6 +35,7 @@
     "@dcloudio/uni-stat": "^2.0.0-24220191115011",
     "flyio": "^0.6.2",
     "less": "^3.10.3",
+    "material-design-icons": "^3.0.1",
     "regenerator-runtime": "^0.12.1",
     "vue": "^2.6.10",
     "vuex": "^3.0.1"
