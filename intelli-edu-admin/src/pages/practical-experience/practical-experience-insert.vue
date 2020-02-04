@@ -4,7 +4,7 @@
         <form @submit="formSubmit">
             <view class="title">添加实践经历</view>
             <view class="inputTitle">单位名称/公司名称</view>
-            <input type="text" name="practiceUnit" placeholder="请输入公司名称"/>
+            <input type="text" name="practiceUnit" placeholder="请输入公司名称" :value="practiceUnit"/>
             <view class="inputTitle">就职状态</view>
             <selector-picker name="inaugurationStatus" :array="['请选择就职状态', '全职', '实习', '兼职', '社会实践']" :index=0 @bind-picker-change="getType"></selector-picker>
             <view class="inputTitle">项目名称</view>
@@ -38,7 +38,7 @@
                 </view>
                 <button @click="upFile" style="border-radius: 0rpx">上传</button> 
             </view>
-            <button type="primary" form-type="submit" class="save">保存</button>
+            <button type="primary" form-type="submit" class="save">添加</button>
             <navigator url="../index/index" class="cancel">取消</navigator>
         </form>
     </view>
@@ -57,11 +57,13 @@
         },
         data() {
             return {
+                practiceUnit: "",
                 url: `${getApp().globalData.url}/practice`,  //添加实践经历的URL
                 type: "请选择就职状态",
                 startTime: "选择入职时间",
                 endTime: "选择离职时间",
                 //以下是附件上传组件的变量
+                computeLength: "",
                 msg:'',
                 limitNum:6,
                 uploadFileUrl: '', //替换成后端接收文件地址
@@ -89,15 +91,29 @@
                 formdata = formdata.substr(1, formdata.length-2)
                 formdata = `{${formdata},"inauguration_status":"${this.type}","start_time":"${this.startTime}","endTime":"${this.endTime}","enclosureAddress":"${enclosureAddress}","gmtCreate":"${gmtCreate}","gmtModified":"${gmtModified}","userNumber":"${userNumber}","practiceId":"${practiceId}","status":"${status}"}`  //在表单提交的数据后拼接上缺少的数据
                 console.log(formdata)  //调试用
-                /* var formdata = e.detail.value
-                uni.showModal({
+                /* uni.showModal({  //调试用的弹框
                      content: '表单数据内容' + JSON.stringify(formdata),
                      showCancel: false
                 }); */
-                if (typeof XMLHttpRequest != "undifined") {  //发送数据，还没针对API进行修改
+                if (typeof XMLHttpRequest != "undifined") {  //发送数据
                     var url = this.url
                     var request = new XMLHttpRequest()
                     request.open("post", url, true)
+                    request.onreadystatechange = function () {
+                        if (request.readyState == 4) {
+                            if ((request.status>=200 && request.status<300) || request.status==304)
+                            {
+                                var responseObj = JSON.parse(request.responseText)
+                                uni.showModal({
+                                    content: responseObj.message
+                                })
+                            } else {
+                                uni.showModal({
+                                    content: "请求失败"
+                                })
+                            }
+                        }
+                    }
                     request.setRequestHeader("Authorization", "Bearer token")
                     request.send(formdata)
                 } else if (typeof ActiveXObject != "undifined") {
@@ -108,6 +124,16 @@
                     request.send(formdata)
                 } else {
                     console.log("该浏览器可能不支持AJAX")
+                }
+            },
+            fillIn: function(contentStr) {  //把查询实践经历单条记录返回的内容填到表单里
+                var record
+                try {
+                    record = JSON.parse(contentStr)
+                } catch (e) {}
+                if (typeof record != "undefined") {
+                    record = record.data.practice
+                    this.practiceUnit = record.practiceUnit
                 }
             },
             getType: function(type) {  //接收普通选择器组件返回的实践经历类型
@@ -130,7 +156,73 @@
             upFile(){  //文件上传组件的方法
                 this.$refs.upimg.upload()
             }
-        }
+        } /* ,
+        onLoad: function (option) {
+            var id = option.id
+            if (typeof id != "undifined") {
+                var url = getApp().globalData.url + "/practice/" + id
+                if (typeof XMLHttpRequest != "undifined") {
+                    var request = new XMLHttpRequest()
+                    request.onreadystatechange = function () {
+                        if (request.readyState == 4) {
+                            if ((request.status>=200 && request.status<300) || request.status==304) {
+                                var response = JSON.parse(request.responseText)
+                                if (response.code == 200) {
+                                    fillIn(request.responseText)
+                                } else {
+                                    uni.showModal({
+                                        title: "查询失败",
+                                        content: response.message,
+                                        showCancel: false
+                                    })
+                                }
+                            } else {
+                                uni.showModal({
+                                    content: "请求失败",
+                                    showCancel: false
+                                })
+                            }
+                        }
+                    }
+                    request.open("GET", url, true)
+                    request.setRequestHeader("Authorization", "Bearer token")
+                    request.send(id)
+                } else if (typeof ActiveXObject != "undifined") {
+                    var request = new ActiveXObject(MSXML2.XMLHttp)
+                    request.onreadystatechange = function () {
+                        if (request.readyState == 4) {
+                            if ((request.status>=200 && request.status<300) || request.status==304) {
+                                var response = JSON.parse(request.responseText)
+                                if (response.code == 200) {
+                                    this.fillIn(request.responseText)
+                                } else {
+                                    uni.showModal({
+                                        title: "查询失败",
+                                        content: response.message,
+                                        showCancel: false
+                                    })
+                                }
+                            } else {
+                                uni.showModal({
+                                    content: "请求失败",
+                                    showCancel: false
+                                })
+                            }
+                        }
+                    }
+                    request.open("GET", url, true)
+                    request.setRequestHeader("Authorization", "Bearer token")
+                    request.send(id)
+                } else {
+                    uni.showModal({
+                        title: "不支持的浏览器",
+                        content: "请更换浏览器重试",
+                        showCancel: false
+                    })
+                }
+                this.fillIn(request.responseText)
+            }
+        } */
     }
 </script>
 

@@ -10,7 +10,7 @@
 			console.log('App Hide')
 		},
         globalData: {
-            url: "www.test.com"
+            url: 'www.test.com'
         }
 	}
 </script>

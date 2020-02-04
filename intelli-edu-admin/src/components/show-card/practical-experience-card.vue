@@ -1,14 +1,16 @@
 <template>
     <!--实践经历展示卡片-->
     <view class="card">
-        <view class="content">
-            <text class="title">{{practice_unit}} {{practice_position}}</text> <text class="type">{{inauguration_status}}</text>  <!--单位名称 担任职位 就职状态-->
-            <view class="time">{{start_time}} - {{end_time}}</view>  <!--开始时间 - 结束时间-->
-            <view>项目：{{entry_name}}</view>  <!--项目名称-->
-            <view class="descript">{{experience_description}}</view>  <!--经历描述-->
-        </view>
-        <button class="del" @click="$emit('del')">删除</button>
-        <navigator class="edit" url="./practical-experience">编辑</navigator>
+        <navigator :url="`./practical-experience-select-single?id=${practice_id}`">  <!--点击内容部分跳转到单条实践经历展示页面-->
+            <view class="content">
+                <text class="title">{{practice_unit}} {{practice_position}}</text> <text class="type">{{inauguration_status}}</text>  <!--单位名称 担任职位 就职状态-->
+                <view class="time">{{start_time}} - {{end_time}}</view>  <!--开始时间 - 结束时间-->
+                <view>项目：{{entry_name}}</view>  <!--项目名称-->
+                <view class="descript">{{experience_description}}</view>  <!--经历描述-->
+            </view>
+        </navigator>
+        <button class="del" @click="$emit('del', practice_id)">删除</button>
+        <navigator class="edit" :url="'./practical-experience-alter?id=' + practice_id">编辑</navigator>
     </view>
 </template>
 
@@ -21,8 +23,9 @@
             practice_position: {},
             start_time: {},
             end_time: {},
-            experience_description: {}
-        },
+            experience_description: {},
+            practice_id: {}
+        } /* ,
         data() {
             return {
                 practice_unit: "单位名称",
@@ -33,7 +36,7 @@
                 end_time: "离职时间",
                 experience_description: "经历描述"
             }
-        }
+        } */
     }
 </script>
 

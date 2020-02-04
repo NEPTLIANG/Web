@@ -6,11 +6,13 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}, {
-            "path": "pages/practical-experience/practical-experience-add"
+            "path": "pages/practical-experience/practical-experience-insert"
         }, {
-            "path": "pages/practical-experience/practical-experience-show-all"
+            "path": "pages/practical-experience/practical-experience-alter"
         }, {
-            "path": "pages/practical-experience/practical-experience-show-single"
+            "path": "pages/practical-experience/practical-experience-select-all"
+        }, {
+            "path": "pages/practical-experience/practical-experience-select-single"
         }, {
             "path": "pages/user-home/user-home"
         }, {
