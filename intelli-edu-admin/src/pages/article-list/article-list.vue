@@ -88,7 +88,7 @@
             search: function (e) {
                 var url = getApp().globalData.url
                 var keyword = e.detail.keyword
-                a
+            }
         },
         created() {
             if (typeof XMLHttpRequest != "undifined") {
