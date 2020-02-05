@@ -1,1 +1,0 @@
-<view class="body"><view class="title">实践经历</view><view><text class="title">{{practice_unit+" "+practice_position}}</text><text class="type">{{inauguration_status}}</text><view class="time">{{start_time+" - "+end_time}}</view><view>{{"项目："+entry_name}}</view><view class="descript">{{experience_description}}</view></view></view>

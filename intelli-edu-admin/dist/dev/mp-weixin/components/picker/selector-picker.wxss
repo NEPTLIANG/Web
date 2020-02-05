@@ -1,9 +1,0 @@
-
-.selectorPicker {
-    text-align: center;
-    border: 1rpx #bfbfbf solid;
-    /* width: 622rpx; */
-    margin: 8rpx 0 16rpx 0;
-    padding: 16rpx 16rpx;
-}
-

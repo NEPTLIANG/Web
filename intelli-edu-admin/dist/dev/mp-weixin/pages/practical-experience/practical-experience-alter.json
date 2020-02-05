@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "u-img": "/components/zhtx-uploadImg/zhtx-uploadImg",
-    "date-picker": "/components/picker/date-picker",
-    "selector-picker": "/components/picker/selector-picker"
-  }
-}
