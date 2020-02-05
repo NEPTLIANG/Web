@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/practical-experience/practical-experience-insert",
+    "pages/practical-experience/practical-experience-alter",
+    "pages/practical-experience/practical-experience-select-all",
+    "pages/practical-experience/practical-experience-select-single",
+    "pages/user-home/user-home",
+    "pages/article-list/article-list"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "智慧学工",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {}
+}

@@ -1,0 +1,44 @@
+
+.body {  /*根view*/
+    padding: 32px 32px;
+    font-size: 16rpx;
+    line-height: 2em;
+}
+input {
+    font-size: 16rpx;
+    border: 1rpx #bfbfbf solid;
+    margin: 8px 0 16rpx 0;
+    padding: 16rpx;
+}
+.title {  /*主标题*/
+    font-weight: bold;
+}
+.datePicker {  /*日期选择器组件*/
+    width: 285rpx;
+    float: left;
+}
+textarea {
+    font-size: 16rpx;
+    width: auto;
+    border: 1rpx #bfbfbf solid;
+    margin: 8px 0 16rpx 0;
+    padding: 16rpx;
+}
+.save {  /*保存按钮*/
+    font-size: 16rpx;
+    width: -webkit-max-content;
+    width: max-content;
+    margin: 16rpx 0;
+    padding: 16rpx 32rpx;
+    border-radius: 0;
+    float: left;
+}
+.cancel {  /*取消按钮（链接）*/
+    font-size: 16rpx;
+    width: -webkit-max-content;
+    width: max-content;
+    margin: 16rpx;
+    padding: 16rpx 32rpx;
+    float: left;
+}
+

@@ -1,0 +1,17 @@
+
+.body {  /*根view*/
+    padding: 32px 32px;
+    font-size: 16rpx;
+    line-height: 2em;
+}
+.title {  /*标题*/
+    font-weight: bold;
+}
+.add {  /*添加实践经历按钮（链接）*/
+    text-align: center;
+    color: #ffffff;
+    background-color: #007fff;
+    padding: 16px;
+    margin: 8px 0 16px 0;
+}
+

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "practical-experience-card": "/components/show-card/practical-experience-card"
+  }
+}

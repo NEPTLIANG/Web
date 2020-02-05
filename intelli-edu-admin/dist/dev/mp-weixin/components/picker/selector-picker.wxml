@@ -1,0 +1,1 @@
+<view class="selectorPicker"><picker value="{{index}}" range="{{array}}" data-event-opts="{{[['change',[['bindPickerChange',['$event']]]]]}}" bindchange="__e"><view>{{array[index]}}</view></picker></view>

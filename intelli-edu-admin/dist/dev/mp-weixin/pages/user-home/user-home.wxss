@@ -1,0 +1,71 @@
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+/*学校前面、电话前面、右边的IconFonts */
+.body {  /*根view*/
+    font-size: 16rpx;
+    line-height: 2em;
+    background-color: #efefef;
+}
+.head {  /*用户信息区域*/
+    color: #fff;
+    background-color: #007fff;
+    padding: 32rpx;
+}
+.portrait {
+    display: inline-block;
+    height: 128rpx;
+    width: 128rpx;
+    border-radius: 128rpx;
+}
+.info {
+    display: inline-block;
+    margin-left: 32rpx;
+    vertical-align: top;
+}
+.name {  /*用户名*/
+    font-size: 24rpx;
+}
+.iconFonts {  /*学校前面、电话前面的图标*/
+    font-size: 16rpx;
+    line-height: 2em;
+    margin-right: 8rpx;
+}
+.logout {  /*“退出登录”按钮*/
+    float: right;
+    font-size: 20rpx;
+    padding: 8rpx 16rpx;
+    border: 3rpx #fff solid;
+    border-radius: 8px;
+}
+.infoDetails {  /*右边的右箭头（个人信息）*/
+    float: right;
+    font-size: 36rpx;
+    line-height: 128rpx;
+    height: 128rpx;
+    margin-left: 16rpx;
+}
+.card {
+    background-color: #fff;
+    margin: 16rpx 0;
+}
+.subTitle {
+    font-size: 20rpx;
+    padding: 8rpx 12rpx;
+    border-left: 4px #007fff solid;
+}
+.option {
+    display: inline-block;
+    text-align: center;
+    width: 86rpx;
+    padding: 32rpx;
+}
+.optionImg {
+    width: 86rpx;
+    height: 86rpx;
+    margin: 0 auto;
+}
+.buttom {
+    background-color: #007fff;
+    height: 128rpx;
+}
+

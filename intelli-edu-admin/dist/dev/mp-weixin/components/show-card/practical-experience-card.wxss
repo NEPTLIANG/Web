@@ -1,0 +1,53 @@
+
+.card {
+    font-size: 16rpx;
+    line-height: 2em;
+    border: 1rpx #dfdfdf solid;
+    margin: 16px 0;
+}
+.content {
+    margin: 32px;
+}
+.title {  /*单位名称和担任职位*/
+    font-weight: bold;
+}
+.type {  /*就职状态标签*/
+    font-size: 14rpx;
+    line-height: 32rpx;
+    color: #007fff;
+    background-color: #dfffff;
+    margin: 0 8px;
+}
+.time {  /*开始时间和结束时间*/
+    color: #7f7f7f;
+}
+.descript {  /*经历描述*/
+    margin: 8px 0 16px 0;
+}
+.del {  /*删除按钮*/
+    font-size: 16rpx;
+    float: left;
+    display: inline-block;
+    text-align: center;
+    line-height: 64rpx;
+    color: #7f7f7f;
+    width: 50%;
+    height: 64rpx;
+    border-width: 0rpx;
+    border-radius: 0rpx;
+    /* padding: 16px; */
+}
+.edit {  /*编辑按钮（链接）*/
+    /* float: right; */
+    display: inline-block;
+    text-align: center;
+    line-height: 64rpx;
+    color: #ffffff;
+    background-color: #007fff;
+    width: 50%;
+    height: 64rpx;
+    border-width: 0rpx;
+    border-radius: 0rpx;
+    /* padding: 16px; */
+}
+

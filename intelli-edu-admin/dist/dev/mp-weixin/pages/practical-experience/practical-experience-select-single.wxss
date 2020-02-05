@@ -1,0 +1,23 @@
+
+.body {  /*根view*/
+    padding: 32px 32px;
+    font-size: 16rpx;
+    line-height: 2em;
+}
+.title {
+    font-weight: bold;
+}
+.type {  /*就职状态标签*/
+    font-size: 14rpx;
+    line-height: 32rpx;
+    color: #007fff;
+    background-color: #dfffff;
+    margin: 0 8px;
+}
+.time {  /*开始时间和结束时间*/
+    color: #7f7f7f;
+}
+.descript {  /*经历描述*/
+    margin: 8px 0 16px 0;
+}
+
