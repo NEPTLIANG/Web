@@ -184,7 +184,8 @@
 </script>
 
 <style>
-    @import 'https://fonts.googleapis.com/icon?family=Material+Icons';  /*浏览量左边的Icon Fonts*/
+    /* @import 'https://fonts.googleapis.com/icon?family=Material+Icons'; */  /*浏览量左边的Icon Fonts*/
+    @import '../../static/iconFont.css';
     .body {  /*根view*/
         font-size: 16rpx;
     }

@@ -4,7 +4,9 @@
 		<view>
 			<text class="title">{{title}}</text>
 		</view>
-        <navigator url="../practical-experience/test">test</navigator>
+        <navigator url="../practical-experience/practical-experience-select-all">practical-experience-select-all</navigator>
+        <navigator url="../article-list/article-list">article-list</navigator>
+        <navigator url="../user-home/user-home">user-home</navigator>
 	</view>
 </template>
 
