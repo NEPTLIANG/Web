@@ -1,6 +1,7 @@
 <template>
     <!--文章列表页面-->
     <view class="body">
+		<uni-search-bar placeholder="请输入关键字查询" :radius="100" @confirm="search"></uni-search-bar>
         <view class="searchArea">
             <form @submit="search">
                 <input type="text" name="keyword" placeholder="请输入关键字查询" class="searchBox">
@@ -8,15 +9,17 @@
             </form>
         </view>
         <view v-for="index in lenOfList" class="item">  <!--文章列表-->
-            <image :src="articleList[index-1].article_logo" mode="aspectFill" class="article_logo">  <!--图片-->
-            <view class="content">
-                <view class="itemTitle">{{articleList[index-1].article_title}}</view>  <!--标题-->
-                <view class="abstract">{{articleList[index-1].article_description}}</view>  <!--摘要-->
-            </view>
-            <view class="info">
-                <view class="publish_time">{{articleList[index-1].publish_time}}</view>  <!--日期-->
-                <view class="article_reader"><text class="material-icons pvIcon">&#xe8a0;</text> {{articleList[index-1].article_reader}}</view>
-            </view>  <!--浏览量-->
+            <navigator url="../index/index">
+                <image :src="articleList[index-1].article_logo" mode="aspectFill" class="article_logo">  <!--图片-->
+                <view class="content">
+                    <view class="itemTitle">{{articleList[index-1].article_title}}</view>  <!--标题-->
+                    <view class="abstract">{{articleList[index-1].article_description}}</view>  <!--摘要-->
+                </view>
+                <view class="info">
+                    <view class="publish_time">{{articleList[index-1].publish_time}}</view>  <!--日期-->
+                    <view class="article_reader"><text class="material-icons pvIcon">&#xe8a0;</text> {{articleList[index-1].article_reader}}</view>
+                </view>  <!--浏览量-->
+            </navigator>
         </view>
         <button @click="getMoreArticle" v-if="thereAreMoreArticle" class="more">加载更多……</button>
         <view class="buttom"></view>
@@ -24,14 +27,18 @@
 </template>
 
 <script>
+	import uniSearchBar from '@/components/uni-search-bar/uni-search-bar.vue'
     export default {
+		components: {
+			uniSearchBar
+		},
         data() {
             return {
                 userNmuber: "",
                 url: `${getApp().globalData.url}/article/number/${this.userNmuber}`,
                 lenOfList: 10,
                 thereAreMoreArticle: true,
-                articleList: [{  //文章对象数组
+                articleList: [/* {  //文章对象数组
                     "article_id": "11111",
                     "article_logo": "../../static/logo.png",
                     "article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或",
@@ -55,7 +62,7 @@
                     "publish_time": "2019-10-124",
                     "article_reader": "113",
                     "article_status": 1
-                }]
+                } */]
             }
         },
         methods: {
@@ -74,6 +81,10 @@
                     }
                     this.articleList.push(article)
                 }
+                if (this.lenOfList > this.articleList.length) {
+                    this.lenOfList = this.articleList.length
+                    this.thereAreMoreArticle = false
+                }
             },
             getMoreArticle: function () {
                 if (this.lenOfList+10 < this.articleList.length) {
@@ -86,8 +97,100 @@
                 }
             },
             search: function (e) {
-                var url = getApp().globalData.url
+                var url = `${getApp().globalData.url}/article`
                 var keyword = e.detail.keyword
+                if (typeof XMLHttpRequest != "undifined") {
+                    var request = new XMLHttpRequest()
+                    request.onreadystatechange = function () {
+                        if (request.readyState == 4) {
+                            if ((request.status>=200 && request.status<300) || request.status==304) {
+                                var response = {}
+                                try {
+                                    response = JSON.parse(request.responseText)
+                                } catch(e) {
+                                    uni.showModal({
+                                        content: "请求失败",
+                                        showCancel: false
+                                    })
+                                }
+                                if (response !== {}) {
+                                    if (response.code == 200) {
+                                        this.articleList = response.data.list
+                                        if (this.lenOfList > this.articleList.length) {
+                                            this.lenOfList = this.articleList.length
+                                            this.thereAreMoreArticle = false
+                                        }
+                                    } else {
+                                        uni.showModal({
+                                            title: "查询失败",
+                                            content: response.message,
+                                            showCancel: false
+                                        })
+                                    }
+                                }
+                            } else {
+                                uni.showModal({
+                                    content: "请求失败",
+                                    showCancel: false
+                                })
+                            }
+                        }
+                    }
+                    request.open("GET", url, true)
+                    request.send(keyword)
+                } else if (typeof ActiveXObject != "undifined") {
+                    var request = new ActiveXObject("MSXML2.XMLHttp")
+                    request.onreadystatechange = function () {
+                        if (request.readyState == 4) {
+                            if ((request.status>=200 && request.status<300) || request.status==304) {
+                                var response = {}
+                                try {
+                                    response = JSON.parse(request.responseText)
+                                } catch (e) {
+                                    uni.showModal({
+                                        content: "请求失败",
+                                        showCancel: false
+                                    })
+                                }
+                                if (response !== {}) {
+                                    if (response.code == 200) {
+                                        this.articleList = response.data.list
+                                        if (this.lenOfList > this.articleList.length) {
+                                            this.lenOfList = this.articleList.length
+                                            this.thereAreMoreArticle = false
+                                        }
+                                    } else {
+                                        uni.showModal({
+                                            title: "查询失败",
+                                            content: response.message,
+                                            showCancel: false
+                                        })
+                                    }
+                                }
+                            } else {
+                                uni.showModal({
+                                    content: "请求失败",
+                                    showCancel: false
+                                })
+                            }
+                        }
+                    }
+                    request.open("GET", url, true)
+                    request.send(keyword)
+                } else {
+                    uni.showModal({
+                        title: "不支持的浏览器",
+                        content: "请更换浏览器再重试",
+                        showCancel: "false"
+                    })
+                }
+                //尝试模拟搜索返回
+                // var testStr = '{"code":200,"success":true,"message":"查询成功","data":{"total":1,"list":[{"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1}]}}'
+                // this.articleList = JSON.parse(testStr).data.list
+                // if (this.lenOfList > this.articleList.length) {
+                //     this.lenOfList = this.articleList.length
+                //     this.thereAreMoreArticle = false
+                // }
             }
         },
         created() {
@@ -177,6 +280,7 @@
                     }
                 })
             }
+            //尝试模拟查询返回
             var testStr = '{"code":200,"success":true,"message":"查询成功","data":{"total":12,"list":[{"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1}, {"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1}, {"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1}, {"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1},{"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1}, {"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1}, {"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1}, {"article_id": "11111","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站呵呵哈哈哈或或或或或或或或或","article_description": "富力物业华南区域2020届校园招聘广东站全面启动啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊少时诵诗书所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所","publish_time": "2019-10-12","article_reader": "11","article_status": 1}, {"article_id": "222222","article_logo": "../../static/logo.png","article_title": "富力物业","article_description": "富力物业","publish_time": "2019-10-13","article_reader": "112","article_status": 1}, {"article_id": "333333","article_logo": "../../static/logo.png","article_title": "富力物业华南区域2020届校园招聘广东站","article_description": "富力物业华南区域2020届校园招聘广东站全面启动","publish_time": "2019-10-124","article_reader": "113","article_status": 1}]}}'
             this.getArticles(testStr)
         }

@@ -164,7 +164,7 @@
 
 <style>
     /*@import 'https://fonts.googleapis.com/icon?family=Material+Icons';*/  /*学校前面、电话前面、右边的IconFonts*/
-    @import '../../static/iconFont.css'
+    @import '../../static/iconFont.css';
     .body {  /*根view*/
         font-size: 16rpx;
         line-height: 2em;
