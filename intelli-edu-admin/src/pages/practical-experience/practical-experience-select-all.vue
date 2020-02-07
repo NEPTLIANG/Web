@@ -2,7 +2,7 @@
     <!--显示所有实践经历页面-->
     <view class="body">
         <view class="title">实践经历</view>
-        <navigator url="./practical-experience-insert" class="add">添加实践经历</navigator>
+        <navigator url="./practical-experience-insert" class="add" hover-class="btn-hover">添加实践经历</navigator>
         <!-- <practical-experience-card
             practice_unit="安吧观光团"
             inauguration_status="兼职"
@@ -138,7 +138,7 @@
             }, {
                 practice_unit: "笔吧观光团",
                 inauguration_status: "社会实践",
-                entry_name: "辽宁舰",
+                entry_name: "长征五号",
                 practice_position: "码农",
                 start_time: "2018-01-01",
                 end_time: "2018-12-31",
@@ -200,26 +200,40 @@
             /* var testStr = "{\"practice_unit\":\"安吧观光团\",\"entry_name\":\"东风41\",\"practice_position\":\"清洁工\",
             \"experience_description\":\"呵呵哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或\",
             \"inauguration_status\":\"全职\",\"start_time\":\"2018-01-09\",\"end_time\":\"2022-03-13\"}"  //先尝试模拟返回JSON字符串 */
-            var testStr = "{\"code\":200,\"success\":true,\"message\":\"查询成功\",\"data\":{\"total\":1,\"list\":[{\"enclosureAddress\":null,\"endTime\":\"2022-03-13\",\"entryName\":\"东风41\",\"experienceDescription\":\"呵呵哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或\",\"gmtCreate\":null,\"gmtModified\":null,\"inaugurationStatus\":\"全职\",\"practiceId\":null,\"practicePosition\":\"清洁工\",\"practiceUnit\":\"安吧观光团\",\"startTime\":\"2018-01-09\",\"status\": null,\"userNumber\": null}]}}"  //先尝试模拟返回JSON字符串
+            var testStr = '{"code":200,"success":true,"message":"查询成功","data":{"total":1,"list":[{"enclosureAddress":null,"endTime":"2022-03-13","entryName":"东风41","experienceDescription":"呵呵哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或","gmtCreate":null,"gmtModified":null,"inaugurationStatus":"全职","practiceId":null,"practicePosition":"清洁工","practiceUnit":"安吧观光团","startTime":"2018-01-099","status": null,"userNumber": null}]}}'  //先尝试模拟返回JSON字符串
             this.responseProcess(testStr)  //调用前面写的响应处理函数
         }
     }
 </script>
 
 <style>
+	page{
+		display: flex;
+		flex-direction: column;
+		background-color: #F8F8F8;
+	}
     .body {  /*根view*/
-        padding: 32px 32px;
-        font-size: 16rpx;
-        line-height: 2em;
+		flex: 1;
+		padding: 30upx;
     }
     .title {  /*标题*/
-        font-weight: bold;
+		padding-top: 30upx;
+		font-size: 35upx;
+		font-weight: 600;
     }
     .add {  /*添加实践经历按钮（链接）*/
-        text-align: center;
-        color: #ffffff;
-        background-color: #007fff;
-        padding: 16px;
-        margin: 8px 0 16px 0;
+		text-align: center;
+		border-radius: 8rpx;
+		margin: 16rpx 0;
+		padding-top: 20upx;
+		height: 60upx;
+		font-size: 30upx;
+		background-color:#169BD5;
+		color: #f2f2f2;
     }
+	.btn-hover{
+	  position: relative;
+	  top: 3rpx;
+	  box-shadow:0 0 18upx #999 inset; /* 点击后效果 */
+	}
 </style>

@@ -19,7 +19,7 @@
         methods: {
             bindPickerChange: function(e) {  //picker组件选项改变事件处理函数
                 this.index = e.target.value
-                this.$emit('bind-picker-change', this.array[this.index])  //返回选中的选项值
+                this.$emit('bind-picker-change', this.index)  //返回选中的选项值
             }
         }
     }
@@ -27,10 +27,11 @@
 
 <style>
     .selectorPicker {
-        text-align: center;
-        border: 1rpx #bfbfbf solid;
+		/* font-size: 16rpx; */
+        /* text-align: center; */
+        /* border: 1rpx #bfbfbf solid; */
         /* width: 622rpx; */
-        margin: 8rpx 0 16rpx 0;
-        padding: 16rpx 16rpx;
+        /* margin: 8rpx 0 16rpx 0; */
+        /* padding: 16rpx 16rpx; */
     }
 </style>

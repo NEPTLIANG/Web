@@ -9,7 +9,7 @@
                 <view class="descript">{{experience_description}}</view>  <!--经历描述-->
             </view>
         </navigator>
-        <button class="del" @click="$emit('del', practice_id)">删除</button>
+        <button class="del" plain @click="$emit('del', practice_id)">删除</button>
         <navigator class="edit" :url="'./practical-experience-alter?id=' + practice_id">编辑</navigator>
     </view>
 </template>
@@ -42,20 +42,22 @@
 
 <style>
     .card {
-        font-size: 16rpx;
-        line-height: 2em;
-        border: 1rpx #dfdfdf solid;
-        margin: 16px 0;
+		line-height: 1.75em;
+		padding: 30upx;
+		background: white;
+		margin-top: 30upx;
+		font-size: 28upx;
+		color: black;
     }
     .content {
-        margin: 32px;
+        /* margin: 32px; */
     }
     .title {  /*单位名称和担任职位*/
         font-weight: bold;
     }
     .type {  /*就职状态标签*/
-        font-size: 14rpx;
-        line-height: 32rpx;
+        font-size: 24rpx;
+        line-height: 28rpx;
         color: #007fff;
         background-color: #dfffff;
         margin: 0 8px;
@@ -67,29 +69,30 @@
         margin: 8px 0 16px 0;
     }
     .del {  /*删除按钮*/
-        font-size: 16rpx;
         float: left;
-        display: inline-block;
-        text-align: center;
-        line-height: 64rpx;
-        color: #7f7f7f;
+        /* display: inline-block; */
         width: 50%;
-        height: 64rpx;
-        border-width: 0rpx;
-        border-radius: 0rpx;
-        /* padding: 16px; */
+		text-align: left;
+		border: rgba(255, 255, 255, 0) 0rpx none;
+		background-image: url(../../static/删除.png);/*设置小图标*/
+		background-size: 40upx 40upx;/*小图标的大小*/
+		background-position: 18% ; /*小图标在input的位置*/	
+		background-repeat: no-repeat;/*背景小图标不重复*/	
+		border-right: 2upx solid #F8F8F8;
+		padding-left: 19%;
+		color: #d81e06;
+		font-size: 28upx;
     }
     .edit {  /*编辑按钮（链接）*/
         /* float: right; */
         display: inline-block;
-        text-align: center;
         line-height: 64rpx;
-        color: #ffffff;
-        background-color: #007fff;
-        width: 50%;
-        height: 64rpx;
-        border-width: 0rpx;
-        border-radius: 0rpx;
-        /* padding: 16px; */
+		background-image: url(../../static/修改.png);/*设置小图标*/
+		background-size: 40upx 40upx;/*小图标的大小*/
+		background-position: 18%; /*小图标的位置*/	
+		background-repeat: no-repeat;/*背景小图标不重复*/	
+		padding-left: 19%;
+		width: 25%;
+		font-size: 28upx;	
     }
 </style>

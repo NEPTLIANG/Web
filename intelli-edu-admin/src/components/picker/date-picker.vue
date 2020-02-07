@@ -37,11 +37,11 @@
 
 <style>
     .datePicker {
-        font-size: 16rpx;
-        text-align: center;
-        border: 1rpx #bfbfbf solid;
-        width: max-content;
+        /* font-size: 16rpx; */
+        /* text-align: center; */
+        /* border: 1rpx #bfbfbf solid; */
+        /* width: max-content; */
         margin: 8rpx 8rpx 16rpx 8rpx;
-        padding: 16rpx 16rpx;
+        /* padding: 16rpx 16rpx; */
     }
 </style>
