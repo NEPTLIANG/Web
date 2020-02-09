@@ -2,7 +2,7 @@
     <!--文章列表页面-->
     <view class="body">
         <view class="searchArea">
-		<uni-search-bar placeholder="请输入关键字查询" :radius="100" @confirm="search" @cancel="cancelSearch"></uni-search-bar>
+		    <uni-search-bar placeholder="请输入关键字查询" :radius="100" @confirm="search" @cancel="cancelSearch"></uni-search-bar>
             <!-- <form @submit="search">
                 <input type="text" name="keyword" placeholder="请输入关键字查询" class="searchBox">
                 <button form-type="submit" plain="true" class="searchButton">搜索</button>
@@ -249,14 +249,12 @@
                     this.lenOfList = this.showList.length
                     this.thereAreMoreArticle = false
                 }
-                if (this.showList.length === 0) {  //如果没有找到相应文章，弹框并显示所有文章
+                if (this.showList.length === 0) {  //如果没有找到相应文章，弹框提示并显示所有文章
                     uni.showModal({
                         content: "没有找到相应文章",
-                        showCancel: false,
-                        success: () => {
-                            this.cancelSearch()
-                        }
+                        showCancel: false
                     })
+                    this.cancelSearch()
                 }
             },
             cancelSearch: function () {  //取消搜索，显示所有文章
@@ -375,7 +373,7 @@
                             })
                         }
                         if (data !== {}) {
-                            if (data.code == 200) {  //若响应正常，获取文章，否则弹框报错并返回
+                            if (data.code == 200) {  //若响应正常，则获取文章，否则弹框报错并返回
                                 this.getArticles(data.data)
                             } else {
                                 uni.showModal({
@@ -408,8 +406,8 @@
 </script>
 
 <style>
-    /* @import 'https://fonts.googleapis.com/icon?family=Material+Icons'; */  /*浏览量左边的Icon Fonts*/
-    @import '../../static/iconFont.css';  /*浏览量左边的Icon Fonts*/
+    /* @import 'https://fonts.googleapis.com/icon?family=Material+Icons'; */  /*浏览量左边的IconFonts，微信小程序不支持引入CDN的*/
+    @import '../../static/IconFont/IconFont.css';  /*浏览量左边的IconFonts*/
     .body {  /*根view*/
         font-size: 16rpx;
         display: flex;
@@ -473,7 +471,7 @@
 	    font-size: 30upx;
 	    overflow: hidden;
     }
-    .abstract {
+    .abstract {  /*文章摘要*/
         height: 64rpx;
         overflow: hidden;
         color: #bfbfbf;
@@ -488,7 +486,7 @@
 	    line-height: 30upx;
 	    font-size: 26upx;
     }
-    .more {  /*“更多”按钮*/
+    .more {  /*“加载更多”*/
         width: 100%;
         font-size: 16rpx;
         text-align: center;

@@ -5,9 +5,9 @@
     src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
     src: local('Material Icons'),
       local('MaterialIcons-Regular'),
-      /* url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'), */
-      /* url(https://example.com/MaterialIcons-Regular.woff) format('woff'), */
-      url(../../static/MaterialIcons-Regular.ttf) format('truetype');
+      url(../../static/IconFont/MaterialIcons-Regular.woff2) format('woff2'),
+      url(../../static/IconFont/MaterialIcons-Regular.woff) format('woff'),
+      url(../../static/IconFont/MaterialIcons-Regular.ttf) format('truetype');
   }
 
   .material-icons {
