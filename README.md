@@ -1,7 +1,7 @@
 # Web
 Web开发学习，由于文件都不是很大而且语言相关程度高，所以放在同一个仓库
 
-常用语言：**JS, PHP, SQL**
+常用语言：**JS, PHP**
 
 ---
 
@@ -54,7 +54,7 @@ Web开发学习，由于文件都不是很大而且语言相关程度高，所�
 
 **主要开发工具**：VIM, 微信开发者工具
 
-包含学校计算机社团一位师兄的毕业设计中的6个页面，采用uni-app（[uniapp.dcloud.io/README](uniapp.dcloud.io/README)，使用Vue.js开发前端应用的框架）。师兄想让我们练练手，所以给我们分配了几个页面
+包含学校计算机社团一位师兄的学校项目中的6个页面，采用uni-app（[uniapp.dcloud.io/README](https://uniapp.dcloud.io/README)，使用Vue.js开发前端应用的框架）。师兄想让我们练练手，所以给我们分配了几个页面
 
 我负责“文章列表”、“实践经历管理”、“个人主页”三个部分共6个页面，其中实践经历管理分为添加实践经历、修改实践经历、查询单条实践经历、查询所有实践经历4个页面
 
@@ -136,7 +136,7 @@ Web开发学习，由于文件都不是很大而且语言相关程度高，所�
     * _学校大二第1学期课程《数据库原理》实验文件 /SQLExperiment\d.sql/_
     * _学校大三第1学期课程《大型数据库设计》（Oracle）实验文件 /OracleExperiment\d(v\d.\d)?.sql/_
 * **SimplifiedRSA**  
-    _[简化的RSA加解密、数字签名系统](https://github.com/NEPTLIANG/Web#%E5%A4%A7%E4%B8%89%E7%AC%AC%E4%B8%80%E5%AD%A6%E6%9C%9F%E5%AD%A6%E6%A0%A1%E8%AF%BE%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E4%B8%8E%E4%BF%9D%E5%AF%86%E6%9C%9F%E6%9C%AB%E4%BD%9C%E4%B8%9A)_
+    _[简化的RSA加解密、数字签名系统](https://github.com/NEPTLIANG/Web#1-%E7%AE%80%E5%8C%96%E7%9A%84rsa%E5%8A%A0%E8%A7%A3%E5%AF%86%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E7%B3%BB%E7%BB%9F)_
 * **WebCourse**  
     _学校大二第2学期课程《网站建设与开发》（ASP）的作业和实验文件_
 * **intelli-edu-admin**  

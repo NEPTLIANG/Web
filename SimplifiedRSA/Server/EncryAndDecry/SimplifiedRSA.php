@@ -3,11 +3,7 @@ function millerRabinAlgorithm($n)  //按照课本介绍实现的Miller-Rabin算�
 {
     $d = 1;
     $nSubOne = decbin($n - 1);
-    $a = mt_rand(0, $n - 1);
-
-//    $a = 10;
-
-    for ($i = 0; $i < strlen($nSubOne); $i++) {
+    $a = mt_rand(0, $n - 1);for ($i = 0; $i < strlen($nSubOne); $i++) {
         $x = $d;
         $d = pow($d, 2) % $n;
         if ($d == 1 && $x != 1 && $x != $n - 1) {
@@ -47,9 +43,6 @@ function millerRabinAlgorithmV2($n)  //参照William Stallings所著的《密码
         for ($times = 0; $times < 10; $times++) {
             $flag = false;
             $a = mt_rand(2, $n - 2);
-
-//    $a = 10;
-
 //            if (pow($a, $q) % $n == 1) {  //溢出了，应用平方乘算法
             if (squareMultiAlgorithm($a, $q, $n) == 1) {
                 $flag = true;  //有可能是素数
@@ -149,9 +142,6 @@ function Ek($m, $pub)  //加密
 {
     $e = $pub["e"];
     $n = $pub["n"];
-
-//    $e=560;$n=561;
-
 //    echo $e;
 //    echo pow($m, $e);
 //    return pow($m, $e) % $n;
