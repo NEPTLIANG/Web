@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* display: flex; */
+    /* flex: auto; */
+    /* border-width: 0; */
+}
+html {
+    display: flex;
+    flex: auto;
+    justify-content: center;
+    align-items: center;
+    /* flex: 1 1 100%; */
+    height: 100%;
+    /* overflow: auto; */
+}
+body {
+    background-image: url("../img/neuro.jpg");
+    background-size: cover;
+    display: flex;
+    /* flex: auto; */
+    flex: 0 1 1280px;
+    flex-direction: column;
+    /* height: 128px; */
+    /* overflow: scroll; */
+    font-size: 16px;
+    color: #7f7f7f;
+    /* margin: 32px auto; */
+}
+header {
+    /* display: flex; */
+    flex: auto;
+    background-color: #dfdfdf;
+    padding: 32px 48px;
+}
+header h1 {
+    color: #bfbfbf;
+    margin-left: -8px;
+    /* position: relative;
+    left: -8px;
+    z-index: 0; */
+}
+header h2 {
+    margin-top: -24px;
+    /* z-index: 99; */
+}
+main {
+    display: flex;
+    flex-direction: row;
+    flex: 0 1 384px;
+    overflow: hidden;
+    /* height: 384px; */
+}
+aside {
+    /* display: flex; */
+    flex: 0 1 auto;
+    background-color: #bfbfbf;
+    padding: 32px 48px;
+    /* flex: 0 0 auto;   */
+}
+aside img {
+    border-radius: 100%;
+}
+nav ul {
+    margin-top: 32px;
+    list-style: none;
+}
+nav li {
+    /* text-align: center; */
+    color: #7f7f7f;
+    text-decoration: none;
+    background-color: #fff;
+    padding: 12px;
+    margin: 4px 0;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+nav a:link,a:visited {
+    color: #7f7f7f;
+    text-decoration: none;
+}
+nav li:hover{
+    color: #fff;
+    background-color: #7f7f7f;
+}
+article {
+    display: flex;
+    flex-direction: column;
+    background-color: #efefef;
+    padding: 32px 48px;
+    overflow: auto;
+    flex: auto;
+}
+section {
+    flex: auto;
+}
+fieldset {
+    padding: 16px;
+}
+footer {
+    display: flex;
+    font-size: 12px;
+    /* text-align: center; */
+    background-color: #dfdfdf;
+    padding: 32px 48px;
+    flex: auto;
+}
