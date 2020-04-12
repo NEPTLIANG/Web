@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>实验3</title>
+        <!--实验3-2、自行设计一个页面，运用JS，JQ知识进行页面交互-->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, 
+            maximun-scale=1.0, minimal-scale=1.0, user-scaleable=no"/>
+        <script>
+            window.onload = function () {
+                document.querySelectorAll("[type=\"button\"]")[0].addEventListener("click", function () {
+                    var id = document.querySelector('[name="id"]').value;
+                    var pwd = document.querySelectorAll("[name='pwd']")[0].value;
+                    if (id=="ming" && pwd=='pwd') {
+                        alert("登录成功");
+                    } else {
+                        alert("用户名或密码错误")
+                    }
+                }, false)
+            }
+        </script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                height: 100%;
+            }
+            body {
+                font-size: 16px;
+                color: #7f7fff;
+                height: 100%;
+                line-height: 1.5em;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #card {
+                flex: 0 1 32rem;
+                padding: 3rem 4rem;
+                border-radius: 1rem;
+                box-shadow: 0 1rem 4rem #dfdfff;
+            }
+            h1 {
+                line-height: 3rem;
+                margin-bottom: 2rem;
+            }
+            .description {
+                font-size: 4px;
+                margin-top: 1rem;
+            }
+            input[type="text"], input[type="password"] {
+                color: #7f7fff;
+                width: 256px;
+                border: #7f7fff solid;
+                border-width: 0 0 2px 0;
+                padding: 0.5rem 0;
+            }
+            input[type="text"]:focus, input[type="password"]:focus {
+                background: none;
+                color: #7f7fff;
+                border: #00f solid;
+                border-width: 0 0 2px 0;
+            }
+            input[type="button"] {
+                display: block;
+                color: #fff;
+                background-color: #7f7fff;
+                padding: 1rem 4rem;
+                margin-top: 1.5rem;
+                border: 0 #7f7fff none;
+                border-radius: 8rem;
+            }
+            input[type="button"]:hover {
+                background-color: #00f;
+            }
+            input[type="button"]:active {
+                background-color: #bfbfff;
+            }
+        </style>
+    </head>
+    <body>
+
+        <form method="post" action="#" id="card">
+            <h1>欢迎登陆<br/>
+                破解版支付宝</h1>
+            <p class="description">用户名</p>
+            <input type="text" name="id"/>
+            <p class="description">密码</p>
+            <input type="password" name="pwd"/>
+            <input type="button" value="登录"/>
+        </form>
+
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>作业4 - 上拉加载&下拉刷新</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimun-scale=1.0, maximun-scale=1.0, user-scalable=no"/>
+        <script src="Homework4.js"></script>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            body {
+                position: relative;
+            }
+            #update {
+                /* position: absolute; */
+                margin-top: -240px;
+                font-size: 48px;
+                text-align: center;
+                padding: 96px;
+            }
+            #main {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .image {
+                margin: 4rem;
+                box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.25);
+            }
+            #more {
+                font-size: 48px;
+                text-align: center;
+                padding: 4rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="body">
+            <div id="update">下拉刷新</div>
+            <div id="main"></div>
+            <div id="more">上滑加载更多</div>
+        </div>
+    </body>
+</html>
