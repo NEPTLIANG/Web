@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>作业5 jquery、ajax实践页面</title>
+        <!--作业5 jquery、ajax实践页面-->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,
+            minimun-scale=1.0, maximun-scale=1.0, user-scalable=no"/>
+        <script>
+
+            onload = () => {
+                var queryBtn = document.getElementById("query");
+                queryBtn.addEventListener("click", function () {
+                    var appCode = "8b6f519bfe9e40488e2e859f82c52745";
+                    var address = document.querySelectorAll("#address")[0].value;
+                    // var ak = "Vfka5G5tO4F5wMYQUidygbmjvy07laPg";
+                    // var url = "http://api.map.baidu.com/location/ip?ak=Vfka5G5tO4F5wMYQUidygbmjvy07laPg";
+                    // var url = "http://api.map.baidu.com/geocoding/v3/?address=" + address + "&output=json&ak=" + ak + "&callback=showLocation";
+                    var url = "http://geo.market.alicloudapi.com/v3/geocode/geo"
+                        + "?address=" + address + "&batch=false&output=JSON";  //不要callback参数，返回的就是JSON而不是函数了
+                    if (typeof "XMLHttpRequest" !== "undefined") {
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = () => {
+                            if (xhr.readyState == 4) {
+                                if (xhr.status == "200") {
+                                    // var x = eval(xhr.responseText);
+                                    console.log(xhr.responseText);
+                                    try {
+                                        var response = JSON.parse(xhr.responseText);
+                                    } catch (e) {
+                                        alert("没有响应");
+                                    }
+                                    if (typeof(response) !== "undefined") {
+                                        if (response.status == 1) {
+                                            var lngNode = document.querySelector("#lng");  //经度
+                                            var latNode = document.getElementById("lat");  //纬度
+                                            lngNode.innerText = response.geocodes[0].location.split(",")[0];
+                                            latNode.innerText = response.geocodes[0].location.split(",")[1];
+                                        } else {
+                                            alert("请求失败");
+                                        }
+                                    }
+                                } else {
+                                    alert("请求失败");
+                                }
+                            }
+                        }
+                        xhr.open("GET", url, true);
+                        xhr.setRequestHeader("Authorization", "APPCODE " + appCode);  //先open再设请求头
+                        xhr.send(null);
+                    }
+                })
+            }
+
+        </script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                overflow: auto;
+                height: 100%;
+                font-size: 48px;
+                display: flex;
+                justify-content: center;
+                align-items: flex-end;
+                background-color: #003f7f;
+            }
+            body {
+                color: #00ffff;
+                padding: 4rem 2rem;
+            }
+            h1 {
+                font-size: 2.5rem;
+                margin: 4rem 0;
+            }
+            input[type="text"] {
+                width: 7rem;
+                text-align: center;
+                font-size: 1rem;
+                color: #00ffff;
+                background: none;
+                padding: 1rem 0 1rem 2rem;
+                margin: 0 1rem;
+                border: #007f7f none;
+                border-width: 0 0 0 4px;
+            }
+            .input {
+                background-color: #001f3f!important;
+            }
+            button{
+                width: 100%;
+                background-color: #001f3f!important;
+            }
+            .result,.input,button {
+                text-align: center;
+                font-size: 1rem;
+                color: #00ffff;
+                background-color: #002f5f;
+                padding: 0.5rem 1rem;
+                margin: 1rem 0;
+                border: 0 none;
+                border-radius: 16px;
+            }
+            .left {
+                color: #00bfbf;
+                display: inline-block;
+                width: 5rem;
+                text-align: center;
+            }
+            .right {
+                display: inline-block;
+                width: 7rem;
+                border: #007f7f none;
+                border-width: 0 0 0 4px;
+                /* padding-left: 1rem;
+                margin-left: 1rem; */
+                padding-left: 2rem;
+                margin: 0 1rem;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h1>经纬度查询</h1>
+        <div class="input">
+            <span class="left">请输入地址</span><input type="text" id="address" placeholder="请输入地址"/>
+        </div>
+        <button id="query">查询</button>
+        <div class="result">
+            <span class="left">经度</span><span id="lng" class="right">请点击查询按钮</span>  <!--经度-->
+        </div>
+        <div class="result">
+            <span class="left">纬度</span><span id="lat" class="right">请点击查询按钮</span>  <!--纬度-->
+        </div>
+
+    </body>
+</html>
