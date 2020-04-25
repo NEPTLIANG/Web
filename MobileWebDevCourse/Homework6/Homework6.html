@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>作业6</title>
+        <!--第六次作业
+            起止时间: 2020/04/24 16:15 ~ 2020/05/01 23:59
+            第六次作业：对【例3-15】综合示例演示注册页面的中提交按钮绑定事件处理操作
+            （步骤1,：在vm实例中的方法中定义事件处理函数，处理函数的具体内容自行定义
+            步骤2：在提交按钮上进行事件绑定）-->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, 
+            minimun-scale=1.0, maximun-scale=1.0, user-scalable=no"/>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>填写个人信息</h1>
+        </header>
+        <article>
+            <section>
+                姓名：<input v-model="name" type="text"/>
+                <fieldset>
+                    <legend>健康信息</legend>
+                    身高：<input v-model="height" type="number"/>
+                    体重：<input v-model="weight" type="number"/>
+                </fieldset>
+                性别：<input v-model="sex" value="男" type="radio"/>男
+                <input v-model="sex" value="女" type="radio"/>女<br/>
+                喜爱的运动：<br/>
+                <input v-model="sport" value="篮球" type="checkbox"/>篮球
+                <input v-model="sport" value="足球" type="checkbox"/>足球
+                <input v-model="sport" value="羽毛球" type="checkbox"/>羽毛球
+                <input v-model="sport" value="跑步" type="checkbox"/>跑步<br/>
+                地址：
+                <select v-model="addr">
+                    <option value="北京">北京</option>
+                    <option value="" selected>请选择城市</option>
+                    <option value="上海">上海</option>
+                    <option value="广州">广州</option>
+                    <option value="深圳">深圳</option>
+                    <option claue="杭州">杭州</option>
+                </select><br/>
+                个人简介：<br/>
+                <textarea v-model="intro" rows="4" cols="40"></textarea><br/>  <!-- textarea是行内元素 -->
+                <input @click.prevent="submit" type="submit" value="提交"/>
+                <input @click.prevent="reset" type="reset" value="重置"/>
+            </section>
+            <section>
+                姓名：{{name.trim()}}<br/>
+                身高：{{height}}<br/>
+                体重：{{weight}}<br/>
+                性别：{{sex}}<br/>
+                喜爱的运动：{{sport.join("、")}}<br/>
+                地址：{{addr}}<br/>
+                个人简介：{{intro}}<br/>
+            </section>
+        </article>
+    </body>
+</html>
+
+<script>
+    var app = new Vue({
+        el: "article",  //不能选择html和body
+        data: {
+            name: "",
+            height: 0,
+            weight: 0,
+            sex: "",
+            sport: [],
+            addr: "",
+            intro: ""
+        },
+        methods: {  //method可能有多个，所以是复数形式
+            submit: (e) => {
+                // console.log(this)  //不应用this读取属性，this指向Window
+                var str = "点击了" + e.target.value
+                    + "，姓名：" + app.name.trim()
+                    + "，身高：" + app.height
+                    + "，体重：" + app.weight
+                    + "，性别：" + app.sex
+                    + "，喜爱的运动：" + app.sport.join("、")
+                    + "，地址：" + app.addr
+                    + "， 个人简介：" + app.intro;
+                alert(str);
+            },
+            reset: (e) => {
+                alert("点击了" + e.target.value);
+                app.name = "";
+                app.height = 0;
+                app.weight = 0;
+                app.sex = "";
+                app.sport = [];
+                app.addr = "";
+                app.intro = "";
+            }
+        }
+    })
+</script>
+
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        line-height: 2rem;
+    }
+    h1 {
+        text-align: center;
+    }
+    article {
+        display: flex;  /* 子标签不会继承display:flex */
+        flex-direction: row;
+        justify-content: center;
+    }
+    section {
+        padding: 0 5%;
+        width: 25%;
+    }
+</style>
