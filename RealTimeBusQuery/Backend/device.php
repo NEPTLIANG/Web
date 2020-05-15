@@ -50,6 +50,8 @@ class Device
 
 session_start();
 
+header("Access-Control-Allow-Origin", "*");
+
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST" :
         $name = trim($_POST['name']);
@@ -71,12 +73,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 exit;
             }
             $db->select_db("RealTimeBusQuery");
-            $query = "INSERT INTO device VALUES ?, ?, ?, ?";
+            $query = "INSERT INTO device "
+                . "VALUES (?, ?, ?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->bind_param("s", $name, $id, $route, $intro);
+            $stmt->bind_param("ssss", $name, $id, $route, $intro);
             $stmt->execute();
-            @$db = mysqli_connect("localhost", "root", "916616515");
-            /*if (mysqli_connect_errno()) {
+            /*@$db = mysqli_connect("localhost", "root", "916616515");
+            if (mysqli_connect_errno()) {
                 echo "Could not connect to database.";
                 exit;
             }
@@ -86,6 +89,33 @@ switch ($_SERVER['REQUEST_METHOD']) {
             mysqli_stmt_prepare($query);
             mysqli_stmt_bind_param("s", $name, $id, $route, $intro);
             mysqli_stmt_execute($query);*/
+        } else {
+            print("IlleGal Value");
+            exit;
         }
+        $db->close();
         break;
+    case "PUT":
+        if (isset($_POST["name"]) && isset($_POST["id"]) && isset($_POST["route"])
+            && isset($_POST["intro"]) && isset($_POST["lng"]) && isset($_POST["lat"])) {
+            $name = trim($_POST["name"]);
+            $id = trim($_POST["id"]);
+            $route = trim($_POST["route"]);
+            $intro = trim($_POST["intro"]);
+            $lng = trim($_POST["lng"]);  //经度
+            $lat = trim($_POST["lat"]);  //纬度
+            @$db = new mysqli("localhost", "root", "916616515");
+            if (mysqli_connect_errno()) {
+                exit("数据库连接失败");
+            }
+            $db->select_db("RealTimeBusQuery");
+            $query = "UPDATE device(id, lng, lat) "
+                . "SET (?, ?, ?) "
+                . "WHERE id=?";
+            $stmt = $db->prepare($query);
+            $stmt->bind_param("sdds", $id, $lng, $lat, $id);
+            $stmt->execute();
+        }
 }
+
+echo "test";
