@@ -1,0 +1,17 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+html {
+    height: 100%;
+}
+body {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    height: 100%;
+}
+#container {
+    width:100%; 
+    height: 100%;
+}

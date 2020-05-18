@@ -25,15 +25,26 @@ device = "car1"
 def submitLocation(res):
     url = "http://122.51.3.35/device.php"
     resList = res.split(",")
-    lat = str(float(resList[1]) / 100)
-    lng = str(float(resList[3]) / 100)
+    latdu = int(float(resList[1]) / 100)
+    latfen = int(float(resList[1]) % 100)
+    latmiao = int(float(resList[1]) % 1)
+    lat = str(float(latdu) + float(latdu)/60 + float(latmiao)/3600)
+    lngdu = int(float(resList[3]) / 100)
+    lngfen = int(float(resList[3]) % 100)
+    lngmiao = int(float(resList[3]) % 1)
+    lng = str(float(lngdu) + float(lngdu)/60 + float(lngmiao)/3600)
+    # lat = str(float(resList[1]) / 100)
+    # lng = str(float(resList[3]) / 100)
     data = "id=" + device + "&lat=" + lat + "&lng=" + lng
     req = request.Request(url=url, data=data.encode(), method="PUT")
-    f = request.urlopen(req)
-    if f.status == 200:
-        print(f.read().decode("utf-8"))
-    else:
-        print("请求失败：" + f.reason)
+    try:
+        f = request.urlopen(req)
+        if f.status == 200:
+            print(f.read().decode("utf-8"))
+        else:
+            print("请求失败：" + f.reason)
+    except:
+        print("网络错误")
 #f = urllib.urlopen("http://122.51.3.35/test.php")
 # print("%d %s" % (f.status, f.reason))
 # for key, value in f.getheaders():
@@ -51,11 +62,17 @@ ser.open()  # 打开端口
 # ser.write(“hello”)#向端口些数据
 times = 0
 while(True):
-    res = ser.readline().decode('utf-8')
-    if re.match("^\$GPGLL", res):  # 是读一行，以/n结束，要是没有/n就一直读，阻塞。
+    res = ser.readline().decode('utf-8')  # 是读一行，以/n结束，要是没有/n就一直读，阻塞。
+    if re.match("^\$GPGLL", res):
         print(res)
         if times >= 5:
-            submitLocation(res)
+            strs = res.split(",")
+            lng = float(strs[3]) / 100  # 经度
+            lat = float(strs[1]) / 100  # 纬度
+            if (lng >= 0 and lng <= 180) and (lat >= 0 and lat <= 90):
+                submitLocation(res)
+            else:
+                print("无法获取经纬度")
             times = 0
         else:
             times += 1

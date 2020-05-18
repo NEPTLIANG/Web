@@ -50,7 +50,7 @@ class Device
 
 session_start();
 
-header("Access-Control-Allow-Origin", "*");
+header("Access-Control-Allow-Origin: *");
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST" :
@@ -63,15 +63,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $dev = new Device($name, $id, $route);
             var_dump($dev);
         } else {
-            print("不合法的值");
-            exit;
+            $result["status"] = 400;
+            $result["message"] = "不合法的值";
+            exit(json_encode($result));
         }
         if (isset($dev)) {
             //var_dump(isset($dev));
             @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
             if (mysqli_connect_errno()) {
-                echo "无法连接到数据库，请稍后重试";
-                exit;
+                $result["status"] = 500;
+                $result["message"] = "无法连接到数据库，请稍后重试";
+                exit(json_encode($result));
             }
             $db->select_db("RealTimeBusQuery");
             $query = "INSERT INTO device VALUES (?, ?, ?, 0, 0, ?)";
@@ -79,7 +81,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $stmt->bind_param("ssss", $id, $name, $route, $intro);
             $stmt->execute();
             if ($stmt->affected_rows > 0) {
-                echo "设备添加成功";
+                $result["status"] = 200;
+                $result["describe"] = "OK";
+                $result["message"] = "设备添加成功";
             } else {
                 echo "发生错误，设备未添加";
             }
@@ -109,10 +113,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $intro = trim($_POST["intro"]);
         $lng = doubleval(trim($_REQUEST["lng"]));  //经度
         $lat = doubleval(trim($_POST["lat"]));  //纬度 */
-        var_dump($_REQUEST);
+        //var_dump($_REQUEST);
         parse_str(file_get_contents('php://input'), $data);
         $id = trim($data["id"]);
-        var_dump($id);
         $lng = doubleval(trim($data["lng"]));  //经度
         $lat = doubleval(trim($data["lat"]));  //纬度
         $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
@@ -130,6 +133,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $stmt->bind_param("sdds", $id, $lng, $lat, $id);
             $stmt->execute();
             if ($stmt->affected_rows > 0) {
+                echo $lng . "," . $lat . "\n";
                 echo "定位上传成功";
             } else {
                 echo "发生错误，定位未上传";
@@ -141,6 +145,53 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $db->close();
         break;
     //}
+    case "GET":
+        //header("Access-Control-Allow-Origin", "*");
+        $route = trim($_GET["route"]);
+        $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
+        if (preg_match($pattern, $route) !== 0) {
+            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+            if (mysqli_connect_errno()) {
+                exit("无法连接到数据库，请稍后重试");
+            }
+            $db->select_db("RealTimeBusQuery");
+            $query = "SELECT id, name, intro, lng, lat "
+                . "FROM device "
+                . "WHERE route=?";
+            $stmt = $db->prepare($query);
+            $stmt->bind_param("s", $route);
+            $stmt->bind_result($id, $name, $intro, $lng, $lat);
+            $stmt->execute();
+            $stmt->store_result();
+            //var_dump($stmt->num_rows);
+            if ($stmt->num_rows > 0) {
+                $devices = [];
+                while ($stmt->fetch()) {
+                    $device = [
+                        "id" => $id,
+                        "name" => $name,
+                        "intro" => $intro,
+                        "lng" => $lng,
+                        "lat" => $lat
+                    ];
+                    array_push($devices, json_encode($device));
+                }
+                //var_dump($devices);
+                $db->close();
+                $result["status"] = 200;
+                $result["describe"] = "OK";
+                $result["devices"] = $devices;
+                exit(json_encode($result));
+            } else {
+                $result["status"] = 500;
+                $result["describe"] = "发生错误，无法查询定位";
+                exit(json_encode($result));
+            }
+        } else {
+            print("不合法的值");
+            exit;
+        }
+        break;
 }
 
-echo "test";
+//echo "test";
