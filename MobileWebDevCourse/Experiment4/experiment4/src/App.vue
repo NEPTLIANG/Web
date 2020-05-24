@@ -47,12 +47,12 @@
 				]
 			};
 			var response = JSON.stringify(responseObj);
-			/* var url = "www.baidu.com";
+			var url = "www.baidu.com";
 			this.$http.jsonp(url).then((res) => {
 				console.log(res);
 			}, () => {
 				console.log(response);
-			}) */
+			})
 			this.words = JSON.parse(response).words;
 			// console.log(this.words);
 		}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>实验5</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimun-scale=1.0,
+            maximun-scale=1.0, user-scalable=no" />
+    </head>
+    <script>
+        onload = () => {
+            if (localStorage.id) {
+                document.querySelector("#id").value = localStorage.id;
+            }
+        }
+        login = () => {
+            // var id = document.querySelector("[name='id']").value;
+            // var pwd = document.querySelector("[name='pwd']").value;
+            if (id.value !== "" && pwd.value !== "") {
+                localStorage.id = id.value;
+                sessionStorage.pwd = pwd.value;
+            } else {
+                alert("请输入账号和密码");
+            }
+        }
+    </script>
+    <style>
+        html, body {
+            display: flex;
+            justify-content: center;
+            color: #777;
+            font-size: 16px;
+            align-items: center;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 32px;
+            text-align: center;
+            margin: 64px 0;
+        }
+        #card {
+            padding: 32px 64px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+        }
+        .hint {
+            color: #bbb;
+            font-size: 12px;
+        }
+        input[type="text"], input[type="password"] {
+            color: #777;
+            width: 128px;
+            text-align: center;
+            padding: 8px 16px;
+            margin: 0 0 32px 0;
+            border-color: #777;
+            border-width: 0 0 2px 0;
+        }
+        .testId {
+            font-size: 12px;
+            color: #bbb;
+            text-align: center;
+        }
+        input[type="submit"] {
+            color: #fff;
+            background-color: #777;
+            width: 100%;
+            padding: 16px 32px;
+            margin: 16px 0;
+            border: none;
+            border-radius: 32px;
+        }
+    </style>
+    <body>
+
+        <article>
+            <h1>水果购物网</h1>
+            <div id="card">
+                <form method="GET" action="index.html" onsubmit="login()">
+                    <div class="hint">账号</div>
+                    <input type="text" id="id" placeholder="请输入你的账号" autofocus/>
+                    <div class="hint">密码</div>
+                    <input type="password" id="pwd" placeholder="请输入你的密码"/>
+                    <div class="testId">(测试账号：guest 密码:1234)</div>
+                    <input type="submit" value="登录"/>
+                </form>
+            </div>
+        </article>
+
+    </body>
+</html>
