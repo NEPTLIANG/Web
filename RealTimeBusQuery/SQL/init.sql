@@ -1,5 +1,11 @@
-CREATE DATABASE RealTimeBusQuery;
+CREATE DATABASE RealTimeBusQuery;  /*建库*/
 USE RealTimeBusQuery;
+
+CREATE USER bus  /*创建用户并授权*/
+    IDENTIFIED BY "amd,yes!";
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON RealTimeBusQuery.*
+    TO bus;
 
 CREATE TABLE org(  /*机构*/
     name VARCHAR(20),
@@ -63,3 +69,14 @@ ALTER TABLE user
     MODIFY name VARCHAR(20) NOT NULL;
 ALTER TABLE user
     MODIFY pwd VARCHAR(20) NOT NULL;
+
+INSERT INTO org(name, id, pwd)  /*插入测试数据*/
+    VALUES("岭师", "000", "password");
+INSERT INTO route(name, id, org)
+    VALUES("校车", "111", "000");
+INSERT INTO device(name, id, route, lng, lat)
+    VALUES("校车1", "222", "111", 0, 0);
+INSERT INTO identification(name, id, route)
+    VALUES("东大门", "333", "111");
+INSERT INTO user(name, id, pwd)
+    VALUES("哈哈哈", "444", "password");
