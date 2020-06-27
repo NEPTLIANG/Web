@@ -1,15 +1,16 @@
-const { userInfo } = require("os")
+// const { userInfo } = require("os")
 
 var request = new XMLHttpRequest()
-var url = "http://122.51.3.35/identification.php"
+var method = "GET"
+var url = "http://122.51.3.35/identification.php?route=111"
 //key=471ec411c1fac90a900a6ea32752e43c sid=134678 tid=250232772 trid=20
-var content = 'name=东大门&id=123&route=111'
+var content = 'route=111'
 request.onreadystatechange = () => {
     if (request.readyState == 4) {
         console.log(unescape(request.responseText.replace(/\\u/gi, "%u")))
     }
 }
-request.open("POST", url, true)
+request.open(method, url, true)
 request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 request.send(content)
 

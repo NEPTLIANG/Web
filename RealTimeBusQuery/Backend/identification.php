@@ -44,7 +44,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result['status'] = 400;
             $result['message'] = "不合法的值";
         }
-        @$db = new mysqli("localhost", "root", "amd,yes!");
+        $db = new mysqli("127.0.0.1", "root", "amd,yes!");  //这里应该用本地ip而非localhost，否则报错
         if (mysqli_connect_errno()) {
             $result['status'] = 500;
             $result['message'] = "无法连接到数据库，请稍后重试";
