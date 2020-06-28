@@ -1,8 +1,8 @@
 <?php
 session_start();
-
 header("Access-Control-Allow-Origin: *");
 
+$pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST" :
         $name = trim($_POST['name']);
@@ -10,7 +10,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $org = trim($_POST['org']);
         $intro = trim($_POST['intro']);
         $intro = isset($intro) ? $intro : "暂无说明";
-        $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
         if ((preg_match($pattern, $id) !== 0) && (preg_match($pattern, $route) !== 0) && isset($name)) {
             //var_dump(isset($dev));
             @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
@@ -45,7 +44,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $name = trim($data["name"]);
         $org = trim($data["org"]);
         $intro = trim($data["intro"]);
-        $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
         if ((preg_match($pattern, $id) !== 0) && (preg_match($pattern, $route) !== 0) && isset($name)) {
             @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
             if (mysqli_connect_errno()) {
@@ -75,7 +73,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case "GET":
         $org = trim($_GET["org"]);
-        $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
         if (preg_match($pattern, $org) !== 0) {
             @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
             if (mysqli_connect_errno()) {
@@ -115,5 +112,36 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result["message"] = "不合法的值";
             exit(json_encode($result));
         }
+        break;
+    case "DELETE":
+        parse_str(file_get_contents("php://input"), $delete);
+        $id = trim($delete['id']);
+        echo $id;
+        if (!preg_match($pattern, $id)) {
+            $response['status'] = 400;
+            $response['message'] = "不合法的值";
+            exit(json_encode($response, JSON_UNESCAPED_UNICODE));
+        }
+        @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
+        if (mysqli_connect_errno()) {
+            $response['status'] = 500;
+            $response['message'] = "无法连接到数据库，请稍后重试";
+            exit(json_encode($response, JSON_UNESCAPED_UNICODE));
+        }
+        $db->select_db("RealTimeBusQuery");
+        $query = "DELETE FROM route "
+            . "WHERE id=?";
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $response['status'] = 200;
+            $response['describe'] = "OK";
+        } else {
+            $response['status'] = 500;
+            $response['message'] = "发生错误，路线未删除";
+        }
+        $db->close();
+        exit(json_encode($response, JSON_UNESCAPED_UNICODE));
         break;
 }

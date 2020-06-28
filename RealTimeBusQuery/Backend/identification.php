@@ -6,10 +6,10 @@ header("Access-Control-Allow-Origin: *");
 $pattern = "/[a-zA-Z0-9_-]{2,21}/";
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST":
-        $name   = trim($_POST['name']);
-        $id     = trim($_POST['id']);
-        $route  = trim($_POST['route']);
-        $intro  = trim($_POST['intro']);
+        $name = trim($_POST['name']);
+        $id = trim($_POST['id']);
+        $route = trim($_POST['route']);
+        $intro = trim($_POST['intro']);
 //        $intro  = $intro ? $intro : "暂无简介";
         if (!$name || !preg_match($pattern, $id)
             || !preg_match($pattern, $route)) {
@@ -44,7 +44,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result['status'] = 400;
             $result['message'] = "不合法的值";
         }
-        @$db = new mysqli("127.0.0.1", "root", "amd,yes!");  //这里应该用本地ip而非localhost，否则报错
+        @$db = new mysqli("127.0.0.1", "root", "amd,yes!"); //这里应该用本地ip而非localhost，否则报错
         if (mysqli_connect_errno()) {
             $result['status'] = 500;
             $result['message'] = "无法连接到数据库，请稍后重试";
@@ -67,10 +67,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $identifications = [];
         while ($stmt->fetch()) {
             $identification = [
-                "id"    => $id,
-                "name"  => $name,
+                "id" => $id,
+                "name" => $name,
                 "route" => $route,
-                "intro" => $intro
+                "intro" => $intro,
             ];
             array_push($identifications, $identification);
         }
@@ -82,10 +82,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case "PUT":
         parse_str(file_get_contents('php://input'), $data);
-        $id     = trim($data['id']);
-        $name   = trim($data['name']);
-        $route  = trim($data['route']);
-        $intro  = trim($data['intro']);
+        $id = trim($data['id']);
+        $name = trim($data['name']);
+        $route = trim($data['route']);
+        $intro = trim($data['intro']);
 //        $intro = $intro ? $intro : "暂无简介";
         if (!$name || !preg_match($pattern, $id)
             || !preg_match($pattern, $route)) {

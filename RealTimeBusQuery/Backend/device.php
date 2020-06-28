@@ -65,7 +65,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         } else {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
-            exit(json_encode($result));
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         if (isset($dev)) {
             //var_dump(isset($dev));
@@ -73,7 +73,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             if (mysqli_connect_errno()) {
                 $result["status"] = 500;
                 $result["message"] = "无法连接到数据库，请稍后重试";
-                exit(json_encode($result));
+                exit(json_encode($result, JSON_UNESCAPED_UNICODE));
             }
             $db->select_db("RealTimeBusQuery");
             $query = "INSERT INTO device VALUES (?, ?, ?, 0, 0, ?)";
@@ -183,6 +183,35 @@ switch ($_SERVER['REQUEST_METHOD']) {
             exit;
         }
         break;
+    case "DELETE":
+        parse_str(file_get_contents("php://input"), $data);
+        $id = trim($data['id']);
+        $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
+        if (!preg_match($pattern, $id)) {
+            $result['status'] = 400;
+            $result['message'] = "不合法的值";
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+        }
+        @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
+        if (mysqli_connect_errno()) {
+            $result['status'] = 500;
+            $result['message'] = "无法连接到数据库，请稍后重试";
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+        }
+        $db->select_db("RealTimeBusQuery");
+        $query = "DELETE FROM device "
+            . "WHERE id=?";
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $result['status'] = 200;
+            $result['describe'] = "OK";
+        } else {
+            $result['status'] = 500;
+            $result['message'] = "发生错误，设备未删除";
+        }
+        $db->close();
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+        break;
 }
-
-//echo "test";
