@@ -30,7 +30,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $stmt->execute();
         if ($stmt->affected_rows > 0) {
             $result["status"] = 200;
-            $result["message"] = "标识点添加成功";
+            $result["describe"] = "OK";
         } else {
             $result["status"] = 500;
             $result["message"] = "发生错误，标识点未添加";
@@ -44,7 +44,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result['status'] = 400;
             $result['message'] = "不合法的值";
         }
-        $db = new mysqli("127.0.0.1", "root", "amd,yes!");  //这里应该用本地ip而非localhost，否则报错
+        @$db = new mysqli("127.0.0.1", "root", "amd,yes!");  //这里应该用本地ip而非localhost，否则报错
         if (mysqli_connect_errno()) {
             $result['status'] = 500;
             $result['message'] = "无法连接到数据库，请稍后重试";
@@ -79,5 +79,71 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $result['describe'] = "OK";
         $result['identifications'] = $identifications;
         exit(json_encode($result));
+        break;
+    case "PUT":
+        parse_str(file_get_contents('php://input'), $data);
+        $id     = trim($data['id']);
+        $name   = trim($data['name']);
+        $route  = trim($data['route']);
+        $intro  = trim($data['intro']);
+//        $intro = $intro ? $intro : "暂无简介";
+        if (!$name || !preg_match($pattern, $id)
+            || !preg_match($pattern, $route)) {
+            $result['status'] = "400";
+            $result['message'] = "不合法的值";
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+        }
+        @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
+        if (mysqli_connect_errno()) {
+            $result['status'] = 500;
+            $result['message'] = "无法连接到数据库，请稍后重试";
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+        }
+        $db->select_db("RealTimeBusQuery");
+        $query = "UPDATE identification "
+            . "SET name=?, route=?, intro=? "
+            . "WHERE id=?";
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("ssss", $name, $route, $intro, $id);
+        $stmt->execute();
+        if (!$stmt->affected_rows) {
+            $result['status'] = 500;
+            $result['message'] = "发生错误，标识点信息未修改";
+        } else {
+            $result['status'] = 200;
+            $result['describe'] = "OK";
+        }
+        $db->close();
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+        break;
+    case "DELETE":
+        parse_str(file_get_contents("php://input"), $data);
+        $id = trim($data['id']);
+        if (!preg_match($pattern, $id)) {
+            $result['status'] = 400;
+            $result['message'] = "不合法的值";
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+        }
+        @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
+        if (mysqli_connect_errno()) {
+            $result['status'] = 500;
+            $result['message'] = "无法连接到数据库，请稍后重试";
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+        }
+        $db->select_db("RealTimeBusQuery");
+        $query = "DELETE FROM identification "
+            . "WHERE id=?";
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $result['status'] = 200;
+            $result['describe'] = "OK";
+        } else {
+            $result['status'] = 500;
+            $result['message'] = "发生错误，标识点未删除";
+        }
+        $db->close();
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         break;
 }

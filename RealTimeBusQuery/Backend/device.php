@@ -105,15 +105,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $db->close();
         break;
     case "PUT":
-        //if (isset($_POST["name"]) && isset($_POST["id"]) && isset($_POST["route"])
-        //&& isset($_POST["intro"]) && isset($_POST["lng"]) && isset($_POST["lat"])) {
-        /*$name = trim($_POST["name"]);
-        $id = trim($_POST["id"]);
-        $route = trim($_POST["route"]);
-        $intro = trim($_POST["intro"]);
-        $lng = doubleval(trim($_REQUEST["lng"]));  //经度
-        $lat = doubleval(trim($_POST["lat"]));  //纬度 */
-        //var_dump($_REQUEST);
         parse_str(file_get_contents('php://input'), $data);
         $id = trim($data["id"]);
         $lng = doubleval(trim($data["lng"]));  //经度
