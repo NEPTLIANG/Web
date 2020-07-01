@@ -1,9 +1,9 @@
 // const { userInfo } = require("os")
 
 var request = new XMLHttpRequest()
-var method = "DELETE"
-var url = "http://122.51.3.35/user.php"
-var content = 'id=test'
+var method = "POST"
+var url = "http://122.51.3.35/device.php"
+var content = 'id=test&name=卧槽&route=name&intro='
 //key=471ec411c1fac90a900a6ea32752e43c sid=134678 tid=250232772 trid=20
 request.onreadystatechange = () => {
     if (request.readyState == 4) {

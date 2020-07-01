@@ -51,6 +51,7 @@ class Device
 session_start();
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST" :
@@ -61,7 +62,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $intro = isset($intro) ? $intro : "暂无说明";
         if (isset($name) && isset($id) && isset($route)) {
             $dev = new Device($name, $id, $route);
-            var_dump($dev);
+            //var_dump($dev);
         } else {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
@@ -69,7 +70,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         if (isset($dev)) {
             //var_dump(isset($dev));
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 $result["status"] = 500;
                 $result["message"] = "无法连接到数据库，请稍后重试";
@@ -85,8 +86,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $result["describe"] = "OK";
                 $result["message"] = "设备添加成功";
             } else {
-                echo "发生错误，设备未添加";
+                $result['status'] = 500;
+                $result['message'] = "发生错误，设备未添加";
             }
+            $db->close();
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
             /*@$db = mysqli_connect("localhost", "root", "916616515");
             if (mysqli_connect_errno()) {
                 echo "无法连接到数据库";
@@ -102,48 +106,90 @@ switch ($_SERVER['REQUEST_METHOD']) {
             print("不合法的值");
             exit;
         }
-        $db->close();
         break;
     case "PUT":
         parse_str(file_get_contents('php://input'), $data);
-        $id = trim($data["id"]);
-        $lng = doubleval(trim($data["lng"]));  //经度
-        $lat = doubleval(trim($data["lat"]));  //纬度
-        $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
-        if (preg_match($pattern, $id) !== 0
-            && ($lng >= 0 && $lng <= 180) && ($lat >= 0 && $lat <= 90)) {
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
-            if (mysqli_connect_errno()) {
-                exit("无法连接到数据库，请稍后重试");
-            }
-            $db->select_db("RealTimeBusQuery");
-            $query = "UPDATE device "
-                . "SET id=?, lng=?, lat=? "
-                . "WHERE id=?";
-            $stmt = $db->prepare($query);
-            $stmt->bind_param("sdds", $id, $lng, $lat, $id);
-            $stmt->execute();
-            if ($stmt->affected_rows > 0) {
-                echo $lng . "," . $lat . "\n";
-                echo "定位上传成功";
+        if (isset($data["id"]) && isset($data["lng"]) && isset($data["lat"])) {
+            $id = trim($data["id"]);
+            $lng = doubleval(trim($data["lng"]));  //经度
+            $lat = doubleval(trim($data["lat"]));  //纬度
+            $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
+            if (preg_match($pattern, $id) !== 0
+                && ($lng >= 0 && $lng <= 180) && ($lat >= 0 && $lat <= 90)) {  //上传定位
+                @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
+                if (mysqli_connect_errno()) {
+                    $response['status'] = 500;
+                    $response['message'] = "无法连接到数据库，请稍后重试";
+                    exit(json_encode($response, JSON_UNESCAPED_UNICODE));
+                }
+                $db->select_db("RealTimeBusQuery");
+                $query = "UPDATE device "
+                    . "SET id=?, lng=?, lat=? "
+                    . "WHERE id=?";
+                $stmt = $db->prepare($query);
+                $stmt->bind_param("sdds", $id, $lng, $lat, $id);
+                $stmt->execute();
+                if ($stmt->affected_rows > 0) {
+                    //echo $lng . "," . $lat . "\n";
+                    $response['status'] = 200;
+                    $response['describe'] = "OK";
+                } else {
+                    $response['status'] = 500;
+                    $response['message'] = "发生错误，定位未上传";
+                }
             } else {
-                echo "发生错误，定位未上传";
+                $response['code'] = 400;
+                $response['message'] = "不合法的值";
+            }
+        } else if (isset($data['id']) && isset($data['name'])
+            && isset($data['route']) && isset($data['intro'])) {
+            $id     = trim($data['id']);
+            $name   = trim($data['name']);
+            $route  = trim($data['route']);
+            $intro  = trim($data['intro']);
+            if ($name && preg_match($pattern, $id) !== 0
+                && preg_match($pattern, $route) && $intro) {  //修改信息
+                @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
+                if (mysqli_connect_errno()) {
+                    $response['status'] = 500;
+                    $response['message'] = "无法连接到数据库，请稍后重试";
+                    exit(json_encode($response, JSON_UNESCAPED_UNICODE));
+                }
+                $db->select_db("RealTimeBusQuery");
+                $query = "UPDATE device "
+                    . "SET id=?, name=?, route=?, intro=?"
+                    . "WHERE id=?";
+                $stmt = $db->prepare($query);
+                $stmt->bind_param("sssss", $id, $name, $route, $intro, $id);
+                $stmt->execute();
+                if ($stmt->affected_rows > 0) {
+                    //echo $lng . "," . $lat . "\n";
+                    $response['status'] = 200;
+                    $response['describe'] = "OK";
+                } else {
+                    $response['status'] = 500;
+                    $response['message'] = "发生错误，设备信息未修改";
+                }
+            } else {
+                $response['code'] = 400;
+                $response['message'] = "不合法的值";
             }
         } else {
-            print("不合法的值");
-            exit;
+            $response['code'] = 400;
+            $response['message'] = "不合法的值";
         }
         $db->close();
+        exit(json_encode($response, JSON_UNESCAPED_UNICODE));
         break;
-    //}
     case "GET":
-        //header("Access-Control-Allow-Origin", "*");
         $route = trim($_GET["route"]);
         $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
         if (preg_match($pattern, $route) !== 0) {
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
-                exit("无法连接到数据库，请稍后重试");
+                $response['status'] = 500;
+                $response['message'] = "无法连接到数据库，请稍后重试";
+                exit(json_encode($response, JSON_UNESCAPED_UNICODE));
             }
             $db->select_db("RealTimeBusQuery");
             $query = "SELECT id, name, intro, lng, lat "
@@ -172,12 +218,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $result["status"] = 200;
                 $result["describe"] = "OK";
                 $result["devices"] = $devices;
-                exit(json_encode($result));
             } else {
                 $result["status"] = 500;
                 $result["describe"] = "发生错误，无法查询定位";
-                exit(json_encode($result));
             }
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         } else {
             print("不合法的值");
             exit;
