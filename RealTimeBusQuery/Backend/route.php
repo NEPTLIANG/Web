@@ -1,6 +1,7 @@
 <?php
 session_start();
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Method: GET, POST, PUT, DELETE");
 
 $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -12,7 +13,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $intro = isset($intro) ? $intro : "暂无说明";
         if ((preg_match($pattern, $id) !== 0) && (preg_match($pattern, $route) !== 0) && isset($name)) {
             //var_dump(isset($dev));
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 $result["status"] = 500;
                 $result["message"] = "无法连接到数据库，请稍后重试";
@@ -45,7 +46,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $org = trim($data["org"]);
         $intro = trim($data["intro"]);
         if ((preg_match($pattern, $id) !== 0) && (preg_match($pattern, $route) !== 0) && isset($name)) {
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 exit("无法连接到数据库，请稍后重试");
             }
@@ -74,7 +75,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case "GET":
         $org = trim($_GET["org"]);
         if (preg_match($pattern, $org) !== 0) {
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 exit("无法连接到数据库，请稍后重试");
             }
@@ -101,17 +102,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $result["status"] = 200;
                 $result["describe"] = "OK";
                 $result["routes"] = $routes;
-                exit(json_encode($result));
             } else {
                 $result["status"] = 500;
                 $result["message"] = "发生错误，无法查询路线";
-                exit(json_encode($result));
             }
         } else {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
-            exit(json_encode($result));
         }
+        exit(json_encode($result));
         break;
     case "DELETE":
         parse_str(file_get_contents("php://input"), $delete);

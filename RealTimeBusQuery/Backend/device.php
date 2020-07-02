@@ -108,12 +108,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     case "PUT":
+        $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
         parse_str(file_get_contents('php://input'), $data);
         if (isset($data["id"]) && isset($data["lng"]) && isset($data["lat"])) {
+            echo "fuck";
             $id = trim($data["id"]);
             $lng = doubleval(trim($data["lng"]));  //经度
             $lat = doubleval(trim($data["lat"]));  //纬度
-            $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
             if (preg_match($pattern, $id) !== 0
                 && ($lng >= 0 && $lng <= 180) && ($lat >= 0 && $lat <= 90)) {  //上传定位
                 @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
@@ -147,6 +148,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $name   = trim($data['name']);
             $route  = trim($data['route']);
             $intro  = trim($data['intro']);
+            $intro = $intro ? $intro : "暂无说明";
             if ($name && preg_match($pattern, $id) !== 0
                 && preg_match($pattern, $route) && $intro) {  //修改信息
                 @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
@@ -157,7 +159,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 }
                 $db->select_db("RealTimeBusQuery");
                 $query = "UPDATE device "
-                    . "SET id=?, name=?, route=?, intro=?"
+                    . "SET id=?, name=?, route=?, intro=? "
                     . "WHERE id=?";
                 $stmt = $db->prepare($query);
                 $stmt->bind_param("sssss", $id, $name, $route, $intro, $id);
@@ -192,12 +194,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 exit(json_encode($response, JSON_UNESCAPED_UNICODE));
             }
             $db->select_db("RealTimeBusQuery");
-            $query = "SELECT id, name, intro, lng, lat "
+            $query = "SELECT id, name, route, intro, lng, lat "
                 . "FROM device "
                 . "WHERE route=?";
             $stmt = $db->prepare($query);
             $stmt->bind_param("s", $route);
-            $stmt->bind_result($id, $name, $intro, $lng, $lat);
+            $stmt->bind_result($id, $name, $route, $intro, $lng, $lat);
             $stmt->execute();
             $stmt->store_result();
             //var_dump($stmt->num_rows);
@@ -207,6 +209,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $device = [
                         "id" => $id,
                         "name" => $name,
+                        "route" => $route,
                         "intro" => $intro,
                         "lng" => $lng,
                         "lat" => $lat

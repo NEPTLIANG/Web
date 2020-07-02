@@ -8,25 +8,25 @@ function loadData() {
     var response
     var request = new XMLHttpRequest()
     var method = "GET"
-    var url = "http://122.51.3.35/device.php?route=name"
+    var url = "http://122.51.3.35/route.php?org=000"
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
             if ((request.status >= 200 && request.status < 300) || request.status == 304) {
                 try {
-                    response = JSON.parse(request.responseText);
+                    console.log(request.responseText)
+                    response = JSON.parse(request.responseText)
                 } catch (e) {}
                 if (response) {
                     if (response.status == 200) {
-                        if (!response.devices.length) {
-                            var alert = document.createElement("div")
-                            alert.innerHTML = "<h2>暂无校车</h2>"
-                            document.getElementById("list").append(alert)
+                        if (!response.routes.length) {
+                            var prompt = document.createElement("div")
+                            prompt.innerHTML = "<h2>暂无路线</h2>"
+                            document.getElementById("list").append(prompt)
                         } else {
                             document.getElementById("list").innerHTML = ""
-                            var devices = response.devices
-                            for (var index in devices) {
-                                show(JSON.parse(devices[index]))
-                                console.log(devices[index])
+                            var routes = response.routes
+                            for (var index in routes) {
+                                show(JSON.parse(routes[index]))
                             }
                         }
                     } else {
@@ -47,33 +47,32 @@ function loadData() {
 
 function show(item) {
     var card = document.createElement("div")
-    var position = (item.lng && item.lat) ? (item.lng + "<br/>" + item.lat) : "暂无定位"
     var intro = item.intro ? item.intro : "暂无说明"
     card.className = "card"
     card.innerHTML = `<h2>${item.name}</h2>
         <span class="id">id: ${item.id}</span>
-        <div class="position"><div style="font-weight: bold">位置</div>${position}</div>
         <div>${intro}</div>
-        <a href='../modify/modify.html?id=${item.id}&name=${item.name}&route=${item.route}&intro=${item.intro}' class="edit">编辑</a>
+        <a href='../modify/modify.html?id=${item.id}&name=${item.name}&org=${item.org}&intro=${item.intro}' class="edit">编辑</a>
         <button onclick="del('${item.id}')" class="del">删除</button>`
     document.getElementById("list").appendChild(card)
 }
 
 var del = (id) => {
-    if (!confirm("确定要删除设备吗？")) {
+    if (!confirm("确定要删除路线吗？")) {
         return;
     }
     var request = new XMLHttpRequest()
     var method = "DELETE"
-    var url = "http://122.51.3.35/device.php"
+    var url = "http://122.51.3.35/route.php"
     var content = `id=${id}`
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
             if ((request.status >= 200 && request.status < 300) || request.status == 304) {
                 try {
+                    console.log(request.responseText)
                     response = JSON.parse(request.responseText);
                 } catch (e) {}
-                if (response) {
+                if (typeof(response) !== "undefined") {
                     if (response.status == 200) {
                         alert("删除成功")
                         loadData()
@@ -84,7 +83,7 @@ var del = (id) => {
                     alert("响应格式错误，请稍后重试")
                 }
             } else {
-                alert(`${response.status}：出现错误，请稍后重试`)
+                alert(`${request.status}：出现错误，请稍后重试`)
             }
         }
     }
