@@ -1,27 +1,27 @@
 <?php
 session_start();
-
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE");
 
 $pattern = "/[a-zA-Z0-9_-]{2,21}/";
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST":
-        $name = trim($_POST['name']);
-        $id = trim($_POST['id']);
-        $route = trim($_POST['route']);
-        $intro = trim($_POST['intro']);
-//        $intro  = $intro ? $intro : "暂无简介";
+        $name   = trim($_POST['name']);
+        $id     = trim($_POST['id']);
+        $route  = trim($_POST['route']);
+        $intro  = trim($_POST['intro']);
+        //$intro  = $intro ? $intro : "暂无简介";
         if (!$name || !preg_match($pattern, $id)
             || !preg_match($pattern, $route)) {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
-            exit(json_encode($result));
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
         if (mysqli_connect_errno()) {
             $result["status"] = 500;
             $result["message"] = "无法连接到数据库，请稍后重试";
-            exit(json_encode($result));
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         $db->select_db("RealTimeBusQuery");
         $query = "INSERT INTO identification(name, id, route, intro) VALUES(?, ?, ?, ?)";
@@ -36,7 +36,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result["message"] = "发生错误，标识点未添加";
         }
         $db->close();
-        exit(json_encode($result));
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         break;
     case "GET":
         $route = trim($_GET['route']);
@@ -44,11 +44,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result['status'] = 400;
             $result['message'] = "不合法的值";
         }
-        @$db = new mysqli("127.0.0.1", "root", "amd,yes!"); //这里应该用本地ip而非localhost，否则报错
+        @$db = new mysqli("127.0.0.1", "root", "amd,yes!");  //这里应该用本地ip而非localhost，否则报错
         if (mysqli_connect_errno()) {
             $result['status'] = 500;
             $result['message'] = "无法连接到数据库，请稍后重试";
-            exit(json_encode($result));
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         $db->select_db("RealTimeBusQuery");
         $query = "SELECT id, name, route, intro "
@@ -62,15 +62,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if (!$stmt->num_rows) {
             $result['status'] = 400;
             $result['message'] = "没有查询到标识点";
-            exit(json_encode($result));
+            exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         $identifications = [];
         while ($stmt->fetch()) {
             $identification = [
-                "id" => $id,
-                "name" => $name,
+                "id"    => $id,
+                "name"  => $name,
                 "route" => $route,
-                "intro" => $intro,
+                "intro" => $intro
             ];
             array_push($identifications, $identification);
         }
@@ -78,14 +78,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $result['status'] = 200;
         $result['describe'] = "OK";
         $result['identifications'] = $identifications;
-        exit(json_encode($result));
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         break;
     case "PUT":
         parse_str(file_get_contents('php://input'), $data);
-        $id = trim($data['id']);
-        $name = trim($data['name']);
-        $route = trim($data['route']);
-        $intro = trim($data['intro']);
+        $id     = trim($data['id']);
+        $name   = trim($data['name']);
+        $route  = trim($data['route']);
+        $intro  = trim($data['intro']);
 //        $intro = $intro ? $intro : "暂无简介";
         if (!$name || !preg_match($pattern, $id)
             || !preg_match($pattern, $route)) {

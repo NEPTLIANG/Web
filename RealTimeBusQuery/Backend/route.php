@@ -1,7 +1,7 @@
 <?php
 session_start();
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Method: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 
 $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -11,7 +11,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $org = trim($_POST['org']);
         $intro = trim($_POST['intro']);
         $intro = isset($intro) ? $intro : "暂无说明";
-        if ((preg_match($pattern, $id) !== 0) && (preg_match($pattern, $route) !== 0) && isset($name)) {
+        if ((preg_match($pattern, $id) !== 0) && (preg_match($pattern, $org) !== 0) && isset($name)) {
             //var_dump(isset($dev));
             @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
@@ -45,13 +45,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $name = trim($data["name"]);
         $org = trim($data["org"]);
         $intro = trim($data["intro"]);
-        if ((preg_match($pattern, $id) !== 0) && (preg_match($pattern, $route) !== 0) && isset($name)) {
+        if ((preg_match($pattern, $id) !== 0) && (preg_match($pattern, $org) !== 0) && isset($name)) {
             @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 exit("无法连接到数据库，请稍后重试");
             }
             $db->select_db("RealTimeBusQuery");
-            $query = "UPDATE device "
+            $query = "UPDATE route "
                 . "SET id=?, name=?, org=?, intro=? "
                 . "WHERE id=?";
             $stmt = $db->prepare($query);
@@ -80,12 +80,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 exit("无法连接到数据库，请稍后重试");
             }
             $db->select_db("RealTimeBusQuery");
-            $query = "SELECT id, name, intro "
+            $query = "SELECT id, name, org, intro "
                 . "FROM route "
                 . "WHERE org=?";
             $stmt = $db->prepare($query);
             $stmt->bind_param("s", $org);
-            $stmt->bind_result($id, $name, $intro);
+            $stmt->bind_result($id, $name, $ort, $intro);
             $stmt->execute();
             $stmt->store_result();
             if ($stmt->num_rows > 0) {
@@ -94,6 +94,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $route = [
                         "id" => $id,
                         "name" => $name,
+                        "org" => $org,
                         "intro" => $intro
                     ];
                     array_push($routes, json_encode($route));
@@ -115,7 +116,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case "DELETE":
         parse_str(file_get_contents("php://input"), $delete);
         $id = trim($delete['id']);
-        echo $id;
         if (!preg_match($pattern, $id)) {
             $response['status'] = 400;
             $response['message'] = "不合法的值";
