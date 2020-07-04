@@ -25,7 +25,7 @@ onload = () => {
                         }
                         if (typeof (response) !== "undefined") {
                             if (response.status === 200) {
-                                location = "../../Map/map.html"
+                                location = `../../Map/map.html?id=${id}`
                             } else {
                                 alert(response.message);
                             }

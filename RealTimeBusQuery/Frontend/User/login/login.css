@@ -31,7 +31,7 @@ input[type="text"], input[type="password"] {
     font-size: 1rem;
     /* color: #00ffff; */
     background: none;
-    padding: 1rem 0 1rem 2rem;
+    padding: 1rem 0;
     /* margin: 0 1rem; */
     border: #007f7f none;
     border-width: 0 0 0 4px;

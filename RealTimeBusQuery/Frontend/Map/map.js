@@ -26,10 +26,6 @@ var polyline = new AMap.Polyline({
 });
 map.add(polyline); */
 
-
-
-
-
 // 创建两个点标记
 var marker1 = new AMap.Marker({
     position: new AMap.LngLat(110.352556, 21.274520),   // 经纬度对象，如 new AMap.LngLat(116.39, 39.9); 也可以是经纬度构成的一维数组[116.39, 39.9]
@@ -67,15 +63,41 @@ car1.setPosition(new AMap.LngLat(110.351556, 21.273520));
 // });
 // map.add(marker);
 
+var id = location.search.split("=")[1]
+var route = ""
+var url = `http://122.51.3.35/user.php?id=${id}`;  //获取标识点
+if (typeof XMLHttpRequest != "undefined") {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+                console.log(xhr.responseText)
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 200 && response.routes.length >= 1) {
+                    route = response.routes;
+                } else if (response.status === 200 && response.routes.length === 0) {
+                    alert("没有查询到路线");
+                } else {
+                    alert("发生错误：" + response.describe);
+                }
+            } else {
+                alert("请求失败：" + xhr.status);
+            }
+        }
+    };
+    xhr.open("GET", url, false);
+    xhr.send(null);
+}
+
+var point = [];
+var cars = {};
 // 自动适配到合适视野范围
 // 无参数，默认包括所有覆盖物的情况
 // map.setFitView();
 // 传入覆盖物数组，仅包括polyline和marker1的情况
-var point = [marker1, marker2];
-var cars = {};
 // map.setFitView(point);
 
-var url = "http://122.51.3.35/identification.php?route=ccbus";
+var url = `http://122.51.3.35/identification.php?route=${route}`;  //获取标识点
 if (typeof XMLHttpRequest != "undefined") {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
@@ -113,7 +135,6 @@ if (typeof XMLHttpRequest != "undefined") {
                     alert("发生错误：" + response.describe);
                 }
                 // car1.setPosition(new AMap.LngLat(response.lng, response.lat));
-                console.log(xhr.responseText);
             } else {
                 alert("请求失败：" + xhr.status);
             }
@@ -122,11 +143,11 @@ if (typeof XMLHttpRequest != "undefined") {
     xhr.open("GET", url, true);
     xhr.send(null);
 }
-// map.setFitView(point);
+map.setFitView(point);
 console.log(point)
 
 
-var url = "http://122.51.3.35/device.php?route=name";
+var url = `http://122.51.3.35/device.php?route=${route}`;  //获取车辆
 setInterval(() => {
     if (typeof XMLHttpRequest != "undefined") {
         var xhr = new XMLHttpRequest();
@@ -157,8 +178,7 @@ setInterval(() => {
                             } else {
                                 cars[device.id].setPosition(new AMap.LngLat(device.lng, device.lat));
                             }
-                            console.log(point);
-                            // map.setFitView(point);
+                            map.setFitView(point);
                         }
                     } else if (response.status === 200 && response.devices.length === 0) {
                         alert("未添加设备");
@@ -166,7 +186,6 @@ setInterval(() => {
                         alert("发生错误：" + response.describe);
                     }
                     // car1.setPosition(new AMap.LngLat(response.lng, response.lat));
-                    console.log(xhr.responseText);
                 } else {
                     alert("请求失败：" + xhr.status);
                 }
