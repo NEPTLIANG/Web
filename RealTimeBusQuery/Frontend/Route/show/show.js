@@ -5,10 +5,12 @@ onload = () => {
 }
 
 function loadData() {
+    var org = location.search.split("=")[1]
+    console.log(org)
     var response
     var request = new XMLHttpRequest()
     var method = "GET"
-    var url = "http://122.51.3.35/route.php?org=000"
+    var url = `http://122.51.3.35/route.php?org=${org}`
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
             if ((request.status >= 200 && request.status < 300) || request.status == 304) {
@@ -20,8 +22,10 @@ function loadData() {
                     if (response.status == 200) {
                         if (!response.routes.length) {
                             var prompt = document.createElement("div")
-                            prompt.innerHTML = "<h2>暂无路线</h2>"
-                            document.getElementById("list").append(prompt)
+                            prompt.className = "card"
+                            prompt.innerHTML = "<h2>暂未查询到标识点</h2>"
+                            document.getElementById("list").appendChild(prompt)
+                            console.log(prompt)
                         } else {
                             document.getElementById("list").innerHTML = ""
                             var routes = response.routes
@@ -31,6 +35,11 @@ function loadData() {
                         }
                     } else {
                         alert(response.message)
+                        var prompt = document.createElement("div")
+                        prompt.className = "card"
+                        prompt.innerHTML = "<h2>暂未查询到标识点</h2>"
+                        document.getElementById("list").appendChild(prompt)
+                        console.log(prompt)
                     }
                 } else {
                     alert("响应格式错误，请稍后重试")
@@ -54,7 +63,10 @@ function show(item) {
         <div>${intro}</div>
         <a href='../modify/modify.html?id=${item.id}&name=${item.name}&org=${item.org}&intro=${item.intro}' class="edit">编辑</a>
         <button onclick="del('${item.id}')" class="del">删除</button>`
-    document.getElementById("list").appendChild(card)
+    var link = document.createElement("a")
+    link.href = `../../Device/show/show.html?route=${item.id}`
+    link.appendChild(card)
+    document.getElementById("list").appendChild(link)
 }
 
 var del = (id) => {

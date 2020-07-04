@@ -3,7 +3,7 @@ onload = () => {
     loginBtn.addEventListener("click", function () {
         var id = document.getElementById("id").value;
         var pwd = CryptoJS.SHA512(document.getElementById("pwd").value).toString();
-        console.log(pwd);
+        // console.log(pwd);
         var url = "http://122.51.3.35/org.php?" + "id=" + id + "&pwd=" + pwd;
         if (typeof "XMLHttpRequest" !== "undefined") {
             var xhr = new XMLHttpRequest();
@@ -19,7 +19,7 @@ onload = () => {
                         if (typeof (response) !== "undefined") {
                             if (response.status === 200) {
                                 console.log("OK");
-                                location = "../../Route/show/show.html";
+                                location = `../../Route/show/show.html?id=${id}`;
                             } else {
                                 alert(response.message);
                             }

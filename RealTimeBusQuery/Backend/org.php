@@ -8,8 +8,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $name = trim($_POST['name']);
         $id = trim($_POST['id']);
         $pwd = trim($_POST['pwd']);
-        $intro = trim($_POST['intro']);
-        $intro = isset($intro) ? $intro : "暂无说明";
         if ((preg_match($pattern, $id) !== 0) && isset($pwd) && isset($name)) {
             //var_dump(isset($dev));
             @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
@@ -19,14 +17,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 exit(json_encode($result, JSON_UNESCAPED_UNICODE));
             }
             $db->select_db("RealTimeBusQuery");
-            $query = "INSERT INTO org VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO org(id, pwd, name) VALUES (?, ?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->bind_param("ssss", $id, $pwd, $name, $intro);
+            $stmt->bind_param("sss", $id, $pwd, $name);
             $stmt->execute();
             if ($stmt->affected_rows > 0) {
                 $result["status"] = 200;
                 $result["describe"] = "OK";
-                $result["message"] = "机构注册成功";
             } else {
                 $result["status"] = 500;
                 $result["message"] = "发生错误，机构未注册";
@@ -75,7 +72,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $id = trim($_GET["id"]);
         $pwd = trim($_GET["pwd"]);
         if (preg_match($pattern, $id) !== 0) {
-            @$db = new mysqli("127.0.0.1", "root", "AMD,YES!");
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 $response['status'] = 500;
                 $response['message'] = "无法连接到数据库，请稍后重试";

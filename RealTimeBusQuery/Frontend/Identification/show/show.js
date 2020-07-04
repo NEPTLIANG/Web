@@ -1,14 +1,18 @@
 onload = () => {
+    document.getElementById("device").onclick = () => {
+        location = `../../Device/show/show.html?route=${location.search.split("=")[1]}`
+    }
     var refresh = document.getElementById("refresh")
     refresh.addEventListener("click", loadData)
     loadData()
 }
 
 function loadData() {
+    var route = location.search.split("=")[1]
     var response
     var request = new XMLHttpRequest()
     var method = "GET"
-    var url = "http://122.51.3.35/identification.php?route=111"
+    var url = `http://122.51.3.35/identification.php?route=${route}`
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
             if ((request.status >= 200 && request.status < 300) || request.status == 304) {
@@ -19,8 +23,11 @@ function loadData() {
                     if (response.status == 200) {
                         if (!response.identifications.length) {
                             var prompt = document.createElement("div")
+                            prompt.className = "card"
                             prompt.innerHTML = "<h2>暂无标识点</h2>"
-                            document.getElementById("list").append(prompt)
+                            document.getElementById("list").appendChild(prompt)
+                            console.log(prompt)
+                            alert(response.message)
                         } else {
                             document.getElementById("list").innerHTML = ""
                             var identifications = response.identifications
@@ -31,6 +38,11 @@ function loadData() {
                         }
                     } else {
                         alert(response.message)
+                        var prompt = document.createElement("div")
+                        prompt.className = "card"
+                        prompt.innerHTML = "<h2>暂未查询到标识点</h2>"
+                        document.getElementById("list").appendChild(prompt)
+                        console.log(prompt)
                     }
                 } else {
                     alert("响应格式错误，请稍后重试")

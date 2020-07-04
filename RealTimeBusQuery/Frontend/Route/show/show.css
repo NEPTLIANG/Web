@@ -1,7 +1,7 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
-}
+} */
 html {
     overflow: hidden;
     height: 100%;
@@ -78,6 +78,7 @@ article {
 }
 .card {
     /* background-color: #ddd; */
+    color: #777;
     flex: 0 0 8rem;
     display: flex;
     flex-direction: column;
@@ -89,6 +90,9 @@ article {
     padding: 2rem 4rem;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(191, 191, 191, 0.5);
+}
+#list a {
+    text-decoration: none!important;
 }
 h2 {
     font-size: 1.5rem;

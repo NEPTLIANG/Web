@@ -1,14 +1,18 @@
 onload = () => {
+    document.getElementById("identification").onclick = () => {
+        location = `../../Identification/show/show.html?route=${location.search.split("=")[1]}`
+    }
     var refresh = document.getElementById("refresh")
     refresh.addEventListener("click", loadData)
     loadData()
 }
 
 function loadData() {
+    var route = location.search.split("=")[1]
     var response
     var request = new XMLHttpRequest()
     var method = "GET"
-    var url = "http://122.51.3.35/device.php?route=name"
+    var url = `http://122.51.3.35/device.php?route=${route}`
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
             if ((request.status >= 200 && request.status < 300) || request.status == 304) {
@@ -18,9 +22,11 @@ function loadData() {
                 if (response) {
                     if (response.status == 200) {
                         if (!response.devices.length) {
-                            var alert = document.createElement("div")
-                            alert.innerHTML = "<h2>暂无校车</h2>"
-                            document.getElementById("list").append(alert)
+                            var prompt = document.createElement("div")
+                            prompt.className = "card"
+                            prompt.innerHTML = "<h2>暂未查询到标识点</h2>"
+                            document.getElementById("list").appendChild(prompt)
+                            console.log(prompt)
                         } else {
                             document.getElementById("list").innerHTML = ""
                             var devices = response.devices
@@ -30,7 +36,12 @@ function loadData() {
                             }
                         }
                     } else {
-                        alert(response.message)
+                        alert(response.describe)
+                        var prompt = document.createElement("div")
+                        prompt.className = "card"
+                        prompt.innerHTML = "<h2>暂未查询到标识点</h2>"
+                        document.getElementById("list").appendChild(prompt)
+                        console.log(response)
                     }
                 } else {
                     alert("响应格式错误，请稍后重试")
