@@ -68,7 +68,7 @@ CREATE TABLE user(  /*用户*/
 ALTER TABLE user
     MODIFY name VARCHAR(20) NOT NULL;
 ALTER TABLE user
-    MODIFY pwd VARCHAR(20) NOT NULL;
+    MODIFY pwd VARCHAR(128) NOT NULL;
 
 INSERT INTO org(name, id, pwd)  /*插入测试数据*/
     VALUES("岭师", "000", "password");

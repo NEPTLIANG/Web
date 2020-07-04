@@ -1,26 +1,26 @@
 <?php
 session_start();
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Method: GET, POST, PUT, DELETE");
 
 $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
+$pwdPattern = "/^[a-fA-F0-9]{128}$/";
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST" :
         $name = trim($_POST['name']);
         $id = trim($_POST['id']);
         $pwd = trim($_POST['pwd']);
-        $intro = trim($_POST['intro']);
-        $intro = isset($intro) ? $intro : "暂无说明";
-        if ((preg_match($pattern, $id) !== 0) && isset($pwd) && isset($name)) {
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+        if (strlen($name) <= 20 && (preg_match($pattern, $id) !== 0) && preg_match($pwdPattern, $pwd)) {
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 $result["status"] = 500;
                 $result["message"] = "无法连接到数据库，请稍后重试";
-                exit(json_encode($result));
+                exit(json_encode($result, JSON_UNESCAPED_UNICODE));
             }
             $db->select_db("RealTimeBusQuery");
-            $query = "INSERT INTO user VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO user(name, id, pwd) VALUES (?, ?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->bind_param("ssss", $id, $pwd, $name, $intro);
+            $stmt->bind_param("sss", $name, $id, $pwd);
             $stmt->execute();
             if ($stmt->affected_rows > 0) {
                 $result["status"] = 200;
@@ -35,14 +35,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
         }
-        exit(json_encode($result));
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         break;
     case "PUT":
         parse_str(file_get_contents('php://input'), $data);
         $id = trim($data["id"]);
         $route = trim($data["route"]);
-        if ((preg_match($pattern, $id) !== 0) && isset($route)) {
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+        if ((preg_match($pattern, $id) !== 0) && isset($route)) {  //用户添加路线
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 exit("无法连接到数据库，请稍后重试");
             }
@@ -70,43 +70,44 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case "GET":
         $id = trim($_GET["id"]);
-        if (preg_match($pattern, $id) !== 0) {
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+        $pwd = trim($_GET["pwd"]);
+        //echo $id . "<br/>" . $pwd . "<br/>";
+        //echo "<br/>" . preg_match($pwdPattern, $pwd);
+        if (preg_match($pattern, $id) && preg_match($pwdPattern, $pwd)) {
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
-                exit("无法连接到数据库，请稍后重试");
+                $response['status'] = 500;
+                $response['message'] = "无法连接到数据库，请稍后重试";
+                exit(json_encode($response, JSON_UNESCAPED_UNICODE));
             }
             $db->select_db("RealTimeBusQuery");
-            $query = "SELECT name, route, intro "
+            $query = "SELECT pwd "
                 . "FROM user "
                 . "WHERE id=?";
             $stmt = $db->prepare($query);
             $stmt->bind_param("s", $id);
-            $stmt->bind_result($name, $route, $intro);
+            $stmt->bind_result($realPwd);
             $stmt->execute();
             $stmt->store_result();
             if ($stmt->num_rows === 1) {
-                while ($stmt->fetch()) {
-                    $user = [
-                        "name" => $name,
-                        "route" => $route,
-                        "intro" => $intro
-                    ];
+                $stmt->fetch();
+                if ($realPwd !== $pwd) {
+                    $response["status"] = 400;
+                    $response["message"] = "密码错误";
+                    exit(json_encode($response, JSON_UNESCAPED_UNICODE));
                 }
-                $db->close();
                 $result["status"] = 200;
                 $result["describe"] = "OK";
-                $result["user"] = json_encode($user);
-                exit(json_encode($result));
             } else {
                 $result["status"] = 500;
                 $result["message"] = "发生错误，无法查询";
-                exit(json_encode($result));
             }
+            $db->close();
         } else {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
-            exit(json_encode($result));
         }
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         break;
     case "DELETE":
         parse_str(file_get_contents("php://input"), $delete);
