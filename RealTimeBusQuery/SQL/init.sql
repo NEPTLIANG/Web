@@ -10,7 +10,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE
 CREATE TABLE org(  /*机构*/
     name VARCHAR(20),
     id VARCHAR(20),
-    pwd VARCHAR(20),
+    pwd VARCHAR(128),
     intro VARCHAR(50)
 );
 ALTER TABLE org
@@ -18,7 +18,7 @@ ALTER TABLE org
 ALTER TABLE org
     MODIFY name VARCHAR(20) NOT NULL;
 ALTER TABLE org
-    MODIFY pwd VARCHAR(20) NOT NULL;
+    MODIFY pwd VARCHAR(128) NOT NULL;
 
 CREATE TABLE route(  /*路线*/
     name VARCHAR(20),
@@ -60,7 +60,7 @@ CREATE TABLE device(  /*设备*/
 CREATE TABLE user(  /*用户*/
     name VARCHAR(20),
     id VARCHAR(20),
-    pwd VARCHAR(20),
+    pwd VARCHAR(128),
     route VARCHAR(100),
     intro VARCHAR(50),
     PRIMARY KEY(id)

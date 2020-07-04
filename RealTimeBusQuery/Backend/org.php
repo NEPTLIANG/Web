@@ -12,11 +12,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $intro = isset($intro) ? $intro : "暂无说明";
         if ((preg_match($pattern, $id) !== 0) && isset($pwd) && isset($name)) {
             //var_dump(isset($dev));
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+            @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 $result["status"] = 500;
                 $result["message"] = "无法连接到数据库，请稍后重试";
-                exit(json_encode($result));
+                exit(json_encode($result, JSON_UNESCAPED_UNICODE));
             }
             $db->select_db("RealTimeBusQuery");
             $query = "INSERT INTO org VALUES (?, ?, ?, ?)";
@@ -36,7 +36,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
         }
-        exit(json_encode($result));
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         break;
     case "PUT":
         parse_str(file_get_contents('php://input'), $data);
@@ -73,42 +73,42 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case "GET":
         $id = trim($_GET["id"]);
+        $pwd = trim($_GET["pwd"]);
         if (preg_match($pattern, $id) !== 0) {
-            @$db = new mysqli("127.0.0.1", "root", "3q3nw,2z1ch.");
+            @$db = new mysqli("127.0.0.1", "root", "AMD,YES!");
             if (mysqli_connect_errno()) {
-                exit("无法连接到数据库，请稍后重试");
+                $response['status'] = 500;
+                $response['message'] = "无法连接到数据库，请稍后重试";
+                exit(json_encode($response, JSON_UNESCAPED_UNICODE));
             }
             $db->select_db("RealTimeBusQuery");
-            $query = "SELECT name, intro "
+            $query = "SELECT pwd "
                 . "FROM org "
                 . "WHERE id=?";
             $stmt = $db->prepare($query);
             $stmt->bind_param("s", $id);
-            $stmt->bind_result($name, $intro);
+            $stmt->bind_result($realPwd);
             $stmt->execute();
             $stmt->store_result();
             if ($stmt->num_rows === 1) {
-                while ($stmt->fetch()) {
-                    $org = [
-                        "name" => $name,
-                        "intro" => $intro
-                    ];
+                $stmt->fetch();
+                if ($realPwd !== $pwd) {
+                    $result['status'] = 400;
+                    $result['message'] = "密码错误";
+                    exit(json_encode($result, JSON_UNESCAPED_UNICODE));
                 }
-                $db->close();
                 $result["status"] = 200;
                 $result["describe"] = "OK";
-                $result["org"] = json_encode($org);
-                exit(json_encode($result));
             } else {
                 $result["status"] = 500;
                 $result["message"] = "发生错误，无法查询机构信息";
-                exit(json_encode($result));
             }
+            $db->close();
         } else {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
-            exit(json_encode($result));
         }
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         break;
     case "DELETE":
         parse_str(file_get_contents("php://input"), $delete);
