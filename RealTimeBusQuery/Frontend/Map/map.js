@@ -1,6 +1,6 @@
 var map = new AMap.Map('container', {
-    // zoom:15.75,//缩放级别
-    center: [110.349556, 21.269520],//中心点坐标
+    zoom: 13,//缩放级别
+    center: [111.791588, 22.17042],//中心点坐标
     viewMode: '3D',//使用3D视图
     mapStyle: 'amap://styles/whitesmoke', //设置地图的显示样式
 });
@@ -25,6 +25,10 @@ var polyline = new AMap.Polyline({
     lineJoin: 'round' // 折线拐点连接处样式
 });
 map.add(polyline); */
+
+
+
+
 
 // 创建两个点标记
 var marker1 = new AMap.Marker({
@@ -69,7 +73,58 @@ car1.setPosition(new AMap.LngLat(110.351556, 21.273520));
 // 传入覆盖物数组，仅包括polyline和marker1的情况
 var point = [marker1, marker2];
 var cars = {};
-map.setFitView(point);
+// map.setFitView(point);
+
+var url = "http://122.51.3.35/identification.php?route=ccbus";
+if (typeof XMLHttpRequest != "undefined") {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 200 && response.identifications.length >= 1) {
+                    for (var index = 0; index < response.identifications.length; index++) {
+                        var identification = response.identifications[index];
+                        // var id = device.id
+                        if (point[identification.id] === undefined) {
+                            var content = '<div>'
+                                + '<div style="border-radius: 8px 8px 8px 0px;background-color: rgba(255,255,255,0.5); padding: 8px 16px;margin: 0 0 -1px 8px;width:max-content;color: #77f">'
+                                + identification.name + '</div>'
+                                + '<img src="../Map/img/3.png" style="width: 16px; height: 16px;margin-left: 8px;"/>'
+                                + '<div style="width:16px; height:16px; border-radius:16px; background-color: #77f; box-shadow: 0 0 8px rgba(127,127,255,0.5);"></div>'
+                                + '</div>';
+                            var pointOfidentification = new AMap.Marker({
+                                content: content,  // 自定义点标记覆盖物内容
+                                position: new AMap.LngLat(identification.lng, identification.lat),
+                                title: identification.name,
+                                offset: new AMap.Pixel(-17, -42) // 相对于基点的偏移位置
+                            });
+                            point.push(pointOfidentification);
+                            // point[identification.id] = pointOfidentification;
+                            map.add(pointOfidentification);
+                        } else {
+                            point[identification.id].setPosition(new AMap.LngLat(identification.lng, identification.lat));
+                        }
+                        // map.setFitView(point);
+                    }
+                } else if (response.status === 200 && response.devices.length === 0) {
+                    alert("未添加设备");
+                } else {
+                    alert("发生错误：" + response.describe);
+                }
+                // car1.setPosition(new AMap.LngLat(response.lng, response.lat));
+                console.log(xhr.responseText);
+            } else {
+                alert("请求失败：" + xhr.status);
+            }
+        }
+    };
+    xhr.open("GET", url, true);
+    xhr.send(null);
+}
+// map.setFitView(point);
+console.log(point)
+
 
 var url = "http://122.51.3.35/device.php?route=name";
 setInterval(() => {

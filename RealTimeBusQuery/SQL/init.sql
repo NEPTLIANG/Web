@@ -37,6 +37,8 @@ CREATE TABLE identification(  /*标识点*/
     name VARCHAR(20),
     id VARCHAR(20),
     route VARCHAR(20),
+    lng DOUBLE,  /*经度*/
+    lat DOUBLE,  /*纬度*/
     intro VARCHAR(50)
 );
 ALTER TABLE identification
@@ -45,6 +47,8 @@ ALTER TABLE identification
     ADD FOREIGN KEY(route) REFERENCES route(id);
 ALTER TABLE identification
     MODIFY name VARCHAR(20) NOT NULL;
+-- alter table identification add lng double after route;
+-- alter table identification add lat double after lng;
 
 CREATE TABLE device(  /*设备*/
     name VARCHAR(20) NOT NULL,

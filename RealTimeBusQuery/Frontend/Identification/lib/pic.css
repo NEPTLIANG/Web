@@ -1,0 +1,49 @@
+.map {
+    height: 66%;
+    width: 25%;
+    margin: 5rem 4rem;
+    float: left;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 3rem rgba(127, 127, 127, 0.1)
+}
+
+#right {
+    color: #444;
+    background-color: #f8f8f8;
+    width: 40%;
+    float: left;
+    height: 100%;
+}
+
+#start,
+#stop,
+#right input {
+    margin: 4px;
+    margin-left: 15px;
+}
+
+.title {
+    width: 100%;
+    background-color: #dadada
+}
+
+/* button {
+    border: solid 1px;
+    margin-left: 15px;
+    background-color: #dadafa;
+} */
+
+.c {
+    font-weight: 600;
+    padding-left: 15px;
+    padding-top: 4px;
+}
+
+#lnglat,
+#address,
+#nearestJunction,
+#nearestRoad,
+#nearestPOI,
+.title {
+    padding-left: 15px;
+}

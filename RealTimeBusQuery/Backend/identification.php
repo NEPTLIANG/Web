@@ -9,10 +9,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $name   = trim($_POST['name']);
         $id     = trim($_POST['id']);
         $route  = trim($_POST['route']);
+        $lng    = doubleval(trim($_POST['lng']));
+        $lat    = doubleval(trim($_POST['lat']));
         $intro  = trim($_POST['intro']);
         //$intro  = $intro ? $intro : "暂无简介";
-        if (!$name || !preg_match($pattern, $id)
-            || !preg_match($pattern, $route)) {
+        if (strlen($name) > 20 || !preg_match($pattern, $id) || !preg_match($pattern, $route)
+            || $lng < 0 || $lng > 180 || $lat < 0 || $lat >180 || strlen($intro) > 128) {
             $result["status"] = 400;
             $result["message"] = "不合法的值";
             exit(json_encode($result, JSON_UNESCAPED_UNICODE));
@@ -24,9 +26,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
             exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         $db->select_db("RealTimeBusQuery");
-        $query = "INSERT INTO identification(name, id, route, intro) VALUES(?, ?, ?, ?)";
+        $query = "INSERT INTO identification(name, id, route, lng, lat, intro) "
+            . "VALUES(?, ?, ?, ?, ?, ?)";
         $stmt = $db->prepare($query);
-        $stmt->bind_param("ssss", $name, $id, $route, $intro);
+        $stmt->bind_param("ssssss", $name, $id, $route, $lng, $lat, $intro);
         $stmt->execute();
         if ($stmt->affected_rows > 0) {
             $result["status"] = 200;
@@ -51,12 +54,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
             exit(json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         $db->select_db("RealTimeBusQuery");
-        $query = "SELECT id, name, route, intro "
+        $query = "SELECT id, name, route, lng, lat, intro "
             . "FROM identification "
             . "WHERE route=?";
         $stmt = $db->prepare($query);
         $stmt->bind_param("s", $route);
-        $stmt->bind_result($id, $name, $route, $intro);
+        $stmt->bind_result($id, $name, $route, $lng, $lat, $intro);
         $stmt->execute();
         $stmt->store_result();
         if (!$stmt->num_rows) {
@@ -70,6 +73,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 "id"    => $id,
                 "name"  => $name,
                 "route" => $route,
+                "lng" => $lng,
+                "lat" => $lat,
                 "intro" => $intro
             ];
             array_push($identifications, $identification);
@@ -85,10 +90,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $id     = trim($data['id']);
         $name   = trim($data['name']);
         $route  = trim($data['route']);
+        $lng    = doubleval(trim($_POST['lng']));
+        $lat    = doubleval(trim($_POST['lat']));
         $intro  = trim($data['intro']);
 //        $intro = $intro ? $intro : "暂无简介";
-        if (!$name || !preg_match($pattern, $id)
-            || !preg_match($pattern, $route)) {
+        if (strlen($name) > 20 || !preg_match($pattern, $id) || !preg_match($pattern, $route)
+            || $lng < 0 || $lng > 180 || $lat < 0 || $lat >180 || strlen($intro) > 128) {
             $result['status'] = "400";
             $result['message'] = "不合法的值";
             exit(json_encode($result, JSON_UNESCAPED_UNICODE));
@@ -101,10 +108,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         $db->select_db("RealTimeBusQuery");
         $query = "UPDATE identification "
-            . "SET name=?, route=?, intro=? "
+            . "SET id=?, name=?, route=?, lng=?, lat=?, intro=? "
             . "WHERE id=?";
         $stmt = $db->prepare($query);
-        $stmt->bind_param("ssss", $name, $route, $intro, $id);
+        $stmt->bind_param("ssssss", $id, $name, $route, $lng, $lat, $intro, $id);
         $stmt->execute();
         if (!$stmt->affected_rows) {
             $result['status'] = 500;

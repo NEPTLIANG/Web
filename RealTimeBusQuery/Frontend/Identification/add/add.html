@@ -10,21 +10,36 @@
     </head>
     <body>
 
-        <h1>添加标识点</h1>
-        <div class="input">
-            <span class="left">标识点名</span><input type="text" id="name" placeholder="请输入标识点名"/>
+        <div class="body">
+            <h1>添加标识点</h1>
+            <div class="input">
+                <span class="left">标识点名</span><input type="text" id="name" placeholder="请输入标识点名"/>
+            </div>
+            <div class="input">
+                <span class="left">id</span><input type="text" id="id" placeholder="请输入id"/>
+            </div>
+            <div class="input">
+                <span class="left">所属路线</span><input type="text" id="route" placeholder="请输入路线名"/>
+            </div>
+            <div class="input">
+                <span class="left">说明</span><input type="text" id="intro" placeholder="请输入说明信息（可选）"/>
+            </div>
+            <div class="input">
+                <span class="left">经纬度</span><input type="text" id="lnglat" placeholder="请选择位置"/>
+            </div>
+            <div class="input">
+                <span class="left">地址</span><input type="text" id="position" placeholder="请选择位置"/>
+            </div>
+            <button id="add">添加</button>
         </div>
-        <div class="input">
-            <span class="left">id</span><input type="text" id="id" placeholder="请输入id"/>
-        </div>
-        <div class="input">
-            <span class="left">所属路线</span><input type="text" id="route" placeholder="请输入路线名"/>
-        </div>
-        <div class="input">
-            <span class="left">说明</span><input type="text" id="intro" placeholder="请输入说明信息（可选）"/>
-        </div>
+        
+        <div id="container" class="map" tabindex="0"></div>  <!--选点地图-->
 
-        <button id="add">添加</button>
+        <script type="text/javascript" src='https://webapi.amap.com/maps?v=2.0&key=a6b0092bfdcc039dfc96272e939adbd8&plugin=AMap.ToolBar'></script>
+        <!-- UI组件库 1.0 -->
+        <script src="https://webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
+        <script src="../lib/pic.js"></script>
+        <link href="../lib/pic.css" rel="stylesheet"/>
 
     </body>
 </html>

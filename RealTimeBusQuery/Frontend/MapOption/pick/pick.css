@@ -1,0 +1,56 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+.map {
+    height: 100%;
+    width: 60%;
+    float: left;
+}
+
+#right {
+    color: #444;
+    background-color: #f8f8f8;
+    width: 40%;
+    float: left;
+    height: 100%;
+}
+
+#start,
+#stop,
+#right input {
+    margin: 4px;
+    margin-left: 15px;
+}
+
+.title {
+    width: 100%;
+    background-color: #dadada
+}
+
+button {
+    border: solid 1px;
+    margin-left: 15px;
+    background-color: #dadafa;
+}
+
+.c {
+    font-weight: 600;
+    padding-left: 15px;
+    padding-top: 4px;
+}
+
+#lnglat,
+#address,
+#nearestJunction,
+#nearestRoad,
+#nearestPOI,
+.title {
+    padding-left: 15px;
+}

@@ -1,7 +1,7 @@
 <?php
 session_start();
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Method: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 
 $pattern = "/^[a-zA-Z0-9_\-]{1,20}$/";
 $pwdPattern = "/^[a-fA-F0-9]{128}$/";

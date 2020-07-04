@@ -23,7 +23,7 @@ function loadData() {
                         if (!response.routes.length) {
                             var prompt = document.createElement("div")
                             prompt.className = "card"
-                            prompt.innerHTML = "<h2>暂未查询到标识点</h2>"
+                            prompt.innerHTML = "<h2>暂未查询到路线</h2>"
                             document.getElementById("list").appendChild(prompt)
                             console.log(prompt)
                         } else {
@@ -37,7 +37,7 @@ function loadData() {
                         alert(response.message)
                         var prompt = document.createElement("div")
                         prompt.className = "card"
-                        prompt.innerHTML = "<h2>暂未查询到标识点</h2>"
+                        prompt.innerHTML = "<h2>暂未查询到路线</h2>"
                         document.getElementById("list").appendChild(prompt)
                         console.log(prompt)
                     }

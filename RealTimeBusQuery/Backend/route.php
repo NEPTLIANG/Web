@@ -73,18 +73,55 @@ switch ($_SERVER['REQUEST_METHOD']) {
         exit(json_encode($result));
         break;
     case "GET":
-        $org = trim($_GET["org"]);
-        if (preg_match($pattern, $org) !== 0) {
+        if (isset($_GET["org"])) {
+            $org = trim($_GET["org"]);
+            if (preg_match($pattern, $org) !== 0) {
+                @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
+                if (mysqli_connect_errno()) {
+                    exit("无法连接到数据库，请稍后重试");
+                }
+                $db->select_db("RealTimeBusQuery");
+                $query = "SELECT id, name, org, intro "
+                    . "FROM route "
+                    . "WHERE org=?";
+                $stmt = $db->prepare($query);
+                $stmt->bind_param("s", $org);
+                $stmt->bind_result($id, $name, $ort, $intro);
+                $stmt->execute();
+                $stmt->store_result();
+                if ($stmt->num_rows > 0) {
+                    $routes = [];
+                    while ($stmt->fetch()) {
+                        $route = [
+                            "id" => $id,
+                            "name" => $name,
+                            "org" => $org,
+                            "intro" => $intro
+                        ];
+                        array_push($routes, json_encode($route));
+                    }
+                    $db->close();
+                    $result["status"] = 200;
+                    $result["describe"] = "OK";
+                    $result["routes"] = $routes;
+                } else {
+                    $result["status"] = 500;
+                    $result["message"] = "发生错误，无法查询路线";
+                }
+            } else {
+                $result["status"] = 400;
+                $result["message"] = "不合法的值";
+            }
+            exit(json_encode($result));
+        } else {
             @$db = new mysqli("127.0.0.1", "root", "amd,yes!");
             if (mysqli_connect_errno()) {
                 exit("无法连接到数据库，请稍后重试");
             }
             $db->select_db("RealTimeBusQuery");
             $query = "SELECT id, name, org, intro "
-                . "FROM route "
-                . "WHERE org=?";
+                . "FROM route";
             $stmt = $db->prepare($query);
-            $stmt->bind_param("s", $org);
             $stmt->bind_result($id, $name, $ort, $intro);
             $stmt->execute();
             $stmt->store_result();
@@ -105,13 +142,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $result["routes"] = $routes;
             } else {
                 $result["status"] = 500;
-                $result["message"] = "发生错误，无法查询路线";
+                $result["message"] = "暂无路线";
             }
-        } else {
-            $result["status"] = 400;
-            $result["message"] = "不合法的值";
+            exit(json_encode($result));
         }
-        exit(json_encode($result));
         break;
     case "DELETE":
         parse_str(file_get_contents("php://input"), $delete);

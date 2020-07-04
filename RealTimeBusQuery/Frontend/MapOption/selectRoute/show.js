@@ -1,47 +1,45 @@
 onload = () => {
-    document.getElementById("identification").onclick = () => {
-        location = `../../Identification/show/show.html?route=${location.search.split("=")[1]}`
-    }
     var refresh = document.getElementById("refresh")
     refresh.addEventListener("click", loadData)
     loadData()
 }
 
 function loadData() {
-    var route = location.search.split("=")[1]
     var response
     var request = new XMLHttpRequest()
     var method = "GET"
-    var url = `http://122.51.3.35/device.php?route=${route}`
+    var url = `http://122.51.3.35/route.php`
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
             if ((request.status >= 200 && request.status < 300) || request.status == 304) {
                 try {
-                    response = JSON.parse(request.responseText);
+                    console.log(request.responseText)
+                    response = JSON.parse(request.responseText)
                 } catch (e) {}
                 if (response) {
                     if (response.status == 200) {
-                        if (!response.devices.length) {
+                        if (!response.routes.length) {
                             var prompt = document.createElement("div")
                             prompt.className = "card"
-                            prompt.innerHTML = "<h2>暂未查询到车辆</h2>"
+                            prompt.innerHTML = "<h2>暂未查询到路线</h2>"
+                            document.getElementById("list").innerHTML = ""
                             document.getElementById("list").appendChild(prompt)
                             console.log(prompt)
                         } else {
                             document.getElementById("list").innerHTML = ""
-                            var devices = response.devices
-                            for (var index in devices) {
-                                show(JSON.parse(devices[index]))
-                                console.log(devices[index])
+                            var routes = response.routes
+                            for (var index in routes) {
+                                show(JSON.parse(routes[index]))
                             }
                         }
                     } else {
-                        alert(response.describe)
+                        alert(response.message)
                         var prompt = document.createElement("div")
                         prompt.className = "card"
-                        prompt.innerHTML = "<h2>暂未查询到车辆</h2>"
+                        prompt.innerHTML = "<h2>暂未查询到路线</h2>"
+                        document.getElementById("list").innerHTML = ""
                         document.getElementById("list").appendChild(prompt)
-                        console.log(response)
+                        console.log(prompt)
                     }
                 } else {
                     alert("响应格式错误，请稍后重试")
@@ -58,35 +56,36 @@ function loadData() {
 
 function show(item) {
     var card = document.createElement("div")
-    var position = (item.lng && item.lat) ? (item.lng + "<br/>" + item.lat) : "暂无定位"
     var intro = item.intro ? item.intro : "暂无说明"
     card.className = "card"
     card.innerHTML = `<h2>${item.name}</h2>
-        <span class="id">id: ${item.id}</span>
-        <div class="position"><div style="font-weight: bold">位置</div>${position}</div>
+        <span class="id">所属机构: ${item.org}</span>
         <div>${intro}</div>
-        <a href='../modify/modify.html?id=${item.id}&name=${item.name}&route=${item.route}&intro=${item.intro}' class="edit">编辑</a>
-        <button onclick="del('${item.id}')" class="del">删除</button>`
+        <button onclick="select('${item.id}')" class="edit">选择</button>`
+    // var link = document.createElement("a")
+    // link.href = `../../Device/show/show.html?route=${item.id}`
+    // link.appendChild(card)
     document.getElementById("list").appendChild(card)
 }
 
-var del = (id) => {
-    if (!confirm("确定要删除设备吗？")) {
+var select = (route) => {
+    if (!confirm("确定要更改路线吗？")) {
         return;
     }
     var request = new XMLHttpRequest()
-    var method = "DELETE"
-    var url = "http://122.51.3.35/device.php"
-    var content = `id=${id}`
+    var method = "PUT"
+    var url = "http://122.51.3.35/user.php"
+    var content = `route=${route}&id=444`
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
             if ((request.status >= 200 && request.status < 300) || request.status == 304) {
                 try {
+                    console.log(request.responseText)
                     response = JSON.parse(request.responseText);
                 } catch (e) {}
-                if (response) {
+                if (typeof(response) !== "undefined") {
                     if (response.status == 200) {
-                        alert("删除成功")
+                        alert("更改成功")
                         loadData()
                     } else {
                         alert(response.message)
@@ -95,7 +94,7 @@ var del = (id) => {
                     alert("响应格式错误，请稍后重试")
                 }
             } else {
-                alert(`${response.status}：出现错误，请稍后重试`)
+                alert(`${request.status}：出现错误，请稍后重试`)
             }
         }
     }

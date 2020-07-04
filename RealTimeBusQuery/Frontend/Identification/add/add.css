@@ -2,9 +2,10 @@
     margin: 0;
     padding: 0;
 }
-html {
+html, body {
     overflow: auto;
     height: 100%;
+    width: 100%;
     font-size: 48px;
     display: flex;
     justify-content: center;
@@ -17,7 +18,7 @@ html {
     align-items: center;
 }
 /* } */
-body {
+.body {
     overflow: auto;
     color: #777;
     padding: 4rem 2rem;
@@ -32,7 +33,7 @@ input[type="text"] {
     font-size: 1rem;
     /* color: #00ffff; */
     background: none;
-    padding: 1rem 0 1rem 2rem;
+    padding: 0.5rem 0 0.5rem 1rem;
     /* margin: 0 1rem; */
     border: #007f7f none;
     border-width: 0 0 0 4px;
@@ -45,7 +46,7 @@ button{
     background-color: #777!important;
 }
 .result,.input,button {
-    height: 3rem;
+    height: 2.5rem;
     text-align: center;
     font-size: 1rem;
     color: #ddd;
