@@ -20,8 +20,6 @@
 
 项目没能通过校赛初筛，后来完善了一下，作为《移动Web应用开发》课程期末作业交了。因为感觉对HTML、CSS、JS还不太熟悉，想再练习一下，所以没用框架
 
-[github.com/NEPTLIANG/Web/tree/master/RealTimeBusQuery](https://github.com/NEPTLIANG/Web/tree/master/RealTimeBusQuery)
-
 **目录结构**：
 ```sh
 .

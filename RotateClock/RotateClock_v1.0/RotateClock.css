@@ -8,8 +8,8 @@ body {
 
 .father {
     position: absolute;
-    top: 600px;
-    left: 1600px;
+    /* top: 600px;
+    left: 1600px; */
 }
 
 #wheelOfSeconds {
@@ -58,9 +58,10 @@ body {
 #date {
     font-size: 48px;
     position: relative;
-    left: -50%;
+    /* left: -45%; */
     top: 128px;
     text-align: center;
+    margin: 0 auto;
 }
 
 .seconds {

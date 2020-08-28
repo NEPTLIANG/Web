@@ -1,5 +1,5 @@
 # “智慧学工”系统部分页面
-### 初入Vue开发 _(2020.01.05 ~ 2020.02.11)_
+## 初入Vue开发 _(2020.01.05 ~ 2020.02.11)_
 
 **主要技术**：
 * uni-app(Vue)
@@ -11,8 +11,6 @@
 我负责“文章列表”、“实践经历管理”、“个人主页”三个部分共6个页面，其中实践经历管理分为添加实践经历、修改实践经历、查询单条实践经历、查询所有实践经历4个页面
 
 因为想熟悉VIM的使用，所以主要采用VIM
-
-[github.com/NEPTLIANG/Web/tree/master/intelli-edu-admin](https://github.com/NEPTLIANG/Web/tree/master/intelli-edu-admin)
 
 ---
 
@@ -39,7 +37,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ---
 
 **目录结构**：
-```sh
+```bash
 .
 ├── src  #源码目录
 │   ├── components  #组件目录
@@ -63,6 +61,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 │   │   │   ├── MaterialIcons-Regular.ttf
 │   │   │   ├── MaterialIcons-Regular.woff
 │   │   │   └── MaterialIcons-Regular.woff2
+│   │   └── 时间.png
 │   └── uni.scss
 └── tsconfig.json
 ```

@@ -1,3 +1,7 @@
+var rotate = 0;  //设置轮盘3D旋转角度
+var left = -50 + "%";  //设置中间日期位置偏移，默认-50%
+
+// 实现父div居中
 // var width = window.innerWidth;
 var height = window.innerHeight;
 var father = document.getElementsByClassName("father");
@@ -6,6 +10,8 @@ var father = document.getElementsByClassName("father");
 // father[0].style.position = "fixed";
 father[0].style.left = "50%";
 father[0].style.top = (height / 2 - 204).toString() + "px";
+
+// 生成轮盘的准备工作
 var num = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "", "", "", "", "", "", ""];
 var num2 = ["十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "", "", "",];
 var wheelOfSeconds = document.getElementById("wheelOfSeconds");
@@ -17,6 +23,8 @@ var initTime = new Date();
 var initSecond = initTime.getSeconds();
 var initMinute = initTime.getMinutes() + initSecond / 60;
 var initHour = initTime.getHours() + initMinute / 60;
+
+// 拼接秒和分钟文字并插到轮盘div里
 for (i = 0; i < 60; i++) {
     seconds.push(document.createElement("div"));
     minutes.push(document.createElement("div"));
@@ -45,6 +53,8 @@ for (i = 0; i < 60; i++) {
     wheelOfSeconds.appendChild(seconds[i]);
     wheelOfMinutes.appendChild(minutes[i]);
 }
+
+// 拼接小时文字并插到轮盘div里
 for (i = 0; i < 24; i++) {
     hours.push(document.createElement("div"));
     if (i === 0) {
@@ -64,6 +74,7 @@ for (i = 0; i < 24; i++) {
     wheelOfHours.appendChild(hours[i]);
 }
 
+// 更新时间文字样式的函数
 var date, year, month, day, hour, minute, second;
 /*function updateStyle() {
     date = new Date();
@@ -77,7 +88,6 @@ var date, year, month, day, hour, minute, second;
 // var lastHour;
 var time = document.getElementById("time");
 var dateDiv = document.getElementById("date");
-
 function changeStyle() {
     date = new Date();
     year = date.getFullYear();
@@ -107,4 +117,15 @@ function changeStyle() {
     // seconds[(second + 60 - 1) % 60].style.fontSize = "32px";
 }
 
+//设置轮盘3D旋转
+father[0].style.transform = `rotate3d(-1, 1, 0, ${rotate}deg)`;
+// transform: rotate3d(-1, 1, 0, 45deg);
+time.style.transform = `rotate3d(1, 1, 0, ${rotate}deg)`;
+dateDiv.style.transform = `rotate3d(1, 1, 0, ${rotate}deg)`;
+dateDiv.style.left = left;
+// var position = 50 - (rotate * 0.2);
+// dateDiv.style.left = `-${position}%`;
+// console.log(`-${position}%`);
+
+// 设置更新轮盘上的文字样式
 setInterval(changeStyle, 100);
