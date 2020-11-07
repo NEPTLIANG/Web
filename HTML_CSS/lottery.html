@@ -1,0 +1,82 @@
+<!--
+ * @Author: NeptLiang
+ * @Date: 2020-11-05 21:51:48
+ * @LastEditors: NeptLiang
+ * @LastEditTime: 2020-11-06 16:34:52
+ * @Description: file content
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #frame {
+            height: 96px;
+            overflow: hidden;
+        }
+        #list {
+            font-size: 16px;
+            line-height: 16px;
+        }
+        .item {
+            padding: 8px 16px;
+            /* animation: all 2s linear 1s; */
+        }
+        .removing {
+            transform: translate(0, -32px);
+            /* position: absolute;
+            top: -32px; */
+            transition: transform 1s linear;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="frame">
+        <div id="list"></div>
+    </div>
+</body>
+
+<script>
+    const NOTICE_LIST = [
+        '恭喜罗X获得特等奖 别墅一套',
+        '恭喜张4获得一等奖 跑车一辆',
+        '恭喜张5获得二等奖 华为手机一部',
+        '恭喜张6获得二等奖 华为手机一部',
+        '恭喜张7获得三等奖 小米手机一部',
+        '恭喜张8获得三等奖 小米手机一部',
+        '恭喜张9获得三等奖 小米手机一部',
+    ]
+    const speed = 2 * 1000  //微秒/条
+
+    //初始化
+    let list = document.getElementById('list')
+    for (let index in NOTICE_LIST) {
+        let child = document.createElement('div')
+        child.className = 'item'
+        child.innerHTML = `<div>${NOTICE_LIST[index]}</div>`
+        list.appendChild(child)
+    }
+
+    //更新列表
+    let nextIndex = 0
+    setInterval(() => {
+        let child = document.createElement('div')
+        child.className = 'item'
+        child.innerHTML = `<div>${NOTICE_LIST[nextIndex]}</div>`
+        list.appendChild(child)
+        nextIndex = (++nextIndex) % NOTICE_LIST.length
+        list.className += 'removing'
+        setTimeout(() => {
+            list.removeChild(list.childNodes[0])
+            list.className = ''
+        }, speed/2)
+    }, speed)
+</script>
+
+</html>

@@ -1,0 +1,166 @@
+<!--
+ * @Author: NeptLiang
+ * @Date: 2020-11-05 13:30:48
+ * @LastEditors: NeptLiang
+ * @LastEditTime: 2020-11-05 17:05:35
+ * @Description: GitHub信息页面
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NeptLiang</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="content" content="width=device-width; initial-scale=1.0
+            minimun-scale=1.0; maximun-scale=1.0; user-scalable=no" />
+        <link rel="icon" href="res/logo.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="res/logo.png" type="image/x-icon" />
+        <style>
+            * {
+                font-family: Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;
+                color: #077;
+                line-height: 2rem;
+                border: 0;
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                height: 100%;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: center;
+                height: 100%;
+                background-image: url("res/code.jpg");
+                background-size: cover;
+                background-position: center;
+            }
+            article {
+                display: flex;
+                flex-direction: column;
+                /* height: 8rem; */
+                backdrop-filter: blur(32px);
+                width: 32rem;
+                background-color: rgba(0, 31, 31, 0.5);
+                margin: 4rem 6rem;
+                padding: 4rem 6rem;
+                border-radius: 2rem;
+                box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.75);
+            }
+            #up {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #avatar {
+                width: 8rem;
+                height: 8rem;
+                border-radius: 4rem;
+            }
+            h1 {
+                color: #0ff;
+                font-size: 2rem;
+                margin: 2rem 3rem;
+            }
+            a {
+                color: #077;
+                text-decoration: none;
+            }
+            a:hover {
+                color: #fff;
+            }
+            a:active {
+                color: #077;
+            }
+            #down {
+                display: flex;
+                margin-top: 2rem;
+            }
+            .info {
+                display: flex;
+                flex-direction: column;
+                flex: auto;
+                align-items: center;
+            }
+            h2 {
+                color: #0ff;
+                font-size: 1.5rem;
+            }
+        </style>
+        <script>
+            onload = () => {
+                const name = 'neptliang'
+                if (typeof(XMLHttpRequest) !== 'undefined') {
+                    let request = new XMLHttpRequest()
+                    request.onreadystatechange = () => {
+                        if (request.readyState === 4) {
+                            if ((request.status >= 200 && request.status < 300) || request.status === 304) {
+                                fill(request.responseText)
+                            } else {
+                                alert(`请求失败：${request.status}`)
+                            }
+                        }
+                    }
+                    request.open('GET', `https://api.github.com/users/${name}`, true)
+                    request.setRequestHeader('Accept', 'application/vnd.github.v3+json')
+                    request.send()
+                }
+
+                let fill = (response) => {
+                    let {
+                        name, 
+                        html_url, 
+                        avatar_url,
+                        company,
+                        blog,
+                        location,
+                        email,
+                        bio,
+                        public_repos,
+                        followers,
+                        following,
+                        created_at,
+                        updated_at
+                    } = JSON.parse(response)
+                    document.getElementById('avatar').src = avatar_url
+                    document.getElementById('name').innerText = name
+                    document.getElementById('url').innerText = html_url
+                    document.getElementById('url').href = html_url
+                    // let {innerText: aText, href: aHref} = document.getElementById('url')
+                    // aText = html_url
+                    // aHref = html_url
+                    // debugger
+                    document.getElementById('followers').innerText = followers
+                    document.getElementById('following').innerText = following
+                    document.getElementById('respositories').innerText = public_repos
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <article>
+            <section id="up">
+                <img id="avatar" alt="头像"/>
+                <h1 id="name">-</h1>
+                <a id="url" target="_blank">-</a>
+            </section>
+
+            <section id="down">
+                <div class="info">
+                    <h2 id="followers">-</h2>
+                    <p>Followers</p>
+                </div>
+                <div class="info">
+                    <h2 id="respositories">-</h2>
+                    <p>Respositories</p>
+                </div>
+                <div class="info">
+                    <h2 id="following">-</h2>
+                    <p>Following</p>
+                </div>
+            </section>
+        </article>
+    </body>
+</html>

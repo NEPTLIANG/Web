@@ -29,10 +29,10 @@ public class ToDoController {
     /**
      * 分页查询
      *
-     * @param page
-     * @param rows
-     * @param toDo
-     * @return result
+     * @param page 页码
+     * @param rows 每页行数
+     * @param toDo 查询用实体类
+     * @return result 查询结果Map对象
      */
     @RequestMapping("/list")
     @ResponseBody

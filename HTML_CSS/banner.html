@@ -1,0 +1,101 @@
+<!--
+ * @Author: NeptLiang
+ * @Date: 2020-11-05 21:51:48
+ * @LastEditors: NeptLiang
+ * @LastEditTime: 2020-11-07 02:03:02
+ * @Description: file content
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #frame {
+            display: flex;
+            align-items: center;
+            flex: 0 0 384px;
+            /* width: 75%; */
+            overflow: hidden;
+            /* margin: 64px 128px; */
+            /* flex-direction: column; */
+            /* height: 384px; */
+            /* padding: 8px 16px; */
+            /* border: 5px solid #000; */
+        }
+        #list {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            line-height: 16px;
+            /* flex: 0 0 10%; */
+        }
+        .item {
+            flex: 0 0 100%;
+            /* padding: 5% 10%; */
+            /* border: 1px solid #000; */
+            /* animation: all 2s linear 1s; */
+        }
+        img {
+            width: 100%;
+        }
+        .removing {
+            transform: translate(-100%, 0);
+            transition: transform 1s ease-in-out;
+            /* position: absolute;
+            top: -32px; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="frame">
+        <div id="list"></div>
+    </div>
+</body>
+
+<script>
+    const IMG_LIST = [
+        'res/banner/1.png',
+        'res/banner/2.png',
+        'res/banner/3.png',
+        'res/banner/4.png',
+        'res/banner/5.png'
+    ]
+    const speed = 4 * 1000  //微秒/条
+
+    //初始化
+    let list = document.getElementById('list')
+    for (let index in IMG_LIST) {
+        let child = document.createElement('div')
+        child.className = 'item'
+        child.innerHTML = `<img src="${IMG_LIST[index]}" />`
+        list.appendChild(child)
+    }
+
+    //更新列表
+    let nextIndex = 0
+    setInterval(() => {
+        let child = document.createElement('div')
+        child.className = 'item'
+        child.innerHTML = `<img src="${IMG_LIST[nextIndex]}" />`
+        list.appendChild(child)
+        nextIndex = (++nextIndex) % IMG_LIST.length
+        list.className += 'removing'
+        setTimeout(() => {
+            list.removeChild(list.childNodes[0])
+            list.className = ''
+        }, speed/2)
+    }, speed)
+</script>
+
+</html>
