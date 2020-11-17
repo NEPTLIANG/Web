@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数字签名</title>
+    <link href="Style/index.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="out">
+    <h1>数字签名</h1>
+    <div class="card">
+        <h2>签名</h2>
+        <form method="post" action="../../Server/DigitalSignature/SignatureResult.php">
+            <span>消息</span>
+            <input type="text" id="em" name="em"/>
+            <input type="submit" value="签名"/>
+            <!--<p>公钥{e,n}：</p>
+            <p id="epub">请输入明文后点击加密</p>
+            <p>私钥{p,q,d}：</p>
+            <p id="epri">请输入明文后点击加密</p>
+            <p>密文：</p>
+            <p id="ec">请输入明文后点击加密</p>-->
+        </form>
+    </div>
+    <div class="card">
+        <h2>验证</h2>
+        <form method="post" action="../../Server/DigitalSignature/VerifyResult.php">
+            <span>签名后的消息</span>
+            <input type="text" id="dc" name="dc"/>
+            <br/>
+            <span>公钥{e,n}</span>
+            <input type="text" id="dpub" name="dpub"/>
+            <input type="submit" value="验证"/>
+            <!--<p>明文：</p>
+            <p id="dm">请输入密文和私钥后点击解密</p>-->
+        </form>
+    </div>
+    <a href="../../index.html" style="float: right; color: #7f7f7f">加密 & 解密</a>
+</div>
+</body>
+</html>
