@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: flex;
+    font-size: 16px;
+    color: #7f7f7f;
+    line-height: 5em;
+}
+#root {
+    flex: 1 1 100%;
+}
+main {
+    display: flex;
+}
+aside {
+    display: flex;
+    align-items: flex-start;
+    /* flex: 1 0 20%; */
+    flex: none;
+    margin: 32px 32px 32px 128px;
+}
+aside nav {
+    display: flex;
+    flex: 1 0 100%;
+}
+aside ul {
+    display: flex;
+    flex-direction: column;
+    /* float: left; */
+    flex: 1 0 100%;
+    overflow: hidden;
+    background-color: #efefef;
+    /* width: 64rem; */
+    /* margin: 32px 64px; */
+    border-radius: 8px;
+    box-shadow: 0 16px 64px #dfdfdf;
+}
+aside li {
+    display: flex;
+}
+aside a {
+    display: inline-block;
+    background-color: #fff;
+    /* width: 8rem; */
+    padding: 1rem 4rem;
+}
+article {
+    display: flex;
+    /* flex: 1 0 calc(80% - 320px); */
+    flex: none;
+    margin: 32px 128px 32px 32px;
+}
+.subNav ul {
+    display: flex;
+    flex: 1 1 100%;
+    /* justify-content: space-around; */
+    background-color: #efefef;
+}
+.subNav li {
+    display: flex;
+    /* justify-content: center; */
+    flex: 0 0 20%;
+    background-color: #fff;
+}
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    text-align: center;
+    color: #7f7f7f;
+    margin: 0 auto;
+    /* padding: 1rem 8rem; */
+    flex: 1 0 2rem;
+}
+.splitLine {
+    /* width: 2px; */
+    flex: 0 0 0px;
+    background-color: #efefef;
+}
+h1 {
+    margin: 32px 64px;
+    font-size: 32px;
+}
+h2 {
+    font-size: 24px;
+}
+.out {
+    width: 1440px;
+    margin: 64px auto;
+    vertical-align: center;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    /* width: 256px; */
+    overflow: hidden;
+    /* width: 64rem; */
+    flex: 1 0 100%;
+    /* margin: 32px 64px; */
+    /* padding: 64px 168px; */
+    border-radius: 8px;
+    box-shadow: 0 16px 64px #dfdfdf;
+}
+.main {
+    /* padding: 64px 168px; */
+    padding: 
+}
+input {
+    color: #7f7f7f;
+    font-size: 16px;
+    text-align: center;
+    margin: 4px 0;
+    padding: 16px 32px;
+    border-width: 0;
+    border-radius: 64px;
+    background-color: #dfdfdf;
+}
+input[type="text"] {
+    margin-left: 16px;
+    width: 64px;
+}
+input[type="submit"] {
+    width: 96px;
+}

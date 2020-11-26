@@ -1,8 +1,6 @@
 import React from 'react'
 //import ReactDOM from 'react-dom'
 
-import './encrypt.css'
-
 export default class Encrypt extends React.Component {
     render() {
         return (

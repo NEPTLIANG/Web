@@ -9,13 +9,12 @@ import {
 
 import Encrypt from '../encrypt/encrypt'
 import Decrypt from '../decrypt/decrypt'
-import './encrypt-and-decrypt.css'
 
 export default class EncryptAndDecrypt extends React.Component {
     render() {
         return (
             <Router>
-                <nav>
+                <nav class="subNav" >
                     <ul>
                         <li>
                             <NavLink to="/encrypt-and-decrypt/encrypt">加密</NavLink>

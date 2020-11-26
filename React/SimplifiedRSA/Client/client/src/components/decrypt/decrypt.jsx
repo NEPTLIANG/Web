@@ -1,7 +1,5 @@
 import React from 'react'
 
-import './decrypt.css'
-
 export default class Decrypt extends React.Component {
     render() {
         return (
