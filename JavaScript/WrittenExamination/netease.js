@@ -1,4 +1,11 @@
-/* 网易前端实习笔试第1题，Aced */
+/*
+ * @Author: NeptLiang
+ * @Date: 2020-11-25 13:50:49
+ * @LastEditors: NeptLiang
+ * @LastEditTime: 2021-03-24 10:03:26
+ * @Description: 前端实习笔试第1题，Aced
+ */
+
 /**
  * 接收两个表示9进制数的字符串，返回表示它们相加后的9进制数的字符串
  * @param num1 string字符串 第一个加数
@@ -6,7 +13,8 @@
  * @return string字符串
  */
 function add(num1, num2) {
-    var bit1, bit2, flag = 0, sum, i, result = "";
+    var bit1, bit2, flag = 0,
+        sum, i, result = "";
     if (num1.indexOf(".") !== -1 || num2.indexOf(".") !== -1) {
         if (num1.indexOf(".") == -1) {
             num1 += ".0";

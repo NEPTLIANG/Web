@@ -1,19 +1,28 @@
-/*--------------------------------------------------
+/*
+ * @Author: NeptLiang
+ * @Date: 2020-11-25 13:50:49
+ * @LastEditors: NeptLiang
+ * @LastEditTime: 2021-03-24 10:05:38
+ * @Description: 前端实习笔试第1题，时间超限
+ */
+
+/*
+--------------------------------------------------
 
                       记得gets
 
 ----------------------------------------------------
-360前端实习笔试第1题，时间超限
 Test case:
 4 2
 1 3 2 4
  */
+
 function Human(level) {
     this.level = level;
     this.win = 0;
 }
 
-(function () {
+(function() {
     var a = "10 10";
     var levels = "1 3 2 4 5 8 6 9 7 0".split(" ");
 
@@ -26,7 +35,7 @@ function Human(level) {
     for (var j = 0; j < num; j++) {
         humans.push(new Human(parseInt(levels[j])));
     }
-// var i = 0;
+    // var i = 0;
     var result = 0;
     while (humans[0].win < require && humans[0].win < num) {
         if (humans[0].level > humans[1].level) {
@@ -41,7 +50,7 @@ function Human(level) {
         result++;
         // i++;
     }
-// print(result);
+    // print(result);
 
 
     console.log(result);
