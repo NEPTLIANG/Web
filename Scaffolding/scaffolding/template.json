@@ -1,0 +1,7 @@
+{
+    "webpack": {
+        "name": "webpack",
+        "description": "Webpack模板",
+        "npm": "struct-fudao-h5"
+    }
+}
