@@ -1,0 +1,5 @@
+.container {
+  max-width: 9rem;
+  padding: 0 1rem;
+  margin: 3rem auto 6rem;
+}  /* 要使用CSS模块，CSS文件名必须以.module.css结尾 */

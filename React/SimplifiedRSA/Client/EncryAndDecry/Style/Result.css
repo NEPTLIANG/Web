@@ -1,0 +1,55 @@
+body {
+    font-size: 16px;
+    color: #7f7f7f;
+    line-height: 2em;
+}
+
+h1 {
+    font-size: 32px;
+    margin: 128px 64px;
+    /*padding: 64px 168px;*/
+}
+
+h2 {
+    font-size: 24px;
+}
+
+input {
+    text-align: center;
+    margin: 4px 0;
+    padding: 16px 32px;
+    border-width: 0;
+    border-radius: 64px;
+    background-color: #dfdfdf;
+}
+
+input[type="text"] {
+    margin-left: 16px;
+    width: 64px;
+}
+
+input[type="submit"] {
+    width: 96px;
+}
+
+.out {
+    width: 60%;
+    margin: 64px auto;
+    vertical-align: center;
+}
+
+.card {
+    /*float: left;*/
+    /*width: 40%;*/
+    /*width: fit-content;*/
+    margin: 128px 64px;
+    padding: 64px 168px;
+    border-radius: 8px;
+    box-shadow: 0 16px 64px #dfdfdf;
+}
+
+.result {
+    font-weight: bold;
+    font-size: 20px;
+    line-break: anywhere;
+}

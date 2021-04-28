@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Rock';
+    src: url('./ROCK.TTF') format('ttf');
+    font-weight: 600;
+    font-style: normal
+}
+
+.hello {
+    color: red;
+    font-family: 'Rock'
+    /* background: url('./Webpack.svg') */
+}
