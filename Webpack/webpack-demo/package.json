@@ -1,22 +1,70 @@
 {
   "name": "webpack-demo",
+  "sideEffects": [
+    "*.css"
+  ],
   "version": "1.0.0",
-  "description": "",
-  "private": "true",
+  "description": "看完B站教程后尝试写的demo",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --open --config webpack.config.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "webpack": "^5.24.3",
-    "webpack-cli": "^4.5.0"
-  },
+  "keywords": [
+    "demo"
+  ],
+  "author": "NeptLiang",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
-    "css-loader": "^5.1.1",
+    "@babel/core": "^7.15.0",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
+    "babel-polyfill": "^6.26.0",
+    "core-js": "^3.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.23.4",
     "lodash": "^4.17.21",
-    "style-loader": "^2.0.0"
+    "mini-css-extract-plugin": "^2.2.0",
+    "postcss-preset-env": "^6.7.0",
+    "whatwg-fetch": "^3.6.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^5.2.7",
+    "csv-loader": "^3.0.3",
+    "eslint": "^7.32.0",
+    "file-loader": "^6.2.0",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.2",
+    "http-server": "^0.12.3",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "postcss": "^8.3.6",
+    "postcss-loader": "^6.1.1",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.49.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2",
+    "workbox-webpack-plugin": "^6.2.2",
+    "xml-loader": "^1.2.1"
+  },
+  "browserslist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base"
   }
 }
