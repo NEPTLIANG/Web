@@ -69,6 +69,7 @@ function getComponent() {
           覆盖 this 指向 
         */
         this.alert('Hmmm, this probably isn\'t a great idea...')
+        console.log('then');
 
         element.appendChild(br);
         element.appendChild(button);
