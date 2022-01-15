@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2021-11-07 21:43:24
+ * @LastEditTime: 2022-01-15 22:25:09
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -13,6 +13,7 @@ const WorkboxPlugin = require('workbox-webpack-plugin'); // npm i workbox-webpac
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // npm i mini-css-extract-plugin
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin'); // npm i optimize-css-assets-webpack-plugin -D
 // const PostCssPresetEnv = require('postcss-preset-env'); // npm i postcss-preset-env
+// const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 
 // process.env.NODE_ENV = 'development'; // 设置nodejs环境变量，CSS兼容性处理需要
 process.env.NODE_ENV = 'production'; // 定义nodejs环境变量，决定使用browserslist的哪个环境
@@ -86,6 +87,9 @@ const commonCssLoader = [ // 复用less与css文件共用的loader
         "sideEffects": false    //所有代码都没有副作用（都可以进行tree shaking）
           问题：可能会把CSS / @babel/polyfill （副作用）文件干掉
         "sideEffects": ["*.css"]
+*/ /*
+  PWA: 渐进式网络开发应用程序（离线可访问）
+    workbox --> workbox-webpack-plugin
 */
 // npm init -y
 // npm i webpack webpack-cli --save-dev
@@ -113,11 +117,11 @@ module.exports = { // exports而非export
             注意：只检查自己写的源码，第三方库不用检查
             设置检查规则：
                 package.json中设置eslintConfig：
-                --------------------------------------
+                ----------------------------------------------------
                     "eslintConfig": {
                         "extends": "airbnb-base"    //继承airbnb规范
                     }
-                --------------------------------------
+                ----------------------------------------------------
                 airbnb --> eslint eslint-config-airbnb-base eslint-plugin-import
                 npm i eslint eslint-config-airbnb-base eslint-plugin-import eslint-loader
         */ /*
@@ -261,11 +265,16 @@ module.exports = { // exports而非export
       join: ['lodash', 'join'], // 暴露出某个模块中单个导出，无论 join 方法在何处调用，我们都只会获取到 lodash 中提供的 join 方法
     }),
     new WorkboxPlugin.GenerateSW({
-      // 这些选项帮助快速启用ServiceWorkers
-      // 不允许遗留任何“旧的”ServiceWorkers
+      // * 这些选项帮助快速启用ServiceWorkers（帮助ServiceWorkers快速启动）
+      // * 不允许遗留任何“旧的”ServiceWorkers（删除旧的ServiceWorkers）
+      // 生成一个ServiceWorkers配置文件
       clientsClaim: true,
       skipWaiting: true,
     }),
+    // new WorkboxWebpackPlugin.GenerateSW({
+    //   clientsClain: true,
+    //   skipWaiting: true
+    // }),
     // new CommonsChunkPlugin({ // 只提取包含 runtime 的 chunk，其他 chunk 都作为其子 chunk
     //   name: 'manifest',
     //   minChunks: Infinity,

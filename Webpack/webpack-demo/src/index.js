@@ -58,7 +58,7 @@ function getComponent() {
           我们都只会获取到 lodash 中提供的 join 方法 
         */
         // element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-        // element.innerHTML = join(['Hello', 'webpack'], ' ');
+        element.innerHTML = join(['Hello', 'webpack'], ' ');
 
         // 假设我们处于 `window` 上下文
         /* 
@@ -69,7 +69,6 @@ function getComponent() {
           覆盖 this 指向 
         */
         this.alert('Hmmm, this probably isn\'t a great idea...')
-        console.log('then');
 
         element.appendChild(br);
         element.appendChild(button);
@@ -98,7 +97,6 @@ function getComponent() {
         )
 
         handleOtherRes();
-        console.log(element);
         return element;
       })
       .catch(error => `An error occurred while loading the component: ${error}`)
@@ -108,7 +106,7 @@ function getComponent() {
 
 // let element = document.createElement('div');
 
-// element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+element.innerHTML = _.join(['Hello', 'webpack'], ' ');
 // element.classList.add('hello');
 let handleOtherRes = () => {
   var btn = document.createElement('button');
@@ -208,11 +206,53 @@ function sum(...args) {
   import动态导入语法：能将某个文件单独打包
 */
 import(/* webpackChunkName: 'calc' */'./js/calc')
-  .then((result) => {
+  // .then((result) => {
+  .then(({ mul, count }) => {
     // 文件加载成功
-    console.log(result);
+    console.log(mul(2, 5));
   })
   .catch(() => {
     console.log('文件加载失败');
   });
 console.log(sum(1, 2, 3, 4));
+
+console.log('index.js文件被加载了');
+document.getElementById('btn').onclick = () => {
+  /*
+    * 懒加载：当文件需要使用时才加载
+    * 预加载（prefetch）：在使用之前，提前加载JS文件
+  */ /*
+    * 正常加载可以认为是并行加载
+    * 预加载是等其他资源加载完毕，浏览器空闲了，再偷偷加载资源
+  */
+  import(/* webpackChunkName: 'text', webpackPrefetch: true */'./test').then(({ mul }) => {
+    console.log(mul(4, 5));
+  })
+}
+
+/* 
+  1. eslint不认识window、navigator全局变量
+    解决：需要修改package.json中eslintConfig配置
+      "env": {
+        "browser": true   //支持浏览器端全局变量
+      }
+  2. SW代码必须运行在服务器上
+    nodejs:
+      npm i serve -g
+      serve -s build    #启动服务器，将build目录下所有资源
+      #作为静态资源暴露出去
+*/
+// 注册serviceworker
+// 处理兼容性问题
+if ('serviceworker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceworker
+      .register('/service-worker.js')
+      .then(() => {
+        console.log('SW注册成功');
+      })
+      .catch(() => {
+        console.log('SW注册失败');
+      });
+  });
+}
