@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-01-15 22:25:09
+ * @LastEditTime: 2022-01-16 17:30:01
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -174,30 +174,43 @@ module.exports = { // exports而非export
             test: /\.js$/,
             exclude: /node_modules/, // node_modules目录而非node_module
             include: resolve(__dirname, 'src'), // 对最少数量的必要模块使用 loader，使用 include 字段仅将 loader 应用在实际需要将其转换的模块所处路径
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [ // 预设：指示babel做什么样的兼容性处理
-                  [
-                    '@babel/preset-env',    //千万别拼错了（落泪
-                    {
-                      useBuiltIns: 'usage', // 按需加载
-                      corejs: {
-                        version: 3, // 指定core-js版本
-                      },
-                      targets: { // 指定兼容性做到哪个版本浏览器
-                        chrome: '60',
-                        firefox: '60',
-                        ie: '9',
-                        safari: '10',
-                        edge: '17',
-                      },
-                    },
-                  ],
-                ],
-                cacheDirectory: true   //开启babel缓存，第二次构建时，会读取之前的缓存
+            use: [
+              /* 
+                开启多进程打包，
+                进程启动大概需要600ms，进程通信也有开销。
+                只有工作消耗时间比较长时，才需要多进程打包
+              */
+              {
+                loader: 'thread-loader',
+                options: {
+                  workers: 2    //2个进程
+                }
               },
-            }
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: [ // 预设：指示babel做什么样的兼容性处理
+                    [
+                      '@babel/preset-env',    //千万别拼错了（落泪
+                      {
+                        useBuiltIns: 'usage', // 按需加载
+                        corejs: {
+                          version: 3, // 指定core-js版本
+                        },
+                        targets: { // 指定兼容性做到哪个版本浏览器
+                          chrome: '60',
+                          firefox: '60',
+                          ie: '9',
+                          safari: '10',
+                          edge: '17',
+                        },
+                      },
+                    ],
+                  ],
+                  cacheDirectory: true   //开启babel缓存，第二次构建时，会读取之前的缓存
+                },
+              }
+            ]
             // loader: 'core-js',
           },
           {

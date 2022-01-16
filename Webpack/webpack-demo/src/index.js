@@ -225,7 +225,7 @@ document.getElementById('btn').onclick = () => {
     * 正常加载可以认为是并行加载
     * 预加载是等其他资源加载完毕，浏览器空闲了，再偷偷加载资源
   */
-  import(/* webpackChunkName: 'text', webpackPrefetch: true */'./test').then(({ mul }) => {
+  import(/* webpackChunkName: 'text', webpackPrefetch: true */'./js/calc').then(({ mul }) => {
     console.log(mul(4, 5));
   })
 }
