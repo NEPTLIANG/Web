@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-01-16 17:30:01
+ * @LastEditTime: 2022-01-16 17:49:42
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -363,6 +363,7 @@ module.exports = { // exports而非export
   },
   externals: [{ // 把 lodash 当作 peerDependency。也就是说，
     // consumer(使用者) 应该已经安装过 lodash 。因此，你就可以放弃控制此外部 library ，而是将控制权让给使用 library 的 consumer
+    jquery: 'jQuery',   //忽略库名 -- npm包名
     lodash: {
       commonjs: 'lodash',
       commonjs2: 'lodash',
