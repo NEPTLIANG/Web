@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkwebpackNumbers=self.webpackChunkwebpackNumbers||[]).push([[722],{806:function(n,u,e){e.r(u),e.d(u,{mul:function(){return r},count:function(){return t}});var r=function(n,u){return n*u},t=function(){return"counted"}}}]);
-//# sourceMappingURL=calc.bundle.js.map

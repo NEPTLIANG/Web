@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-01-16 17:49:42
+ * @LastEditTime: 2022-02-13 16:12:43
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -14,7 +14,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // npm i mini-c
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin'); // npm i optimize-css-assets-webpack-plugin -D
 // const PostCssPresetEnv = require('postcss-preset-env'); // npm i postcss-preset-env
 // const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
-
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');   //npm i add-asset-html-webpack-plugin -D
 // process.env.NODE_ENV = 'development'; // 设置nodejs环境变量，CSS兼容性处理需要
 process.env.NODE_ENV = 'production'; // 定义nodejs环境变量，决定使用browserslist的哪个环境
 
@@ -90,19 +90,39 @@ const commonCssLoader = [ // 复用less与css文件共用的loader
 */ /*
   PWA: 渐进式网络开发应用程序（离线可访问）
     workbox --> workbox-webpack-plugin
+*/ /*
+  entry: 入口起点
+  1. string, 如'./src/index.js'
+    单入口
+    打包形成一个chunk，输出一个bundle文件。
+    此时chunk的名称默认是main
+  2. array，如['./src/index.js', './src/add.js']
+    多入口
+    所有入口文件最终形成一个chunk，输出一个bundle文件
+    只有在HMR功能中让html热更新生效
+  3. object
+    多入口
+    有几个入口文件就形成几个chunk，输出几个bundle文件
+    此时chunk的名称是配置项的key
+    --> 特殊用法：
+      {
+        index: ['./src/index.js', './src/count.js'],    //形成一个chunk，输出一个bundle文件
+        add: './src/add.js'   //形成一个chunk，输出一个bundle文件
+      }
 */
 // npm init -y
 // npm i webpack webpack-cli --save-dev
 module.exports = { // exports而非export
   // entry: './src/js/index.js',   //单入口
+  // entry: ['./src/index.js', './scr/add.js'],
   entry: {    //多入口：有一个入口，最终输出就有一个bundle
-    app: './src/index.js',
+    app: ['./src/index.js', './src/js/calc.js'],
     // add1s: './src/js/add1s.js'   //我们还要删除掉 add1s.js 的入口起点，因为现在已经在 index.js 模块中引用了它
     // 代码分割方式1：多入口起点，缺点：重复模块都会被引入到各个 bundle 中；解决：使用 SplitChunksPlugin
     polyfills: './src/js/polyfills.js', // 最佳实践仍然是，不加选择地和同步地加载所有 polyfill/shim，尽管这会导致额外的 bundle 体积成本。否则，可把 import 放入一个新文件，并加入 whatwg-fetch polyfill
   },
   output: {
-    filename: 'js/[name].[contenthash:10].bundle.js', // [name]: 取entry名；属性名是小写字母而非驼峰法
+    filename: 'js/[name].[contenthash:10].bundle.js', // [name]: 取entry名；属性名“filename”是全小写字母而非驼峰法
     chunkFilename: 'js/[name].bundle.js', // chunkFilename决定 non-entry chunk(非入口 chunk) 的名称
     path: resolve(__dirname, 'dist'), // __dirname是nodejs的变量，代表当前文件的目录绝对路径
     library: 'webpackNumbers', // 将你的 library bundle 暴露为名为 webpackNumbers 的全局变量，consumer 通过此名称来 import
@@ -264,7 +284,7 @@ module.exports = { // exports而非export
     // new CleanWebpackPlugin(), // npm i --save-dev clean-webpack-plugin     #在每次构建前清理 /dist 文件夹
     new HtmlWebpackPlugin({ // npm i --save-dev html-webpack-plugin
       title: 'HTML Webpack Plugin Config Title',
-      template: './template/index.html', // 复制./template/index.html文件，并自动引入打包输出的所有资源（如JS, CSS)
+      template: './template/index.html', // 复制./template/index.html文件，并自动引入打包输出的所有资源（如JS、CSS)
       minify: { // 压缩html代码
         collapseWhitespace: true, // 移除空格
         removeComments: true, // 移除注释
@@ -296,6 +316,14 @@ module.exports = { // exports而非export
       filename: 'css/built.[contenthash:10].css', // 对输出的css文件进行重命名
     }),
     new OptimizeCssAssetsWebpackPlugin(), // 压缩css
+    // 告诉Webpack哪些库不参与打包，同时使用时的名称也得变
+    new webpack.DllReferencePlugin({
+      manifest: resolve(__dirname, 'dll/manifest.json')
+    }),
+    // 将某个文件打包输出，并在html中自动引入该资源
+    new AddAssetHtmlWebpackPlugin({
+      filepath: resolve(__dirname, 'dll/jquery.js')
+    })
   ],
   // 模式
   // 生产模式自带Tree Shaking，但是要在package.json中配置sideEffects
@@ -326,19 +354,19 @@ module.exports = { // exports而非export
       module会将loader的source map加入
     内联 和 外部 的区别：1. 外部生成了文件，内联没有；2. 内联构建速度更快
     开发环境：速度快，调试更友好
-      速度快（eval > inline > cheap > ...）
+      速度快（eval > inline > cheap > ...）：
         eval-cheap-source-map
         eval-source-map
-      调试更友好
+      调试更友好：
         source-map
         cheap-module-source-map
         cheap-source-map
-      --> eval-source-map / eval-cheap-module-source-map
+      --> 故开发环境一般选择 eval-source-map (如React) / eval-cheap-module-source-map
     生产环境：源代码要不要隐藏？调试要不要更友好？加载速度重于构建速度
       内联会让代码体积变大，所以在生产环境不用内联
       nosources-source-map 全部隐藏
       hidden-source-map 只隐藏源代码，会提示构建后代码的错误信息
-      --> source-map / cheap-module-source-map
+      --> 生产环境一般用 source-map (如Vue) / cheap-module-source-map
   */
   // 启用 source map，在大多数情况下，最佳选择是 cheap-module-eval-source-map（Webpack4可用，Webpack5不支持）
   // devtool: 'cheap-module-eval-source-map',

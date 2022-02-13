@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server --open --config webpack.config.js"
+    "start": "webpack-dev-server --open --config webpack.config.js",
+    "clean": "rm -rf ./dist/*"
   },
   "keywords": [
     "demo"
@@ -32,6 +33,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
+    "add-asset-html-webpack-plugin": "^3.2.0",
     "babel-eslint": "^10.1.0",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "css-loader": "^5.2.7",

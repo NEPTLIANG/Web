@@ -1,1 +1,0 @@
-{"version":3,"file":"js/calc.bundle.js","mappings":"wLAAO,IAAMA,EAAM,SAACC,EAAGC,GAAJ,OAAUD,EAAIC,GACpBC,EAAQ,iBAAM","sources":["webpack://webpackNumbers/./src/js/calc.js"],"sourcesContent":["export const mul = (a, b) => a * b;\r\nexport const count = () => 'counted';"],"names":["mul","a","b","count"],"sourceRoot":""}
