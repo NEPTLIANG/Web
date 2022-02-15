@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-02-15 21:31:34
+ * @LastEditTime: 2022-02-15 21:55:15
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -154,8 +154,9 @@ module.exports = { // exports而非export
             对于js文件，要先执行eslint，再执行babel，即先检查代码再转化
         */
         test: /\.js$/, // 匹配哪些文件
-        exclude: /node_modules/,
+        exclude: /node_modules/,    //排除node_modules下的js文件
         enforce: 'pre', // 优先执行本loader
+        // enforce: 'post',    //延后执行
         use: [ // 使用哪些loader进行处理
           {
             loader: 'eslint-loader', // loader属性设置loader
@@ -197,7 +198,7 @@ module.exports = { // exports而非export
             */
             test: /\.js$/,
             exclude: /node_modules/, // node_modules目录而非node_module
-            include: resolve(__dirname, 'src'), // 对最少数量的必要模块使用 loader，使用 include 字段仅将 loader 应用在实际需要将其转换的模块所处路径
+            include: resolve(__dirname, 'src'), // 对最少数量的必要模块使用 loader，使用 include 字段仅将 loader 应用在实际需要将其转换的模块所处路径（只处理src下的文件）
             use: [
               /* 
                 开启多进程打包，
@@ -251,7 +252,7 @@ module.exports = { // exports而非export
           },
           {
             test: /\.html$/,
-            loader: 'html-loader', // npm i -D html-loader, 处理HTML文件的img图片（负责引入img，从而能被url-loader进行处理）
+            loader: 'html-loader', // 单个loader用loader属性；npm i -D html-loader, 处理HTML文件的img图片（负责引入img，从而能被url-loader进行处理）
           },
           {
             test: /\.(jpg|png|gif)$/, // 处理图片资源
