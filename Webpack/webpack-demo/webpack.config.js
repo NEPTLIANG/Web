@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-02-13 16:12:43
+ * @LastEditTime: 2022-02-15 21:31:34
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -122,11 +122,15 @@ module.exports = { // exports而非export
     polyfills: './src/js/polyfills.js', // 最佳实践仍然是，不加选择地和同步地加载所有 polyfill/shim，尽管这会导致额外的 bundle 体积成本。否则，可把 import 放入一个新文件，并加入 whatwg-fetch polyfill
   },
   output: {
-    filename: 'js/[name].[contenthash:10].bundle.js', // [name]: 取entry名；属性名“filename”是全小写字母而非驼峰法
-    chunkFilename: 'js/[name].bundle.js', // chunkFilename决定 non-entry chunk(非入口 chunk) 的名称
-    path: resolve(__dirname, 'dist'), // __dirname是nodejs的变量，代表当前文件的目录绝对路径
-    library: 'webpackNumbers', // 将你的 library bundle 暴露为名为 webpackNumbers 的全局变量，consumer 通过此名称来 import
+    filename: 'js/[name].[contenthash:10].bundle.js', // 文件名称（指定目录+名称）；[name]: 取entry名；属性名“filename”是全小写字母而非驼峰法
+    chunkFilename: 'js/[name]_chunk.bundle.js', // chunkFilename决定 non-entry chunk(非入口 chunk) 的名称
+    path: resolve(__dirname, 'dist'), // 输出文件目录（将来所有资源输出的公共目录）；__dirname是nodejs的变量，代表当前文件的目录绝对路径
+    publicPath: '/',    //输出的文件中所有资源引入公共路径前缀：'imgs/a.jpg' --> '/imgs/a.jpg'；'/'指服务器根目录
+    library: 'webpackNumbers', // 将你的 library bundle 暴露为名为 webpackNumbers 的全局变量，consumer 通过此名称来 import（整个库向外暴露的变量名）
     libraryTarget: 'umd', // 在 AMD 或 CommonJS require 之后可访问（libraryTarget:'umd'）
+    // libraryTarget: 'window',    //变量名添加到哪（浏览器中）
+    // libraryTarget: 'global',    //变量名添加到哪（node中）
+    // libraryTarget: 'commonjs'
   },
   module: { // loader的配置
     rules: [ // rules属性而非rule
@@ -317,13 +321,13 @@ module.exports = { // exports而非export
     }),
     new OptimizeCssAssetsWebpackPlugin(), // 压缩css
     // 告诉Webpack哪些库不参与打包，同时使用时的名称也得变
-    new webpack.DllReferencePlugin({
-      manifest: resolve(__dirname, 'dll/manifest.json')
-    }),
+    // new webpack.DllReferencePlugin({
+    //   manifest: resolve(__dirname, 'dll/manifest.json')
+    // }),
     // 将某个文件打包输出，并在html中自动引入该资源
-    new AddAssetHtmlWebpackPlugin({
-      filepath: resolve(__dirname, 'dll/jquery.js')
-    })
+    // new AddAssetHtmlWebpackPlugin({
+    //   filepath: resolve(__dirname, 'dll/jquery.js')
+    // })
   ],
   // 模式
   // 生产模式自带Tree Shaking，但是要在package.json中配置sideEffects
