@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-02-16 20:38:16
+ * @LastEditTime: 2022-02-16 22:08:09
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -15,6 +15,8 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 // const PostCssPresetEnv = require('postcss-preset-env'); // npm i postcss-preset-env
 // const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');   //npm i add-asset-html-webpack-plugin -D
+const TerserWebpackPlugin = require('terser-webpack-plugin');   //npm i terser-webpack-plugin -D
+
 // process.env.NODE_ENV = 'development'; // 设置nodejs环境变量，CSS兼容性处理需要
 process.env.NODE_ENV = 'production'; // 定义nodejs环境变量，决定使用browserslist的哪个环境
 
@@ -381,18 +383,42 @@ module.exports = { // exports而非export
     2. 自动分析多入口chunk中，有没有公共的文件，如果有会打包成单独一个chunk
   */
   optimization: {
-    runtimeChunk: 'single', // 使用 optimization.runtimeChunk 选项将 runtime 代码拆分为一个单独的 chunk。将其设置为 single 来为所有 chunk 创建一个 runtime bundle
-    splitChunks: { // 代码分割方法2：SplitChunksPlugin 插件可以将公共的依赖模块提取到已有的 entry chunk 中，或者提取到一个新生成的 chunk，适用于小型代码库，但是在大型代码库中却非常耗费性能
+    // runtimeChunk: 'single', // 使用 optimization.runtimeChunk 选项将 runtime 代码拆分为一个单独的 chunk。将其设置为 single 来为所有 chunk 创建一个 runtime bundle
+    runtimeChunk: {   //将当前模块的记录其他模块的hash单独打包为一个文件runtime，解决修改a文件->导致a文件文件名变化->导致引入了a文件的b文件的contenthash变化
+      name: entryPoint => `runtime-${entryPoint.name}`
+    },
+    splitChunks: { // 代码分割方法2：SplitChunksPlugin 插件可以将公共的依赖模块提取到已有的 entry chunk 中，或者提取到一个新生成的 chunk，适用于小型代码库，但是在大型代码库中却非常耗费性能（分割chunk的组。node_modules文件会被打包到vendors组的chunk中，变成vendors~xxx.js。满足上面的公共规则，如：大小超过30kb，至少被引用一次）
       cacheGroups: { // 将第三方库(library)（例如 lodash 或 react）提取到单独的 vendor chunk 文件中
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all',
+          priority: -10   //优先级
         },
       },
       // chunks: 'all'
+      // 以下都有默认值，可以不写
+      minSize: 30 * 1024,   //分割单独chunk最小为30kb
+      maxSize: 0,   //最大没有限制
+      minChunks: 1,   //要提取的chunk最少被引用1次
+      maxAsyncRequests: 5,    //按需加载时并行加载的文件的最大数量
+      maxInitialRequests: 3,    //入口js文件最大并行请求数量
+      automaticNameDelimiter: '~',    //名称连接符
+      // name: true,   //可以使用命名规则
+      // default: {
+      //   minChunks: 2,   //要提取的chunk最少被引用2次
+      //   priority: -20,    //优先级
+      //   reuseExistingChunk: true    //如果当前要打包的模块，和之前已经被提取的模块是同一个，就会复用，而不是重新打包模块
+      // }
     },
     // usedExports: true
+    minimizer: [
+      new TerserWebpackPlugin({   //配置生产环境的压缩方案：js和css
+        cache: true,    //开启缓存
+        parallel: true,   //开去多进程打包
+        sourceMap: true   //启动source-map
+      })
+    ]
   },
   externals: [{ // 把 lodash 当作 peerDependency。也就是说，
     // consumer(使用者) 应该已经安装过 lodash 。因此，你就可以放弃控制此外部 library ，而是将控制权让给使用 library 的 consumer
