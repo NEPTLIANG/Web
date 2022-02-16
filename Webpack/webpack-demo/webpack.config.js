@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-02-15 21:55:15
+ * @LastEditTime: 2022-02-16 20:16:42
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -423,4 +423,14 @@ module.exports = { // exports而非export
     port: 3000, // 端口号
     open: true, // 自动打开浏览器
   },
+  resolve: {    //解析模块的规则
+    alias: {    //配置解析模块路径别名，优点是可简写路径，缺点是路径没有补全提示
+      $css: resolve(__dirname, 'src/css')
+    },
+    extensions: ['.js', '.json', '.jsx', '.css'],   //配置省略文件路径的后缀名
+    modules: [    //告诉webpack解析模块是去找哪个目录
+      resolve(__dirname, '../../node_modules'), 
+      'node_modules'
+    ]
+  }
 };
