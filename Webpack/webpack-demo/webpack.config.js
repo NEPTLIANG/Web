@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-02-16 20:16:42
+ * @LastEditTime: 2022-02-16 20:38:16
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -406,7 +406,7 @@ module.exports = { // exports而非export
   }],
   devServer: { // npm i --save-dev webpack-dev-server，开发服务器devServer：
     // 用来自动化（自动编译，自动打开浏览器，自动刷新浏览器。特点：只会再内存中编译打包，不会有任何输出。启动devServer指令为：npx webpack-dev-server
-    contentBase: './dist', // 项目构建后路径
+    contentBase: './dist', // 项目构建后路径，运行代码的目录
     compress: true, // 启动gzip压缩
     /*
       HMR: Hot Module Replacement 热模块替换/模块热替换
@@ -422,6 +422,21 @@ module.exports = { // exports而非export
     host: 'localhost',
     port: 3000, // 端口号
     open: true, // 自动打开浏览器
+    watchContentBase: true,   //监视contentBase目录下的所有文件，一旦文件变化就会reload
+    watchOptions: {
+      ignored: /node_modules/   //忽略文件
+    },
+    // clientLogLevel: 'none',   //不要显示启动服务器日志信息
+    // quiet: true,    //除了一些基本启动信息以外，其他内容都不要显示
+    // overlay: false,   //如果出错了，不要全屏提示
+    // proxy: {    //服务器代理（解决开发环境跨域问题）
+    //   '/api': {
+    //     target: 'http://localhost:3000',
+    //     pathRewrite: {    //发送请求时，请求路径重写（本例将/api/xxx改为/xxx，即去掉/api）
+    //       '^/api': ''
+    //     }
+    //   }
+    // }
   },
   resolve: {    //解析模块的规则
     alias: {    //配置解析模块路径别名，优点是可简写路径，缺点是路径没有补全提示
