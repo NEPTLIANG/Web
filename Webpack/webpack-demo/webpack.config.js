@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-02-16 22:08:09
+ * @LastEditTime: 2022-02-20 02:59:49
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -20,8 +20,8 @@ const TerserWebpackPlugin = require('terser-webpack-plugin');   //npm i terser-w
 // process.env.NODE_ENV = 'development'; // 设置nodejs环境变量，CSS兼容性处理需要
 process.env.NODE_ENV = 'production'; // 定义nodejs环境变量，决定使用browserslist的哪个环境
 
-const commonCssLoader = [ // 复用less与css文件共用的loader
-  // 'style-loader',     //创建style标签，将JS中的样式资源插入，添加到HTML文档的head属性中生效。已实现CSS的模块热替换HMR
+const commonStyleFileLoader = [ // 复用less与css文件共用的loader
+  // 'style-loader',     //创建style标签，将JS中的样式资源插入，添加到HTML文档的head元素中生效。已实现CSS的模块热替换HMR
   MiniCssExtractPlugin.loader, // 这个loader取代style-loader。作用：提取js中的css成单独文件
   'css-loader', // 将CSS文件变成commonjs模块，加载到JS中，里面内容是样式字符串
   // npm i --save-dev style-loader css-loader
@@ -128,7 +128,8 @@ module.exports = { // exports而非export
     chunkFilename: 'js/[name]_chunk.bundle.js', // chunkFilename决定 non-entry chunk(非入口 chunk) 的名称
     path: resolve(__dirname, 'dist'), // 输出文件目录（将来所有资源输出的公共目录）；__dirname是nodejs的变量，代表当前文件的目录绝对路径
     publicPath: '/',    //输出的文件中所有资源引入公共路径前缀：'imgs/a.jpg' --> '/imgs/a.jpg'；'/'指服务器根目录
-    library: 'webpackNumbers', // 将你的 library bundle 暴露为名为 webpackNumbers 的全局变量，consumer 通过此名称来 import（整个库向外暴露的变量名）
+    library: 'webpackNumbers', // 将你的 library bundle 暴露为名为 webpackNumbers 的全局变量，consumer 通过此名称来 import
+    // library: '[name]',    //整个库向外暴露的变量名
     libraryTarget: 'umd', // 在 AMD 或 CommonJS require 之后可访问（libraryTarget:'umd'）
     // libraryTarget: 'window',    //变量名添加到哪（浏览器中）
     // libraryTarget: 'global',    //变量名添加到哪（node中）
@@ -157,18 +158,15 @@ module.exports = { // exports而非export
         */
         test: /\.js$/, // 匹配哪些文件
         exclude: /node_modules/,    //排除node_modules下的js文件
+        include: resolve(__dirname, 'src'),   //只处理src下的文件
         enforce: 'pre', // 优先执行本loader
         // enforce: 'post',    //延后执行
-        use: [ // 使用哪些loader进行处理
-          {
-            loader: 'eslint-loader', // loader属性设置loader
-            options: { // options属性配置loader
-              fix: true, // 自动修复eslint检测出的错误
-              // output: __dirname + '[name]_[contenthash:10].[ext]',
-              // esModule: false
-            },
-          },
-        ],
+        loader: 'eslint-loader', // loader属性设置loader
+        options: { // options属性配置loader
+          fix: true, // 自动修复eslint检测出的错误
+          // output: __dirname + '[name]_[contenthash:10].[ext]',
+          // esModule: false
+        },
       },
       {
         oneOf: [ // 以下loader只会匹配一个
@@ -200,7 +198,7 @@ module.exports = { // exports而非export
             */
             test: /\.js$/,
             exclude: /node_modules/, // node_modules目录而非node_module
-            include: resolve(__dirname, 'src'), // 对最少数量的必要模块使用 loader，使用 include 字段仅将 loader 应用在实际需要将其转换的模块所处路径（只处理src下的文件）
+            include: resolve(__dirname, 'src'), // 对最少数量的必要模块使用 loader，使用 include 字段仅将 loader 应用在实际需要将其转换的模块所处路径
             use: [
               /* 
                 开启多进程打包，
@@ -240,21 +238,17 @@ module.exports = { // exports而非export
             ]
             // loader: 'core-js',
           },
-          {
+          {   //npm i css-loader style-loader less-loader less -D
             test: /\.css$/,
-            use: [...commonCssLoader], // MiniCssExtractPlugin.loader, css-loader, postcss-loader
+            use: commonStyleFileLoader, // MiniCssExtractPlugin.loader, css-loader, postcss-loader
             // 要使用多个loader处理用use，use数组中loader执行顺序：从右到左，从下到上，依次执行
           },
           {
             test: /\.less$/,
             use: [
-              ...commonCssLoader,
+              ...commonStyleFileLoader,
               'less-loader', // 将less文件编译成css文件，需要下载less-loader和less
             ],
-          },
-          {
-            test: /\.html$/,
-            loader: 'html-loader', // 单个loader用loader属性；npm i -D html-loader, 处理HTML文件的img图片（负责引入img，从而能被url-loader进行处理）
           },
           {
             test: /\.(jpg|png|gif)$/, // 处理图片资源
@@ -267,11 +261,16 @@ module.exports = { // exports而非export
               outputPath: 'imgs',
             },
           },
+          {
+            test: /\.html$/,
+            loader: 'html-loader', // 单个loader用loader属性；npm i -D html-loader, 处理HTML文件的img图片（负责引入img，从而能被url-loader进行处理）
+          },
           { // 打包其他资源（除了HTML, JS, CSS以外的资源）
             exclude: /\.(html)|(js)|(css)|(less)$/, // 排除HTML, CSS, JS资源
             loader: 'file-loader', // npm i --save-dev file-loader
             options: {
-              outputPath: 'media'
+              outputPath: 'media',
+              name: '[hash:10].[ext]'
             }
           },
           {
@@ -414,9 +413,9 @@ module.exports = { // exports而非export
     // usedExports: true
     minimizer: [
       new TerserWebpackPlugin({   //配置生产环境的压缩方案：js和css
-        cache: true,    //开启缓存
-        parallel: true,   //开去多进程打包
-        sourceMap: true   //启动source-map
+        // cache: true,    //开启缓存
+        parallel: true,   //开启多进程打包
+        // sourceMap: true   //启动source-map
       })
     ]
   },
@@ -446,7 +445,7 @@ module.exports = { // exports而非export
     */
     hot: true, // 启用模块热替换HMR。当修改了webpack配置、想要让新配置生效，必须重新webpack服务
     host: 'localhost',
-    port: 3000, // 端口号
+    port: 5000, // 端口号
     open: true, // 自动打开浏览器
     watchContentBase: true,   //监视contentBase目录下的所有文件，一旦文件变化就会reload
     watchOptions: {
@@ -456,7 +455,7 @@ module.exports = { // exports而非export
     // quiet: true,    //除了一些基本启动信息以外，其他内容都不要显示
     // overlay: false,   //如果出错了，不要全屏提示
     // proxy: {    //服务器代理（解决开发环境跨域问题）
-    //   '/api': {
+    //   '/api': {   //一旦devServer（5000端口）接收到路径形如/api/xxx的请求，就把请求转发到另外一个服务器（localhost:3000）
     //     target: 'http://localhost:3000',
     //     pathRewrite: {    //发送请求时，请求路径重写（本例将/api/xxx改为/xxx，即去掉/api）
     //       '^/api': ''
