@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2021-06-02 18:42:28
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-02-15 21:55:15
+ * @LastEditTime: 2022-02-20 02:59:49
  * @Description: 看完B站教程后尝试写个demo
  */
 const { resolve } = require('path');
@@ -15,11 +15,13 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 // const PostCssPresetEnv = require('postcss-preset-env'); // npm i postcss-preset-env
 // const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');   //npm i add-asset-html-webpack-plugin -D
+const TerserWebpackPlugin = require('terser-webpack-plugin');   //npm i terser-webpack-plugin -D
+
 // process.env.NODE_ENV = 'development'; // 设置nodejs环境变量，CSS兼容性处理需要
 process.env.NODE_ENV = 'production'; // 定义nodejs环境变量，决定使用browserslist的哪个环境
 
-const commonCssLoader = [ // 复用less与css文件共用的loader
-  // 'style-loader',     //创建style标签，将JS中的样式资源插入，添加到HTML文档的head属性中生效。已实现CSS的模块热替换HMR
+const commonStyleFileLoader = [ // 复用less与css文件共用的loader
+  // 'style-loader',     //创建style标签，将JS中的样式资源插入，添加到HTML文档的head元素中生效。已实现CSS的模块热替换HMR
   MiniCssExtractPlugin.loader, // 这个loader取代style-loader。作用：提取js中的css成单独文件
   'css-loader', // 将CSS文件变成commonjs模块，加载到JS中，里面内容是样式字符串
   // npm i --save-dev style-loader css-loader
@@ -126,7 +128,8 @@ module.exports = { // exports而非export
     chunkFilename: 'js/[name]_chunk.bundle.js', // chunkFilename决定 non-entry chunk(非入口 chunk) 的名称
     path: resolve(__dirname, 'dist'), // 输出文件目录（将来所有资源输出的公共目录）；__dirname是nodejs的变量，代表当前文件的目录绝对路径
     publicPath: '/',    //输出的文件中所有资源引入公共路径前缀：'imgs/a.jpg' --> '/imgs/a.jpg'；'/'指服务器根目录
-    library: 'webpackNumbers', // 将你的 library bundle 暴露为名为 webpackNumbers 的全局变量，consumer 通过此名称来 import（整个库向外暴露的变量名）
+    library: 'webpackNumbers', // 将你的 library bundle 暴露为名为 webpackNumbers 的全局变量，consumer 通过此名称来 import
+    // library: '[name]',    //整个库向外暴露的变量名
     libraryTarget: 'umd', // 在 AMD 或 CommonJS require 之后可访问（libraryTarget:'umd'）
     // libraryTarget: 'window',    //变量名添加到哪（浏览器中）
     // libraryTarget: 'global',    //变量名添加到哪（node中）
@@ -155,18 +158,15 @@ module.exports = { // exports而非export
         */
         test: /\.js$/, // 匹配哪些文件
         exclude: /node_modules/,    //排除node_modules下的js文件
+        include: resolve(__dirname, 'src'),   //只处理src下的文件
         enforce: 'pre', // 优先执行本loader
         // enforce: 'post',    //延后执行
-        use: [ // 使用哪些loader进行处理
-          {
-            loader: 'eslint-loader', // loader属性设置loader
-            options: { // options属性配置loader
-              fix: true, // 自动修复eslint检测出的错误
-              // output: __dirname + '[name]_[contenthash:10].[ext]',
-              // esModule: false
-            },
-          },
-        ],
+        loader: 'eslint-loader', // loader属性设置loader
+        options: { // options属性配置loader
+          fix: true, // 自动修复eslint检测出的错误
+          // output: __dirname + '[name]_[contenthash:10].[ext]',
+          // esModule: false
+        },
       },
       {
         oneOf: [ // 以下loader只会匹配一个
@@ -198,7 +198,7 @@ module.exports = { // exports而非export
             */
             test: /\.js$/,
             exclude: /node_modules/, // node_modules目录而非node_module
-            include: resolve(__dirname, 'src'), // 对最少数量的必要模块使用 loader，使用 include 字段仅将 loader 应用在实际需要将其转换的模块所处路径（只处理src下的文件）
+            include: resolve(__dirname, 'src'), // 对最少数量的必要模块使用 loader，使用 include 字段仅将 loader 应用在实际需要将其转换的模块所处路径
             use: [
               /* 
                 开启多进程打包，
@@ -238,21 +238,17 @@ module.exports = { // exports而非export
             ]
             // loader: 'core-js',
           },
-          {
+          {   //npm i css-loader style-loader less-loader less -D
             test: /\.css$/,
-            use: [...commonCssLoader], // MiniCssExtractPlugin.loader, css-loader, postcss-loader
+            use: commonStyleFileLoader, // MiniCssExtractPlugin.loader, css-loader, postcss-loader
             // 要使用多个loader处理用use，use数组中loader执行顺序：从右到左，从下到上，依次执行
           },
           {
             test: /\.less$/,
             use: [
-              ...commonCssLoader,
+              ...commonStyleFileLoader,
               'less-loader', // 将less文件编译成css文件，需要下载less-loader和less
             ],
-          },
-          {
-            test: /\.html$/,
-            loader: 'html-loader', // 单个loader用loader属性；npm i -D html-loader, 处理HTML文件的img图片（负责引入img，从而能被url-loader进行处理）
           },
           {
             test: /\.(jpg|png|gif)$/, // 处理图片资源
@@ -265,11 +261,16 @@ module.exports = { // exports而非export
               outputPath: 'imgs',
             },
           },
+          {
+            test: /\.html$/,
+            loader: 'html-loader', // 单个loader用loader属性；npm i -D html-loader, 处理HTML文件的img图片（负责引入img，从而能被url-loader进行处理）
+          },
           { // 打包其他资源（除了HTML, JS, CSS以外的资源）
             exclude: /\.(html)|(js)|(css)|(less)$/, // 排除HTML, CSS, JS资源
             loader: 'file-loader', // npm i --save-dev file-loader
             options: {
-              outputPath: 'media'
+              outputPath: 'media',
+              name: '[hash:10].[ext]'
             }
           },
           {
@@ -381,18 +382,42 @@ module.exports = { // exports而非export
     2. 自动分析多入口chunk中，有没有公共的文件，如果有会打包成单独一个chunk
   */
   optimization: {
-    runtimeChunk: 'single', // 使用 optimization.runtimeChunk 选项将 runtime 代码拆分为一个单独的 chunk。将其设置为 single 来为所有 chunk 创建一个 runtime bundle
-    splitChunks: { // 代码分割方法2：SplitChunksPlugin 插件可以将公共的依赖模块提取到已有的 entry chunk 中，或者提取到一个新生成的 chunk，适用于小型代码库，但是在大型代码库中却非常耗费性能
+    // runtimeChunk: 'single', // 使用 optimization.runtimeChunk 选项将 runtime 代码拆分为一个单独的 chunk。将其设置为 single 来为所有 chunk 创建一个 runtime bundle
+    runtimeChunk: {   //将当前模块的记录其他模块的hash单独打包为一个文件runtime，解决修改a文件->导致a文件文件名变化->导致引入了a文件的b文件的contenthash变化
+      name: entryPoint => `runtime-${entryPoint.name}`
+    },
+    splitChunks: { // 代码分割方法2：SplitChunksPlugin 插件可以将公共的依赖模块提取到已有的 entry chunk 中，或者提取到一个新生成的 chunk，适用于小型代码库，但是在大型代码库中却非常耗费性能（分割chunk的组。node_modules文件会被打包到vendors组的chunk中，变成vendors~xxx.js。满足上面的公共规则，如：大小超过30kb，至少被引用一次）
       cacheGroups: { // 将第三方库(library)（例如 lodash 或 react）提取到单独的 vendor chunk 文件中
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all',
+          priority: -10   //优先级
         },
       },
       // chunks: 'all'
+      // 以下都有默认值，可以不写
+      minSize: 30 * 1024,   //分割单独chunk最小为30kb
+      maxSize: 0,   //最大没有限制
+      minChunks: 1,   //要提取的chunk最少被引用1次
+      maxAsyncRequests: 5,    //按需加载时并行加载的文件的最大数量
+      maxInitialRequests: 3,    //入口js文件最大并行请求数量
+      automaticNameDelimiter: '~',    //名称连接符
+      // name: true,   //可以使用命名规则
+      // default: {
+      //   minChunks: 2,   //要提取的chunk最少被引用2次
+      //   priority: -20,    //优先级
+      //   reuseExistingChunk: true    //如果当前要打包的模块，和之前已经被提取的模块是同一个，就会复用，而不是重新打包模块
+      // }
     },
     // usedExports: true
+    minimizer: [
+      new TerserWebpackPlugin({   //配置生产环境的压缩方案：js和css
+        // cache: true,    //开启缓存
+        parallel: true,   //开启多进程打包
+        // sourceMap: true   //启动source-map
+      })
+    ]
   },
   externals: [{ // 把 lodash 当作 peerDependency。也就是说，
     // consumer(使用者) 应该已经安装过 lodash 。因此，你就可以放弃控制此外部 library ，而是将控制权让给使用 library 的 consumer
@@ -406,7 +431,7 @@ module.exports = { // exports而非export
   }],
   devServer: { // npm i --save-dev webpack-dev-server，开发服务器devServer：
     // 用来自动化（自动编译，自动打开浏览器，自动刷新浏览器。特点：只会再内存中编译打包，不会有任何输出。启动devServer指令为：npx webpack-dev-server
-    contentBase: './dist', // 项目构建后路径
+    contentBase: './dist', // 项目构建后路径，运行代码的目录
     compress: true, // 启动gzip压缩
     /*
       HMR: Hot Module Replacement 热模块替换/模块热替换
@@ -420,7 +445,32 @@ module.exports = { // exports而非export
     */
     hot: true, // 启用模块热替换HMR。当修改了webpack配置、想要让新配置生效，必须重新webpack服务
     host: 'localhost',
-    port: 3000, // 端口号
+    port: 5000, // 端口号
     open: true, // 自动打开浏览器
+    watchContentBase: true,   //监视contentBase目录下的所有文件，一旦文件变化就会reload
+    watchOptions: {
+      ignored: /node_modules/   //忽略文件
+    },
+    // clientLogLevel: 'none',   //不要显示启动服务器日志信息
+    // quiet: true,    //除了一些基本启动信息以外，其他内容都不要显示
+    // overlay: false,   //如果出错了，不要全屏提示
+    // proxy: {    //服务器代理（解决开发环境跨域问题）
+    //   '/api': {   //一旦devServer（5000端口）接收到路径形如/api/xxx的请求，就把请求转发到另外一个服务器（localhost:3000）
+    //     target: 'http://localhost:3000',
+    //     pathRewrite: {    //发送请求时，请求路径重写（本例将/api/xxx改为/xxx，即去掉/api）
+    //       '^/api': ''
+    //     }
+    //   }
+    // }
   },
+  resolve: {    //解析模块的规则
+    alias: {    //配置解析模块路径别名，优点是可简写路径，缺点是路径没有补全提示
+      $css: resolve(__dirname, 'src/css')
+    },
+    extensions: ['.js', '.json', '.jsx', '.css'],   //配置省略文件路径的后缀名
+    modules: [    //告诉webpack解析模块是去找哪个目录
+      resolve(__dirname, '../../node_modules'), 
+      'node_modules'
+    ]
+  }
 };
