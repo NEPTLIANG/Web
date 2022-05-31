@@ -8,9 +8,9 @@
  */
 
 /*
- * @lc app=leetcode id=53 lang=javascript
+ * @lc app=leetcode.cn id=53 lang=javascript
  *
- * [53] Maximum Subarray
+ * [53] 最大子数组和
  */
 
 // @lc code=start
@@ -18,7 +18,7 @@
  * @param {number[]} nums
  * @return {number}
  */
-var maxSubArray = function (nums) {
+ var maxSubArray = function (nums) {
     let pre = 0;
     let result = nums[0];   //不可初始化为0，因nums[0]为-1时，pre > num[0], result就不会更新为num[0]而仍然是0
     nums.forEach(num => {
@@ -50,6 +50,7 @@ var maxSubArray = function (nums) {
 //     return max;
 };
 // @lc code=end
+
 // var maxSubArray = function(nums) {
 //     let pre = 0, maxAns = nums[0];
 //     nums.forEach((x) => {
