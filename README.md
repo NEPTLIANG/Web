@@ -11,6 +11,8 @@ Web开发学习，由于项目都不是很大而且语言相关程度高，所�
 ## 1. 实时公交系统
 ### 2020年计算机设计大赛校赛参赛作品 _(2020.05.13 ~ 2020.07.05)_
 
+**代码已迁移至[https://github.com/NEPTLIANG/RealTimeBusQuery](https://github.com/NEPTLIANG/RealTimeBusQuery)**
+
 **技术栈**：
 * HTML
 * CSS
@@ -38,6 +40,8 @@ Web开发学习，由于项目都不是很大而且语言相关程度高，所�
 ## 2. “智慧学工”系统部分页面
 ### 初入Vue开发 _(2020.01.05 ~ 2020.02.11)_
 
+**代码已迁移至[https://github.com/NEPTLIANG/intelli-edu-admin](https://github.com/NEPTLIANG/intelli-edu-admin)**
+
 **主要技术**：
 * uni-app(Vue)
 
@@ -56,6 +60,8 @@ Web开发学习，由于项目都不是很大而且语言相关程度高，所�
 
 ## 3. 简化的RSA加解密、数字签名系统
 ### 大三第一学期学校课程《信息安全与保密》期末作业 _(2019.12.23 ~ 2020.01.01)_
+
+**代码已迁移至[https://github.com/NEPTLIANG/SimplifiedRSA](https://github.com/NEPTLIANG/SimplifiedRSA)**
 
 **技术栈**：
 * HTML
@@ -97,6 +103,8 @@ Web开发学习，由于项目都不是很大而且语言相关程度高，所�
 
 ## 5. 轮盘时钟
 ### CSS动效练习 _(2019.10)_
+
+**代码已迁移至[https://github.com/NEPTLIANG/RotateClock](https://github.com/NEPTLIANG/RotateClock)**
 
 **涉及技术**：
 * HTML
