@@ -13,15 +13,17 @@ const DAY = {
 };
 const CONF = {
     DEFAULT_LOG_PATH: 'log.json',
-    DEFAULT_TARGET: 5 * 11,
+    DAY_NUM: 5,
+    AVG_TARGET: 11,
     // START_DAY: 'mon',
     END_DAY: 'fri'
 };
+const SUM_TARGET = CONF.DAY_NUM * CONF.AVG_TARGET;
 
 export default class Log {
     log = [];
     logPath = CONF.DEFAULT_LOG_PATH;
-    target = CONF.DEFAULT_TARGET;
+    target = SUM_TARGET;
     
     get sum() {
         let sum = this.log.length ? 
@@ -30,7 +32,7 @@ export default class Log {
                     hours: [(prev?.hours ?? 0) + ele.hours],
                     minutes: [(prev?.minutes ?? 0) + ele.minutes]
                 } : prev})
-                return */ ele ? {
+                return */ typeof ele.hours !== 'undefined' && typeof ele.minutes !== 'undefined' ? {
                 hours: (prev?.hours ?? 0) + ele.hours,
                 minutes: (prev?.minutes ?? 0) + ele.minutes
             } : prev/* , sum */ /* } */)
@@ -55,29 +57,41 @@ export default class Log {
         return needed;
     }
 
+    get predict() {
+        console.log(this.log[(new Date(Date.now()).getDay())]);
+    }
+
     get avg() {
         const { 
-            sum: { hours: sumHours, minutes: sumMinutes }, 
-            needed: { hours: neededHours, minutes: neededMinutes } 
+            sum/* : { hours: sumHours, minutes: sumMinutes } */, 
+            needed/* : { hours: neededHours, minutes: neededMinutes }  */
         } = this;
         const currDay = (new Date(Date.now()).getDay());
         // const sumDay = (new Date(Date.now())).getDay() - DAY[CONF.START_DAY];
         const neededDays = DAY[CONF.END_DAY] - currDay + 1;
-        console.log(Math.ceil(((neededHours % neededDays) / neededDays) * 60) + Math.ceil(neededMinutes / neededDays));
-        const avgNeeded = this.carry({
-            hours: Math.floor(neededHours / neededDays),
-            minutes: Math.ceil(((neededHours % neededDays) / neededDays) * 60) + Math.ceil(neededMinutes / neededDays)
-        });
-        return { avgNeeded };
+        // console.log(Math.ceil(((neededHours % neededDays) / neededDays) * 60) + Math.ceil(neededMinutes / neededDays));
+        return { 
+            needed: this.getAvgTime(needed.hours, needed.minutes, neededDays/* neededHours, neededMinutes, neededDays */), 
+            sum: this.getAvgTime(sum.hours, sum.minutes, CONF.DAY_NUM/* sumHours, sumMinutes, CONF.DAY_NUM */)
+        };
     }
 
     constructor(
         logPath = CONF.DEFAULT_LOG_PATH, 
-        target = CONF.DEFAULT_TARGET
+        target = SUM_TARGET
     ) {
         this.logPath = logPath;
         this.target = target;
         // this.getLog();
+    }
+
+    getAvgTime(hours, minutes, days) { 
+        return this.carry({
+            hours: Math.floor(hours / days),
+            minutes: Math.ceil(
+                ((hours % days) / days) * 60
+            ) + Math.ceil(minutes / days)
+        });
     }
 
     /* async */ getCurrDay() {
@@ -112,6 +126,8 @@ export default class Log {
             LOG_YESTERDAY: 'y',
             LOG_FORMER: 'f',
             DELETE_FROM_LOG: 'd',
+            LOG_TODAY: 't',
+            LOG_WEEK_HISTORY: 'w',
             LIST: 'l',
             QUIT: 'q'
         };
@@ -120,12 +136,14 @@ export default class Log {
         const { 
             sum/* : { hours: sumHours, minutes: sumMinutes } */, 
             needed/* : { hours: neededHours, minutes: neededMinutes } */, 
-            avg: { avgNeeded }
+            avg: { needed: avgNeeded, sum: avgSum }
         } = this;
         console.log(
-            `已有 ${sum.hours}h ${sum.minutes}m`,
+            `已有 ${sum.hours}h ${sum.minutes}m，`,
+            `均约 ${avgSum.hours}h ${avgSum.minutes} m`,
             `\n尚需 ${needed.hours}h ${needed.minutes}m，`,
-            `均约 ${avgNeeded.hours}h ${avgNeeded.minutes} m`
+            `均约 ${avgNeeded.hours}h ${avgNeeded.minutes} m`,
+            this.predict
         );
         const reader = readline.createInterface({ input: process.stdin, output: process.stdout });
         this.reader = reader;
@@ -151,7 +169,7 @@ export default class Log {
                 //     .catch(console.error);
                 break; 
             }
-            case 'c': {     //删往日
+            case ACTION.DELETE_FROM_LOG: {     //删往日
                 await this.getCurrDay()
                     .then((day => this.deleteFromLog.call(this, day)))
                     .catch(err => console.error(err.message));
@@ -159,8 +177,12 @@ export default class Log {
                 //     .then((dayDiff => this.deleteFromLog.call(this, dayDiff)))
                 //     .catch(console.error);
             }
-            case 'l': { console.log(this.log); }
-            case 'q': { break; }
+            case ACTION.LOG_TODAY: { await this.logToday(); }
+            case ACTION.LOG_WEEK_HISTORY: {
+                this.logWeekHistory();
+            }
+            case ACTION.LIST: { console.log(this.log); }
+            case ACTION.QUIT: { break; }
         }
         reader.close();
     }
@@ -188,8 +210,8 @@ export default class Log {
 
     async logToday() {
         const { reader } = this;
-        const hours = await reader.question('始时：');
-        const minutes = await reader.question('始分');
+        const hours = Number.parseInt(await reader.question('始时：'));
+        const minutes = Number.parseInt(await reader.question('始分：'));
         const now = new Date(Date.now());
         const currDatePara = {
             year: now.getFullYear(),
@@ -201,27 +223,39 @@ export default class Log {
             currDatePara.year,
             currDatePara.monthIndex,
             currDatePara.date, 
-            startHours, 
-            Number.parseInt(startMinutes) + 1
+            hours, 
+            Number.parseInt(minutes) + 1
         );
-        const { avgNeeded } = this.avg;
+        const { needed: avgNeeded } = this.avg;
+        console.log({hours, minutes, avgNeeded, h: hours + avgNeeded.hours,
+            m: minutes + avgNeeded.minutes + 1})
         const end = new Date(
             currDatePara.year,
             currDatePara.monthIndex,
             currDatePara.date,
-            startHours + avgNeeded.hours,
-            startHours + avgNeeded.minutes + 1
+            hours + avgNeeded.hours,
+            minutes + avgNeeded.minutes + 1
         )
-        // console.log(start.toLocaleString(), end.toLocaleString());
-        const diff = end - start
-        this.log[day] = {
+        console.log(start.toLocaleString(), end.toLocaleString());
+        // const diff = end - start
+        this.log[currDatePara.day] = {
         // this.log[currDatePara.day - dayDiff] = {
-            hours: (Math.floor(diff / 3600000)) % 60,
-            minutes: (diff / 60000) % 60,
-            details: `${startHours}: ${startMinutes} ~ ${endHours}: ${endMinutes}`
+            // hours: (Math.floor(diff / 3600000)) % 60,
+            // minutes: (diff / 60000) % 60,
+            predict: {
+                hours: end.getHours(),
+                minutes: end.getMinutes(),
+                details: `[${Object.keys(DAY)[currDatePara.day]}] ${hours}:${minutes} ~ ${end.getHours()}:${end.getMinutes()}`
+            }
             // (diff / 1000) % 60, 
             // diff % 1000, 
         }
+        writeFile(this.logPath, JSON.stringify(this.log));
+    }
+
+    logWeekHistory() {
+        console.log(this.avg);
+        this.log.history = this.avg.sum;
         writeFile(this.logPath, JSON.stringify(this.log));
     }
 
@@ -261,7 +295,7 @@ export default class Log {
             year: now.getFullYear(),
             monthIndex: now.getMonth(),
             date: now.getDate(),
-            // day: now.getDay()
+            day: now.getDay()
         };
         // console.log(currDatePara);
         const start = new Date(
@@ -284,7 +318,7 @@ export default class Log {
         // this.log[currDatePara.day - dayDiff] = {
             hours: (Math.floor(diff / 3600000)) % 60,
             minutes: (diff / 60000) % 60,
-            details: `${startHours}: ${startMinutes} ~ ${endHours}: ${endMinutes}`
+            details: `[${Object.keys(DAY)[currDatePara.day - 1]}] ${startHours}: ${startMinutes} ~ ${endHours}: ${endMinutes}`
             // (diff / 1000) % 60, 
             // diff % 1000, 
         }
