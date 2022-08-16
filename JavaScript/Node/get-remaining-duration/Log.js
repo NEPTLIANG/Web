@@ -122,88 +122,6 @@ export default class Log {
     //     })
     // }
 
-    async interaction() {
-        const ACTION = {
-            LOG_YESTERDAY: 'y',     //录昨日
-            LOG_FORMER: 'f',    //录往日
-            DELETE_FROM_LOG: 'd',   //删往日
-            LOG_TODAY: 't',     //录今日用于预计
-            LOG_WEEK_HISTORY: 'w',      //录入一周均值
-            LIST: 'l',      //显示日志
-            CLEAN: 'Clean up the log',      //清空日志
-            QUIT: 'q'
-        };
-        await this.getLog();
-        const { 
-            sum, 
-            needed, 
-            avg: { needed: avgNeeded, sum: avgSum },
-            predict
-        } = this;
-        const now = new Date(Date.now());
-        const predictInfo = typeof predict !== 'undefined' ?
-            `，预计${(
-                new Date(
-                    now.getFullYear(), 
-                    now.getMonth(), 
-                    now.getDate(), 
-                    predict.hour, 
-                    predict.minute
-                )
-            ).toTimeString().match(/^(\d\d:\d\d):\d\d GMT\+\d\d\d\d.*$/)[1]}`
-            : ''
-        console.log(
-            `已有 ${sum.hours}h ${sum.minutes}m，`,
-            `均约 ${avgSum.hours}h ${avgSum.minutes}m`,
-            `\n尚需 ${needed.hours}h ${needed.minutes}m，`,
-            `均约 ${avgNeeded.hours}h ${avgNeeded.minutes}m`,
-            predictInfo
-        );
-        const reader = readline.createInterface({ 
-            input: process.stdin, 
-            output: process.stdout 
-        });
-        this.reader = reader;
-        const hint = `操作： [${
-            ACTION.LOG_YESTERDAY}] 录昨日; [${
-                ACTION.LOG_FORMER
-            }] 录往日; [${
-                ACTION.DELETE_FROM_LOG
-            }] 删往日; \n\t[${
-                ACTION.LOG_TODAY
-            }]: 录今日; [${
-                ACTION.LOG_WEEK_HISTORY
-            }]: 录本周均值; \n\t[${
-                ACTION.CLEAN
-            }]; 清空日志列表 \n\t[${
-                ACTION.LIST
-            }] 查看列表; [${
-                ACTION.QUIT
-            }或enter] 退出 \n输入字母选项并回车：`;
-        const action = await reader.question(hint);
-        switch(action) {
-            case ACTION.LOG_YESTERDAY: { await this.logging(); break; };
-            case ACTION.LOG_FORMER: {
-                await this.readDayInput()
-                    .then(async day => await this.logging(day))
-                    .catch(err => console.error(err.message));
-                break; 
-            }
-            case ACTION.DELETE_FROM_LOG: {
-                await this.readDayInput()
-                    .then(day => this.deleteFromLog.call(this, day))
-                    .catch(err => console.error(err.message));
-                break;
-            }
-            case ACTION.LOG_TODAY: { await this.logToday(); break; }
-            case ACTION.LOG_WEEK_HISTORY: { this.logWeekHistory(); break; }
-            case ACTION.LIST: { console.log(this.data); break; }
-            case ACTION.CLEAN: { this.cleanLog(); break; }
-            case ACTION.QUIT: { break; }
-        }
-        reader.close();
-    }
-
     async logging(day) {
         const { reader } = this;
         const startHours = await reader.question('始时：');
@@ -325,5 +243,87 @@ export default class Log {
         time.hours += Math.floor(time.minutes / 60);
         time.minutes %= 60;
         return time;
+    }
+
+    async interaction() {
+        const ACTION = {
+            LOG_YESTERDAY: 'y',     //录昨日
+            LOG_FORMER: 'f',    //录往日
+            DELETE_FROM_LOG: 'd',   //删往日
+            LOG_TODAY: 't',     //录今日用于预计
+            LOG_WEEK_HISTORY: 'w',      //录入一周均值
+            LIST: 'l',      //显示日志
+            CLEAN: 'Clean up the log',      //清空日志
+            QUIT: 'q'
+        };
+        await this.getLog();
+        const { 
+            sum, 
+            needed, 
+            avg: { needed: avgNeeded, sum: avgSum },
+            predict
+        } = this;
+        const now = new Date(Date.now());
+        const predictInfo = typeof predict !== 'undefined' ?
+            `，预计${(
+                new Date(
+                    now.getFullYear(), 
+                    now.getMonth(), 
+                    now.getDate(), 
+                    predict.hour, 
+                    predict.minute
+                )
+            ).toTimeString().match(/^(\d\d:\d\d):\d\d GMT\+\d\d\d\d.*$/)[1]}`
+            : ''
+        console.log(
+            `已有 ${sum.hours}h ${sum.minutes}m，`,
+            `均约 ${avgSum.hours}h ${avgSum.minutes}m`,
+            `\n尚需 ${needed.hours}h ${needed.minutes}m，`,
+            `均约 ${avgNeeded.hours}h ${avgNeeded.minutes}m`,
+            predictInfo
+        );
+        const reader = readline.createInterface({ 
+            input: process.stdin, 
+            output: process.stdout 
+        });
+        this.reader = reader;
+        const hint = `操作： [${
+            ACTION.LOG_YESTERDAY}] 录昨日; [${
+                ACTION.LOG_FORMER
+            }] 录往日; [${
+                ACTION.DELETE_FROM_LOG
+            }] 删往日; \n\t[${
+                ACTION.LOG_TODAY
+            }]: 录今日; [${
+                ACTION.LOG_WEEK_HISTORY
+            }]: 录本周均值; \n\t[${
+                ACTION.CLEAN
+            }]; 清空日志列表 \n\t[${
+                ACTION.LIST
+            }] 查看列表; [${
+                ACTION.QUIT
+            }或enter] 退出 \n输入字母选项并回车：`;
+        const action = await reader.question(hint);
+        switch(action) {
+            case ACTION.LOG_YESTERDAY: { await this.logging(); break; };
+            case ACTION.LOG_FORMER: {
+                await this.readDayInput()
+                    .then(async day => await this.logging(day))
+                    .catch(err => console.error(err.message));
+                break; 
+            }
+            case ACTION.DELETE_FROM_LOG: {
+                await this.readDayInput()
+                    .then(day => this.deleteFromLog.call(this, day))
+                    .catch(err => console.error(err.message));
+                break;
+            }
+            case ACTION.LOG_TODAY: { await this.logToday(); break; }
+            case ACTION.LOG_WEEK_HISTORY: { this.logWeekHistory(); break; }
+            case ACTION.LIST: { console.log(this.data); break; }
+            case ACTION.CLEAN: { this.cleanLog(); break; }
+            case ACTION.QUIT: { break; }
+        }
+        reader.close();
     }
 }
