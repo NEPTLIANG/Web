@@ -2,6 +2,7 @@
  * @param {string} s
  * @return {string}
  */
+// 参考了https://leetcode.cn/problems/longest-palindromic-substring/solution/zui-chang-hui-wen-zi-chuan-by-leetcode-solution/
 var longestPalindrome = function (s) {
     if (s.length <= 1) { return s; }
     const map = [];
@@ -11,7 +12,7 @@ var longestPalindrome = function (s) {
         map[index] = [];
         // 子串长度为1：对称
         map[index][index] = true;
-        // 字串长度为2：两字符相同则对称
+        // 子串长度为2：两字符相同则对称
         if (s[index] === s[index + 1]) {
             map[index][index + 1] = true;
             result = s.slice(index, index + 2);
