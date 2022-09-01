@@ -1,0 +1,6 @@
+.div1 {
+  padding-top: 30px;
+  padding-left: 30%;
+  padding-right: calc(20% + 10px);
+  padding-bottom: calc(20% + 10px);
+}
