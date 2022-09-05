@@ -1,0 +1,30 @@
+// 示例：CSS border样式画四个方向的等腰直角三角形
+.triangle(@_, @w, @c) {     //注意参数个数须一致
+    width: 0px;
+    height: 0px;
+    overflow: hidden;   //处理IE下形状异常问题（overflow: hidden可以处理很多IE样式问题）
+}
+
+.triangle(LEFT, @width, @color) {
+    border-width: @width;
+    border-style: dashed solid dashed dashed;   //Chrome下另外三边颜色设为transparent即可，但是IE不支持会变成黑色，故可设置边框样式为dashed，正好显示虚线间（也是虚线前）的空白部分
+    border-color: transparent @color transparent transparent;
+}
+
+.triangle(RIGHT, @width, @color) {
+    border-width: @width;
+    border-style: dashed dashed dashed solid;
+    border-color: transparent transparent transparent @color;
+}
+
+.triangle(TOP, @width, @color) {
+    border-width: @width;
+    border-style: dashed dashed solid dashed;
+    border-color: transparent transparent @color transparent;
+}
+
+.triangle(BOTTOM, @width, @color) {
+    border-width: @width;
+    border-style: solid dashed dashed dashed;
+    border-color: @color transparent transparent transparent;
+}

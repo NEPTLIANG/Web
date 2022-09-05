@@ -1,0 +1,15 @@
+{
+  "name": "get-remaining-duration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "NeptLiang",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^18.6.4"
+  }
+}

@@ -1,0 +1,20 @@
+{
+    "include": [ "./src/**/*" ],
+    "compilerOptions": {    // compilerOptions 编译器选项
+        "target": "es2015",     // target 指定TS被编译后的ES版本，Argument for '--target' option must be: 'es3', 'es5', 'es6', 'es2015', 'es2016', 'es2017', 'es2018', 'es2019', 'es2020', 'es2021', 'es2022', 'esnext'.
+        "module": "es2015",     // module 指定要使用的模块化的规范，Argument for '--module' option must be: 'none', 'commonjs', 'amd', 'system', 'umd', 'es6', 'es2015', 'es2020', 'es2022', 'esnext', 'node16', 'nodenext'.
+        // "lib": []   // lib 指定项目中要使用的库。有默认值，一般不需配置，如果设为空数组就会把默认的覆盖掉。Argument for '--lib' option must be: 'es5', 'es6', 'es2015', 'es7', 'es2016', 'es2017', 'es2018', 'es2019', 'es2020', 'es2021', 'es2022', 'esnext', 'dom', 'dom.iterable', 'webworker', 'webworker.importscripts', 'webworker.iterable', 'scripthost', 'es2015.core', 'es2015.collection', 'es2015.generator', 'es2015.iterable', 'es2015.promise', 'es2015.proxy', 'es2015.reflect', 'es2015.symbol', 'es2015.symbol.wellknown', 'es2016.array.include', 'es2017.object', 'es2017.sharedmemory', 'es2017.string', 'es2017.intl', 'es2017.typedarrays', 'es2018.asyncgenerator', 'es2018.asynciterable', 'es2018.intl', 'es2018.promise', 'es2018.regexp', 'es2019.array', 'es2019.object', 'es2019.string', 'es2019.symbol', 'es2020.bigint', 'es2020.date', 'es2020.promise', 'es2020.sharedmemory', 'es2020.string', 'es2020.symbol.wellknown', 'es2020.intl', 'es2020.number', 'es2021.promise', 'es2021.string', 'es2021.weakref', 'es2021.intl', 'es2022.array', 'es2022.error', 'es2022.intl', 'es2022.object', 'es2022.string', 'esnext.array', 'esnext.symbol', 'esnext.asynciterable', 'esnext.intl', 'esnext.bigint', 'esnext.string', 'esnext.promise', 'esnext.weakref'.
+        "outDir": "./dist",     // outDir 用来指定编译输出文件的目录
+        // "outFile": "./dist/app.js"      // 将代码合并为一个文件。Only 'amd' and 'system' modules are supported alongside --outFile
+        // "allowJs": true,    // 是否对js文件进行编译，默认是false
+        // "checkJs": true,    // 是否检查js代码是否符合语法规范，默认是false
+        "removeComments": true,     // 是否移除注释，默认为false
+        // "noEmit": true      // 不生成编译后的文件，只进行类型检查，默认为false
+        "noEmitOnError": true,      // 有错误时不生成编译后的文件，默认为false
+        "strict": true      // 所有严格检查的总开关（等效于下面四个选项），一般建议打开
+        // "alwaysStrict": true,   // 编译后的文件是否使用严格模式，默认false
+        // "noImplicitAny": true,      // 不允许隐式的any类型
+        // "noImplicitThis": true,     // 不允许不明确类型的this
+        // "strictNullChecks": true    // 严格检查空值
+    }
+}
