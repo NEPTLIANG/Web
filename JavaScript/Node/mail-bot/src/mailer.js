@@ -2,7 +2,7 @@
  * @Author: NeptLiang
  * @Date: 2022-02-19 00:02:24
  * @LastEditors: NeptLiang
- * @LastEditTime: 2022-02-19 16:30:48
+ * @LastEditTime: 2022-02-27 20:18:31
  * @Description: file content
  */
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -11,6 +11,8 @@ const nodemailer = require('nodemailer');
 const axios = require('axios');
 //const querystring = require('querystring')
 const FormData = require('form-data');
+// console.log('=>fs',require('fs'))
+import fs from 'fs'
 
 const form = new FormData();
 
@@ -33,9 +35,9 @@ const sent = msg => {
     };
 
     console.log('Processing');
-    transporter.sendMail(mailOptions, (err, info) => {
-        console.log(err || info);
-    });
+    // transporter.sendMail(mailOptions, (err, info) => {
+    //     console.log(err || info);
+    // });
 }
 
 let msg = '';

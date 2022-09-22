@@ -1,3 +1,4 @@
+import add1s from 'src/js/add1s';
 import './style/style.css';
 import Icon from './img/HA.png';
 import Data from './xml/data.xml';
@@ -13,7 +14,9 @@ import numRef from './ref.json';
   并加入 whatwg-fetch polyfill 
 */
 // import 'babel-polyfill';   
-import add1s from './js/add1s';
+// import add1s from './js/add1s';
+// import fs from 'fs'
+// require('fs')
 // 入口文件1
 
 // 将数字 1 到 5 转换为文本表示，反之亦然，例如将 2 转换为 '二'。

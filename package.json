@@ -1,0 +1,20 @@
+{
+  "name": "web-demo",
+  "version": "1.0.0",
+  "description": "Web开发学习，由于项目都不是很大而且语言相关程度高，所以放在同一个仓库",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neptliang/web.git"
+  },
+  "author": "NeptLiang",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/neptliang/web/issues"
+  },
+  "homepage": "https://github.com/neptliang/web#readme",
+  "type": "module"
+}
