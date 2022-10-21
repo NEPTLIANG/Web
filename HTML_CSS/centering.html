@@ -1,0 +1,183 @@
+<h1>常见居中方式Demo</h1>
+
+<div>
+    <h2>1. 绝对定位 + margin:auto</h2>
+    兼容性好，但绝对定位不建议使用
+</div>
+<div class="first-parent" style="width: 400px; height: 300px; background-color: #bbb; margin: 10px;">
+    <div class="first-child" style="width: 300px; height: 40px; color: #fff; background-color: #333; overflow: hidden">
+    </div>
+</div>
+<style>
+    .first-parent {
+        position: relative;
+    }
+
+    .first-child {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+</style>
+
+<!-- 父布局设置 display: table-cell + vertical-align: middle -->
+<div>
+    <h2>2. 父布局设置 display: table-cell <br />
+        + vertical-align: middle</h2>
+</div>
+<div class="second-parent" style="width: 400px; height: 300px; background-color: #bbb; margin: 10px;">
+    <div class="second-child"
+        style="width: 300px; height: 40px; color: #fff; background-color: #333; overflow: hidden;"></div>
+</div>
+<style>
+    .second-parent {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .second-child {
+        margin: 0 auto;
+    }
+</style>
+
+<div>
+    <h2>3. 绝对定位 + margin-top: -(高度的一半); <br />
+        margin-left: -(宽度的一半);</h2>
+    兼容性好，但需要提前知道尺寸
+</div>
+<div class="third-parent" style="width: 400px; height: 300px; background-color: #bbb; margin: 10px;">
+    <div class="third-child" style="width: 300px; height: 40px; color: #fff; background-color: #333; overflow: hidden;">
+    </div>
+</div>
+<style>
+    .third-parent {
+        position: relative;
+    }
+
+    .third-child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -20px;
+        margin-left: -150px;
+    }
+</style>
+
+<div>
+    <h2>4. 绝对定位 + transform: translate(-50%, -50%)</h2>
+    不需要提前知道尺寸，但兼容性一般
+</div>
+<div class="fourth-parent" style="width: 400px; height: 300px; background-color: #bbb; margin: 10px;">
+    <div class="fourth-child"
+        style="width: 300px; height: 40px; color: #fff; background-color: #333; overflow: hidden;"></div>
+</div>
+<style>
+    .fourth-parent {
+        position: relative;
+    }
+
+    .fourth-child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<!-- <div>
+    <h1>绝对定位 + transform: translate(-50%, -50%)</h1>
+    不需要提前知道尺寸，但兼容性一般
+</div>
+<div class="fifth-parent" style="width: 400px; height: 300px; background-color: #bbb; margin: 10px;">
+    <div class="fifth-child" style="width: 300px; height: 40px; color: #fff; background-color: #333; overflow: hidden;">
+    </div>
+    <div class="fifth-bro" style="width: 300px; height: 40px; color: #fff; background-color: #333; overflow: hidden;">
+    </div>
+</div>
+<style>
+    .fifth-parent {
+        position: relative;
+    }
+
+    .fifth-child,
+    .fifth-bro {
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>
+<div class="parent">
+    <div class="child">child</div>
+    <div class="brother">brother</div>
+</div>
+<style>
+    .parent {
+        width: 400px;
+        height: 400px;
+        border: 1px solid red;
+        position: relative;
+    }
+
+    .child,
+    .brother {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .child {
+        background: blue;
+        font-size: 12px;
+        margin: 0 auto;
+    }
+
+    .brother {
+        height: 400px;
+        font-size: 0;
+    }
+</style> -->
+
+<div>
+    <h2>5. 利用 ghost element</h2>
+</div>
+<div class="fifth-parent" style="width: 400px; height: 300px; background-color: #bbb; margin: 10px;">
+    <div class="fifth-child" style="width: 300px; height: 40px; color: #fff; background-color: #333; overflow: hidden;">
+    </div>
+</div>
+<style>
+    .fifth-parent {
+        text-align: center;
+    }
+
+    .fifth-parent::before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    .fifth-child {
+        display: inline-block;
+    }
+</style>
+
+<!-- <div class="sixth-parent" style="background-color: #bbb;">
+    <div class="sixth-child" style="background-color: #333;"></div>
+</div>
+<style>
+    .sixth-parent {
+        font-size: 175.4px;
+        height: 200px;
+        text-align: center;
+    }
+
+    .sixth-child {
+        vertical-align: middle;
+        display: inline-block;
+        font-size: 12px;
+        width: 50px;
+        height: 50px;
+        background-color: #00f;
+    }
+</style> -->
