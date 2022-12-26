@@ -3,8 +3,8 @@
  * 参考：https://es6.ruanyifeng.com/#docs/number#Number-EPSILON
  * @param {number} left 值1
  * @param {number} right 值2
- * @param {number} precision 二进制精度指数
- * @returns 是否视为相等
+ * @param {number} precision 二进制精度指数。例如值为50时，精度约为2^-50
+ * @returns {boolean} 是否视为相等
  */
 function withinErrorMargin (left, right, precision = 52) {
     const diff = Math.abs(left - right);
