@@ -53,7 +53,7 @@
     "@types/html5plus": "^1.0.1",
     "@types/uni-app": "^1.4.3",
     "@vue/cli-plugin-babel": "3.5.1",
-    "@vue/cli-service": "^4.5.8",
+    "@vue/cli-service": "^5.0.8",
     "babel-plugin-import": "^1.13.1",
     "mini-types": "^0.1.4",
     "miniprogram-api-typings": "^2.12.0",
