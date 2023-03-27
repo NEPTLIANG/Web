@@ -97,24 +97,48 @@ console.log('Hello! MING');
 //     (ele, index) => console.log(index.toFixed())    //TypeError: Cannot read property 'toFixed' of undefined
 // );
 
-// 函数重载
-// let makeDate = (timestamp: number): Date;   //error TS1005: '=>' expected.
-// let makeDate = (y: number, m: number, d: number): Date;     //error TS1005: '=>' expected.
-// let makeDate = (    //无法重新声明块范围变量“makeDate”。ts(2451)
-function makeDate(timestamp: number): Date;
-function makeDate(y: number, mIndex: number, d: number): Date;
-function makeDate(
-    yearOrTimestamp: number,
-    monthIndex?: number,
-    date?: number
-): Date {
-    return typeof (monthIndex ?? date) !== 'undefined' ?
-        new Date(yearOrTimestamp, monthIndex, date)
-        :
-        new Date(yearOrTimestamp);
-}
 
-const d1 = makeDate(12345678);
-const d2 = makeDate(5, 5, 5);
-// const d3 = makeDate(1, 3);      //error TS2575: No overload expects 2 arguments, but overloads do exist that expect either 1 or 3 arguments.
-console.log({ d1, d2 });    // { d1: 1970-01-01T03:25:45.678Z, d2: 1905-06-04T16:00:00.000Z }
+// 函数重载
+// (() => {
+//     // let makeDate = (timestamp: number): Date;   //error TS1005: '=>' expected.
+//     // let makeDate = (y: number, m: number, d: number): Date;     //error TS1005: '=>' expected.
+//     // let makeDate = (    //无法重新声明块范围变量“makeDate”。ts(2451)
+//     function makeDate(timestamp: number): Date;
+//     function makeDate(y: number, mIndex: number, d: number): Date;
+//     function makeDate(
+//         yearOrTimestamp: number,
+//         monthIndex?: number,
+//         date?: number
+//     ): Date {
+//         return typeof (monthIndex ?? date) !== 'undefined' ?
+//             new Date(yearOrTimestamp, monthIndex, date)
+//             :
+//             new Date(yearOrTimestamp);
+//     }
+
+//     const d1 = makeDate(12345678);
+//     const d2 = makeDate(5, 5, 5);
+//     // const d3 = makeDate(1, 3);      //error TS2575: No overload expects 2 arguments, but overloads do exist that expect either 1 or 3 arguments.
+//     console.log({ d1, d2 });    // { d1: 1970-01-01T03:25:45.678Z, d2: 1905-06-04T16:00:00.000Z }
+// })();
+
+
+// Pick<Type, Keys>
+(() => {
+    interface Todo {
+        title: string;
+        description: string;
+        completed: boolean;
+    }
+
+    type TodoPreview = Pick<Todo, 'title' | 'completed'>;
+
+    const preview: TodoPreview = {
+        title: 'Clean room',
+        // description: 'Description',     // error TS2322: Type '{ title: string; description: string; completed: false; }' is not assignable to type 'Pick<Todo, "title" | "completed">'.
+        // completed: 'false'      // error TS2322: Type 'string' is not assignable to type 'boolean'.
+        completed: false
+    };
+
+    console.log(preview);
+})();

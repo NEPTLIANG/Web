@@ -1,0 +1,14 @@
+{
+  "name": "ts-demo-doc",
+  "version": "1.0.0",
+  "description": "TS Demo from TS Document",
+  "main": "demo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NeptLiang",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "typescript": "^5.0.2"
+  }
+}
