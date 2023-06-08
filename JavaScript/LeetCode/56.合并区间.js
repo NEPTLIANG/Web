@@ -50,19 +50,6 @@ const START = 0;
 const END = 1;
 
 /**
- * 判断往左还是往右插
- * @param {<Item>} item 遍历到的数组元素
- * @param {<Item>} anchor 被选作锚点的数组元素
- * @returns {boolean} true: 左; false: 右
- */
-const judgeQuickSortItem = (item, anchor) => {
-    if (item[START] === anchor[START]) {
-        return item[END] > anchor[END];
-    }
-    return item[START] < anchor[START];
-}
-
-/**
  * 快排
  * @param {<Item>[]} arr 要排序的数组
  * @param {Function} judge 判断往左还是往右插的函数
@@ -73,17 +60,30 @@ const quickSort = (arr, judge) => {
     if (len <= 1) { return arr; }
     let left = [];
     let right = [];
-    const anchor = arr[0];
+    const sentinel = arr[0];
     for (let index = 1; index < len; index++) {
         const item = arr[index];
-        judge(item, anchor) ?
+        judge(item, sentinel) ?
             left.push(item)
             :
             right.push(item);
     }
     left = quickSort(left, judge);
     right = quickSort(right, judge);
-    return left.concat([anchor], right);
+    return left.concat([sentinel], right);
+}
+
+/**
+ * 判断往左还是往右插
+ * @param {<Item>} item 遍历到的数组元素
+ * @param {<Item>} anchor 被选作锚点的数组元素
+ * @returns {boolean} true: 左; false: 右
+ */
+const judgeQuickSortItem = (item, anchor) => {
+    if (item[START] === anchor[START]) {
+        return item[END] > anchor[END];
+    }
+    return item[START] < anchor[START];
 }
 
 /**
