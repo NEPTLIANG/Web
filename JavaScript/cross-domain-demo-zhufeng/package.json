@@ -1,0 +1,12 @@
+{
+  "name": "cross-domain-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "NeptLiang",
+  "license": "GPL-v3.0-or-later",
+  "private": true,
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2"
+  }
+}

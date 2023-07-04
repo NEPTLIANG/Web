@@ -1,0 +1,41 @@
+<h2 id="content">
+    这是父页面传给子页面的用户名：
+</h2>
+<h1 id="user-name"></h1>
+<script>
+
+    const messageBox = document.querySelector('#user-name');
+
+    const sendMessageToOrigin = e => {
+        const message = '我是子页面传给父页面的页面标题';
+        e.source.postMessage(message, e.origin);
+    }
+
+    const listenAnotherDomain = () => {
+        window.addEventListener('message', function (e) {
+            messageBox.innerHTML = e.data;
+            sendMessageToOrigin(e);
+        });
+    }
+    listenAnotherDomain();
+
+</script>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        background-color: #efefef;
+    }
+
+    h1 {
+        font-size: 64px;
+    }
+
+    #content,
+    #user-name {
+        padding: 16px 16px 0 16px;
+    }
+</style>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meth charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <header>
+        <h1 class="icon">Logo</h1>
+        <div style="display: flex; align-items: center;">
+            <button>Button 3</button>
+            <button>Button 2</button>
+            <button style="border-radius: 4px; background-color: #777; color: white;">
+                Button 1
+            </button>
+        </div>
+    </header>
+    <aside>
+        <nav>Function 1</nav>
+        <nav>Function 2</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+        <nav>Function 3</nav>
+    </aside>
+    <main>
+        <h2 id="title"></h2>
+
+        <iframe id="main-content" src="http://localhost:4000/page.html"></iframe>
+        <script src="./frame.js"></script>
+
+    </main>
+</body>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    header {
+        display: flex;
+        z-index: 100;
+        padding: 16px 32px;
+        justify-content: space-between;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    header,
+    aside,
+    main h2 {
+        position: relative;
+        background-color: white;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    }
+
+    aside {
+        float: left;
+        z-index: 10;
+        overflow: scroll;
+        width: 256px;
+        padding-top: 8px;
+    }
+
+    main {
+        float: right;
+        width: calc(100% - 256px);
+    }
+
+    main,
+    aside {
+        height: calc(100% - 68px);
+    }
+
+    aside nav {
+        padding: 8px 32px;
+    }
+
+    header h1 {
+        font-size: 24px;
+        line-height: 1.5em;
+        vertical-align: middle;
+    }
+
+    header button {
+        height: 1.5em;
+        box-sizing: content-box;
+        background: none;
+        padding: 8px 32px;
+        border: none;
+    }
+
+    main h2 {
+        padding: 16px;
+    }
+
+    #main-content {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+</style>
+
+</html>

@@ -1,0 +1,37 @@
+<script>
+
+    const ANOTHER_ORIGIN = 'http://localhost:4000';
+
+    const getUsers = async () => {
+        const users = await fetch(`${ANOTHER_ORIGIN}/api/users`)
+            .then(response => {
+                const customHeaderValue = response.headers.get('custom-response-header');
+                console.log({ customHeaderValue });
+                return response.json();
+            });
+        console.log({ users/* : await users.json() */ });
+    }
+
+    const createUser = async newUser => {
+        const result = await fetch(`${ANOTHER_ORIGIN}/api/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },    //Content-Type 默认是 “text/plain; charset=utf-8”，express.json() 解析出来的是空对象
+            body: JSON.stringify(newUser)
+        })
+            .then(response => response.json())
+            .catch(console.warn);
+        console.log(result);
+    }
+
+    const refreshCounter = async () => {
+        const result = await fetch(`${ANOTHER_ORIGIN}/api/visit-count`, {
+            credentials: 'include'      //如果需要在跨域时携带 cookies，需要设置此参数，否则不会携带，但也不会报错
+        }).then(response => response.json());
+        console.log(result);
+    }
+
+    getUsers();
+    createUser({ name: 'Li Lei' });
+    refreshCounter();
+
+</script>

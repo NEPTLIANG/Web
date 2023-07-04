@@ -58,10 +58,10 @@ const countingSort = (input, { descending }) => {
     const len = input.length;
     const map = new Array(len + 1).fill(0);
     const result = new Array(len + 1);
-    input.forEach(citation => typeof map[citation] !== 'undefined' ? 
-        map[citation]++ 
+    input.forEach(item => typeof map[item] !== 'undefined' ? 
+        map[item]++ 
         : 
-        map[citation] = 1
+        map[item] = 1
     );
     for (let index = 1, len = map.length; index < len; index++) {
         typeof map[index] !== 'undefined' ? 
@@ -69,13 +69,13 @@ const countingSort = (input, { descending }) => {
             :
             map[index] = map[index - 1];
     }
-    input.forEach(citation => {
+    input.forEach(item => {
         const index = descending ? 
-            len - (map[citation] - 1)
+            len - (map[item] - 1)
             :
-            map[citation];
-        result[index] = citation;
-        map[citation]--;
+            map[item];
+        result[index] = item;
+        map[item]--;
     });
     result.shift();
     return result;
@@ -90,7 +90,7 @@ var hIndex = function(citations) {
         descending: true
     });
     // const frequency = sorted.findLastIndex((citation, index) => citation >= index + 1) + 1;     //力扣的 node 版本是 14.8.0，TypeError: sorted.findLastIndex is not a function
-    for (let index = sorted.length - 1; index >= 0; index--) {      //力扣的 node 不支持 findLastIndex，只好手动遍历
+    for (let index = sorted.length - 1; index >= 0; index--) {      //力扣的 node v14.8.0 不支持 findLastIndex，只好手动遍历
         if (sorted[index] >= index + 1) {
             return index + 1;
         }
