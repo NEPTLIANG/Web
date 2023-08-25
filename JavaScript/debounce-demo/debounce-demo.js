@@ -1,48 +1,58 @@
-const isObject = arg => Object.prototype.toString.call(arg) === '[object Object]';
+const isObject = value => {
+    const type = typeof value;
+    return value !== null
+        && (type === 'object' || type === 'function');      //先排除null，然后判断typeof为object或function
+};
 
-const globalObj = window || global || globalThis || (function () {
-    return this;
-})() || (new Function('return this'))();
+const globalObj = (typeof globalThis === 'object' && globalThis !== null && globalThis.Object == Object && globalThis)      //1. typeof; 2. 排除null； 3. 其Object是全局的Object
+    || (typeof global === 'object' && global !== null && global.Object === Object && global)
+    || (typeof self === 'object' && self !== null && self.Object === Object && self)
+    || Function('return this')();   //globalThis > global > self > function的this
 
 const debounce = (func, wait, options) => {
-    console.log(Object.prototype.toString.call(null))
-    let {
-        leading,
-        trailing,
-        maxWait
-    } = isObject(options) ? options : {};
     let result,
         timerId,
         lastThis,
-        lastArgs;
-    let lastCallTime = 0;
+        lastArgs,
+        maxWait;
+    let maxing = false;
+    let leading = false
+    let trailing = true;    //先声明options选项对应的变量，后面用isObject校验options后再赋值
+    // console.log(Object.prototype.toString.call(null))
+    let lastCallTime;   //lastCallTime不初始化，后面据此判断是否是首次触发
     let lastInvokeTime = 0;
-    const useRAF = +wait <= 0
+    const useRAF = !wait && wait !== 0      //? 不是很明白为什么为零不为零都是 false
         && typeof globalObj.requestAnimationFrame === 'function';
-    const maxing = typeof maxWait === 'number';
 
-    if (typeof func !== 'function') { throw new Error(); }
-    wait = maxing ? Math.min(+wait, +maxWait) : (+wait || 0);
-    leading = !!leading;
-    trailing = !(trailing === false);
+    if (typeof func !== 'function') { throw new Error('Expected a function'); }     //抛出异常而非返回异常
+    wait = +wait || 0;
+    if (isObject(options)) {
+        maxing = 'maxWait' in options;
+        maxWait = maxing ? Math.max(+maxWait || 0, wait) : maxWait;     //对maxWait取max而非对wait取min
+        leading = !!options.leading;
+        trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
     // console.log({leading})
 
 
     const remainingWait = time => {
         const timeSinceLastCall = time - lastCallTime;
         const timeSinceLastInvoke = time - lastInvokeTime;
-        console.log({ wait })
+        // console.log({ wait })
         const timeToNextCall = wait - timeSinceLastCall;
-        const timeToNextInvoke = wait - timeSinceLastInvoke;
-        return Math.min(timeToNextCall, timeToNextInvoke);
+        const timeToNextInvoke = maxWait - timeSinceLastInvoke;     //last invoke 对应 maxWait 而非 wait
+        return maxing ?     //只有maxing的时候才取min
+            Math.min(timeToNextCall, timeToNextInvoke)
+            :
+            timeToNextCall;
     }
 
     const startTimer = (pendingFunc, time) => {
         if (useRAF) {
-            cancelAnimationFrame(timerId);
-            return requestAnimationFrame(pendingFunc);
+            globalObj.cancelAnimationFrame(timerId);
+            return globalObj.requestAnimationFrame(pendingFunc);
         }
-        console.log({ time })
+        // console.log({ time })
         return setTimeout(pendingFunc, time);
     }
 
@@ -50,14 +60,13 @@ const debounce = (func, wait, options) => {
         const timeSinceLastCall = time - lastCallTime;
         const timeSinceLastInvoke = time - lastInvokeTime;
         // console.log(maxing, time, lastInvokeTime)
-        return timerId === undefined
-            || timeSinceLastCall < 0
+        return lastCallTime === undefined   //通过lastCallTime判断而非timerId
             || timeSinceLastCall >= wait
+            || timeSinceLastCall < 0
             || (maxing && timeSinceLastInvoke >= maxWait);
     }
 
     const invokeFunc = time => {
-        // console.log({leading})
         const args = lastArgs;
         const thisArgs = lastThis;
         lastArgs = lastThis = undefined;
@@ -66,12 +75,12 @@ const debounce = (func, wait, options) => {
         return result;
     }
 
-    const timerExpiration = () => {
-        const time = new Date().valueOf();
+    const timerExpired = () => {
+        const time = new Date();
         if (shouldInvoke(time)) {
             return trailingEdge(time);
         }
-        timerId = startTimer(timerExpiration, remainingWait(time));
+        timerId = startTimer(timerExpired, remainingWait(time));
     }
 
     const trailingEdge = time => {
@@ -80,51 +89,50 @@ const debounce = (func, wait, options) => {
         if (trailing && lastArgs) {
             return invokeFunc(time)
         }
-        lastInvokeTime = time;
         lastArgs = lastThis = undefined;
         return result;
     }
 
     const leadingEdge = time => {
-        if (shouldInvoke(time)) {
-            // console.log({leading})
-            timerId = startTimer(timerExpiration, wait);
-            return leading ? invokeFunc(time) : result;
-        }
-        return result;
+        lastInvokeTime = time;      //leadingEdge里也要刷新lastInvokeTime而非在trailingEdge里刷新
+        // console.log({leading})
+        timerId = startTimer(timerExpired, wait);   //debounced里判断过shouldInvoke了，leadingEdge里面不用判断了
+        return leading ? invokeFunc(time) : result;
     }
 
     const cancel = () => {
-        if (useRAF) { return cancelAnimationFrame(timerId); }
-        clearTimeout(timerId);
-        timerId = undefined;
+        if (timerId !== undefined) {
+            if (useRAF) { return globalObj.cancelAnimationFrame(timerId); }
+            clearTimeout(timerId);
+        }
+        lastInvokeTime = 0;
+        lastArgs = lastCallTime = lastThis = timerId = undefined;
     }
 
-    const flush = () => {
-        invokeFunc(new Date().valueOf())
-        if (useRAF) { return cancelAnimationFrame(timerId); }
-        clearTimeout(timerId);
-    }
+    const flush = () => timerId === undefined ? result : trailingEdge(Date.now());
 
-    const pending = () => typeof timerId !== 'undefined';
+    const pending = () => timerId !== undefined;
 
     const debounced = function (...args) {
-        const time = new Date().valueOf();
+        const time = new Date();
         const isInvoking = shouldInvoke(time);
+
         lastCallTime = time;
         lastArgs = args;
+        lastThis = this;
 
         if (isInvoking) {
             if (timerId === undefined) {
                 return leadingEdge(time);
             }
             if (maxing) {
-                return leading ? invokeFunc(time) : result;
+                timerId = startTimer(timerExpired, wait);
+                return invokeFunc(time);
             }
         }
         if (timerId === undefined) {
             // console.log({leading})
-            leading ? invokeFunc(time) : result;
+            timerId = startTimer(timerExpired, wait);
         }
         return result
     }
