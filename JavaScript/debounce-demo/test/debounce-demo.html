@@ -1,0 +1,16 @@
+<script type="module">
+    // import debounce from "../debounce-demo.js";
+    import throttle from "../throttle-demo.js"
+
+    const button = document.getElementById('button');
+
+    const options = {
+        leading: true,
+        trailing: false
+    };
+    button.addEventListener('click', throttle(() => {
+        console.log(1);
+    }, 1000, options));
+</script>
+
+<button id="button">1</button>
