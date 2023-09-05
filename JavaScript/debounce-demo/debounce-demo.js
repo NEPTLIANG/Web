@@ -7,7 +7,7 @@ const isObject = value => {
 const globalObj = (typeof globalThis === 'object' && globalThis !== null && globalThis.Object == Object && globalThis)      //1. typeof; 2. 排除null； 3. 其Object是全局的Object
     || (typeof global === 'object' && global !== null && global.Object === Object && global)
     || (typeof self === 'object' && self !== null && self.Object === Object && self)
-    || Function('return this')();   //globalThis > global > self > function的this
+    || Function('return this')();   //globalThis > global > self > function的this，而且function的this得用Function构造函数，否则严格模式下返回undefined
 
 const debounce = (func, wait, options) => {
     let result,
