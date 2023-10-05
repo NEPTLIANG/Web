@@ -19,7 +19,7 @@
     "file-loader": "^6.2.0",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.1.0",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^9.1.4",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1"
   }
