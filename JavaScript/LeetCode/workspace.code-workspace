@@ -4,8 +4,8 @@
 			"path": "."
 		},
 		{
-			"name": "Git",
-			"path": "../../.."
+			"name": ".leetcode",
+			"path": "../../../../.leetcode"
 		}
 	],
 	"settings": {}
