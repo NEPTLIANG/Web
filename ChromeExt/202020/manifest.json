@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "202020",
+    "description": "",
+    "version": "0.1",
+    "permissions": [
+        "alarms",
+        "scripting",
+        "activeTab"
+    ]
+    // "background": {
+    //     "service_worker": "scripts/content.js"
+    // }
+    // "content_scripts": [
+    //     {
+    //         "js": [
+    //             "scripts/content.js"
+    //         ],
+    //         "matches": [
+    //             "*://*/*"
+    //         ]
+    //     }
+    // ]
+}

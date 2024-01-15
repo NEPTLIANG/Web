@@ -1,0 +1,11 @@
+{
+  "name": "202020",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "NeptLiang",
+  "license": "GPL-v3-or-later",
+  "private": true,
+  "dependencies": {
+    "chrome-types": "^0.1.248"
+  }
+}
