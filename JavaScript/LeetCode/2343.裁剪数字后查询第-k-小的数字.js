@@ -139,9 +139,9 @@ var smallestTrimmedNumbers = function (nums, queries) {
         setNum: ElementsWithSatellite.setNum,
         getRoundResult
     }), results)
-    return queries.map(([roder, length]) => {
-        console.log('===>', length, results/* .length */[roder[1] - 1], roder[0] - 1)
-        return results[roder[1] - 1][roder[0] - 1].index
+    return queries.map((query, index) => {
+        console.log('===>', index, results/* .length */[query[1] - 1], query[0] - 1)
+        return results[query[1] - 1][query[0] - 1].index
     })
 };
 // @lc code=end
