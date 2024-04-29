@@ -119,6 +119,7 @@ const radixSort = (nums, {
         //     arr.map(element => new ElementsWithSatellite(element, getKey))
         //     :
         //     arr;
+        // console.log('getter', index)
         sortedNums = countingSort(sortedNums, getKey);
         console.log('====>round', index, sortedNums);
         getRoundResult?.(maxLen - 1 - index, sortedNums);
