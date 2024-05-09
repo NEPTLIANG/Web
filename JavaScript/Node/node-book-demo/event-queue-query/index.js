@@ -1,7 +1,7 @@
 import events from 'events';
-import { execute } from './executeQuery.js';
+import execute from './basicQuery.js';
 
-// 基于《深入浅出Node.js》实现
+// 基于《深入浅出Node.js》4.3.1实现
 
 const STATUS = {
     READY: 'ready',
@@ -19,7 +19,7 @@ let status = STATUS.READY;
 
 /**
  * 事件队列方式的查询
- * @param {Function} callback 回调
+ * @param {(Error | null, <Row>[]?) => unknown} callback 回调
  * @returns {void}
  */
 const queuedQuery = (sql, callback) => {
@@ -44,16 +44,14 @@ const queuedQuery = (sql, callback) => {
 }
 
 // 测试
-(function test() {
-    for (let i = 0; i < 10; i++) {
-        queuedQuery(
-            `select * 
-                from RealTimeBusQuery.route`,
-            console.log
-        );
-    }
-})();
+// (function test() {
+//     for (let i = 0; i < 10; i++) {
+//         queuedQuery(
+//             `select * 
+//                 from RealTimeBusQuery.route`,
+//             console.log,
+//         );
+//     }
+// })();
 
-export {
-    queuedQuery,
-}
+export default queuedQuery;
