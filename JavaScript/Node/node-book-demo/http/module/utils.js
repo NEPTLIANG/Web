@@ -1,13 +1,4 @@
-import handleRoute from "./route.js";
-import queuedQuery from "../../event-queue-query/index.js";
-
-const handleRouter = async (method, url) => {
-    switch(url) {
-        case '/route': {
-            return await handleRoute(method);
-        }
-    }
-}
+const queuedQuery = require('../../event-queue-query');
 
 const queuedQueryPromises = sql => new Promise((resolve, reject) => {
     queuedQuery(sql, (error, result) => {
@@ -16,7 +7,6 @@ const queuedQueryPromises = sql => new Promise((resolve, reject) => {
     });
 })
 
-export {
-    handleRouter,
+module.exports = {
     queuedQueryPromises,
 }

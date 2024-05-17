@@ -5,7 +5,6 @@
   "main": "index.js",
   "author": "NeptLiang",
   "license": "GPL-v3-or-later",
-  "type": "module",
   "dependencies": {
     "mariadb": "^3.2.3",
     "typescript": "^5.4.5"

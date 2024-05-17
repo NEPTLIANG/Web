@@ -1,6 +1,15 @@
-import http from 'http';
-import { handleRouter } from './module/utils.js';
+const http = require('http');
+// const https = require('https');
+// const fs = require('fs');
+// const path = require('path');
+const handleRouter = require('./router');
 
+// const options = {
+//     key: fs.readFileSync(path.resolve(__dirname, '_secret/ssl-keys/server.key')),
+//     cert: fs.readFileSync(path.resolve(__dirname, '_secret/ssl-keys/server.crt')),
+// };
+
+// https.createServer(options, async (req, res) => {
 http.createServer(async (req, res) => {
     const { method, url/* , headers */ } = req;
     const { status, body } = await handleRouter(method, url);
@@ -9,6 +18,6 @@ http.createServer(async (req, res) => {
     });
     res.end(JSON.stringify(body));
 })
-    .listen(80, '127.0.0.1');
+    .listen(80/* 443 *//* , '127.0.0.1' */);
 
-console.log('Running');
+// console.log('Running');

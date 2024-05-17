@@ -1,7 +1,11 @@
-import { queuedQueryPromises } from "./utils.js";
+const { queuedQueryPromises } = require('./utils');
 // import queuedQuery from "../../event-queue-query/index.js";
 
-const getRoute = async () => {
+/**
+ * 查询路线列表
+ * @returns {object}
+ */
+const getRoutes = async () => {
     let routes = [];
     routes = await queuedQueryPromises(`
         select * 
@@ -22,12 +26,17 @@ const getRoute = async () => {
     };
 };
 
-const handleRoute = async (method) => {
+/**
+ * 分发路线相关请求
+ * @param {string} method 请求方法
+ * @returns {object}
+ */
+const handleRoute = async method => {
     switch (method) {
         case 'GET': {
-            return await getRoute();
+            return await getRoutes();
         }
     }
 }
 
-export default handleRoute;
+module.exports = handleRoute;

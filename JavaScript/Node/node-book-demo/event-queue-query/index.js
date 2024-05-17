@@ -1,5 +1,5 @@
-import events from 'events';
-import execute from './basicQuery.js';
+const events = require('events');
+const execute = require('./basicQuery');
 
 // 基于《深入浅出Node.js》4.3.1实现
 
@@ -54,4 +54,4 @@ const queuedQuery = (sql, callback) => {
 //     }
 // })();
 
-export default queuedQuery;
+module.exports = queuedQuery;
