@@ -8,6 +8,12 @@ const ORG_PATTERN = /^[a-zA-Z0-9_\-]{1,20}$/;
  * @returns {object}
  */
 const getRoutes = async query => {
+    if (Array.isArray(query.org)) {
+        return {
+            status: 400,
+            body: { message: '参数重复' },
+        };
+    }
     let sql = `
         select id, name, org, intro
             from RealTimeBusQuery.route
