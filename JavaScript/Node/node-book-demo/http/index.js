@@ -1,8 +1,15 @@
 const http = require('http');
+const url = require('url');
 // const https = require('https');
 // const fs = require('fs');
 // const path = require('path');
+
 const handleRouter = require('./router');
+
+//! debug
+// process.on('uncaughtException', error => {
+//     console.log('未捕获：', error);
+// });
 
 // const options = {
 //     key: fs.readFileSync(path.resolve(__dirname, '_secret/ssl-keys/server.key')),
@@ -11,8 +18,9 @@ const handleRouter = require('./router');
 
 // https.createServer(options, async (req, res) => {
 http.createServer(async (req, res) => {
-    const { method, url/* , headers */ } = req;
-    const { status, body } = await handleRouter(method, url);
+    const { method, /* url: urlString *//* , headers */ } = req;
+    const { pathname, query } = url.parse(req.url, true);
+    const { status, body } = await handleRouter(method, pathname, query) || {};
     res.writeHead(status, {
         'Content-Type': 'text/plain',
     });
