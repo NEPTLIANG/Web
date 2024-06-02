@@ -6,19 +6,22 @@
     "permissions": [
         "alarms",
         "scripting",
+        "tabs",
         "activeTab"
-    ]
+    ],
     // "background": {
     //     "service_worker": "scripts/content.js"
     // }
-    // "content_scripts": [
-    //     {
-    //         "js": [
-    //             "scripts/content.js"
-    //         ],
-    //         "matches": [
-    //             "*://*/*"
-    //         ]
-    //     }
-    // ]
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/content.js" 
+            ],
+            "matches": [
+                "*://*/*",
+                "https://*/*",
+                "http://*/*"
+            ]
+        }
+    ]
 }

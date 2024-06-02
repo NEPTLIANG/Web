@@ -1,5 +1,5 @@
-var getType = function (val) {
-    var type = typeof val;
+const getType = (val) => {
+    const type = typeof val;
     if (type !== 'object') {
         return type;
     } //先进行typeof判断，如果是基础数据类型，直接返回
