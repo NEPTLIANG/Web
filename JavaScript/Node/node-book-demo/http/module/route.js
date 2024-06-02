@@ -8,6 +8,7 @@ const ORG_PATTERN = /^[a-zA-Z0-9_\-]{1,20}$/;
  * @returns {object}
  */
 const getRoutes = async query => {
+    // 如果查询字符串中的键出现多次，那么它的值会是一个数组
     if (Array.isArray(query.org)) {
         return {
             status: 400,
