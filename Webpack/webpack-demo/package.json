@@ -44,7 +44,7 @@
     "html-webpack-plugin": "^5.5.0",
     "http-server": "^0.12.3",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
-    "postcss": "^8.4.6",
+    "postcss": "^8.4.31",
     "postcss-loader": "^6.2.1",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.3.1",
