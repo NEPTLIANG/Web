@@ -7,7 +7,7 @@ const imgContainer = document.getElementById('');
  */
 const lazy = function () {
     if (!(imgElement instanceof HTMLImageElement)) { return; }
-    const realSrc: string = imgElement.getAttribute('real-src') || '';
+    const realSrc = imgElement.getAttribute('real-src') || '';
     imgElement.src = realSrc;
     imgElement.onload = () => {
         imgElement.style.opacity = '1';
@@ -20,11 +20,11 @@ const lazy = function () {
  */
 const computed = function () {
     if (!(imgContainer instanceof HTMLElement)) { return; }
-    const C: number = document.documentElement.clientHeight;
+    const C = document.documentElement.clientHeight;
     const {
         top: B,
         bottom: A,
-    }: DOMRect = imgContainer?.getBoundingClientRect();
+    } = imgContainer?.getBoundingClientRect();
     if (A <= C && B >= 0) {
         lazy();
     }
