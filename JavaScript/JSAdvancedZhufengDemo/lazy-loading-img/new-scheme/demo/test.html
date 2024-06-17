@@ -1,0 +1,30 @@
+<!-- <div class="absolute"> -->
+<div class="container1" >
+    <img class="img" real-src="https://images.universal-music.de/img/assets/590/590645/4/380/00028948654734-giulini-bruckner-packshotjpg.jpg" >
+</div>
+<div class="container2" >
+    <img class="img" real-src="https://images.universal-music.de/img/assets/590/590645/4/380/00028948654734-giulini-bruckner-packshotjpg.jpg" >
+</div>
+<div class="container3" >
+    <img class="img" real-src="https://images.universal-music.de/img/assets/590/590645/4/380/00028948654734-giulini-bruckner-packshotjpg.jpg" >
+</div>
+<!-- </div> -->
+
+<script src="./demo.js" ></script>
+
+<style>
+    /* .absolute {
+        position: absolute;
+    } */
+    [class^=container] {
+        width: 210px;
+        height: 90px;
+        position: absolute;
+        margin: 2000px auto;
+        background-color: #bbb;
+    }
+    .img {
+        opacity: 0;
+        transition: opacity 1s;
+    }
+</style>
