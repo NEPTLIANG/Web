@@ -1,7 +1,7 @@
-import TimeLineItem from './utils/view-components/time-line/index.tsx';
-// import LazyImg from './utils/lazy-img/lazy-img.tsx';
+// import TimeLineItem from './utils/view-components/time-line/index.tsx';
+import LazyImg from './utils/lazy-img/lazy-img.tsx';
 
-// import logo from './logo.svg';
+import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <header className="App-header">
 
-        <div style={{ padding: '4rem' }}>
+        {/* <div style={{ padding: '4rem' }}>
           <TimeLineItem 
             isStart
             title="test"
@@ -29,21 +29,26 @@ function App() {
             style={{ padding: '0 1rem' }}
           />
           <TimeLineItem isEnding style={{ padding: '0 1rem' }} />
-        </div>
+        </div> */}
 
         {/* lazy-img */}
-        {/* <LazyImg lazySrc={logo} className="App-logo" alt="logo" style={{
-              margin: '1000px auto'
-            }} />
-        <LazyImg
-          // className="App-logo"
-          lazySrc="https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/e08da34488b114bd4c665ba2fa520a31.svg"
-          alt="jj"
+        <LazyImg lazySrc={logo} className="App-logo" id="logo"
+          style={{
+            margin: '1000px auto'
+          }}
           conf={{
             threshold: 1
           }}
-          style={imgStyle}
-        /> */}
+        />
+        <LazyImg
+          // className="App-logo"
+          lazySrc="https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/e08da34488b114bd4c665ba2fa520a31.svg"
+          id="jj"
+          // style={imgStyle}
+          style={{
+            margin: '1000px auto'
+          }}
+        />
 
         {/* Default */}
         {/* <img src={logo} className="App-logo" alt="logo" />
