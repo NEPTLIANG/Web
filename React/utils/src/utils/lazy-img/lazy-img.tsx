@@ -2,87 +2,75 @@ import React, {
     useEffect
 } from "react";
 
-interface imgElement {
-    // id: String
-    loaded?: boolean,
-};
+import type {
+    Props,
+    ImgElement,
+    LoadImg,
+    TestSrc,
+    JudgeShowImg,
+} from './types';
 
-const LazyImg = props => {
-    const { conf = {} } = props;
-    // console.log(props.size?.height ?? 200);
 
-    const loadImg = (/* event, */ img, lazySrc) => {
+const LazyImg = (props: Props) => {
+    const {
+        conf = { threshold: 0 },
+    } = props;
+
+    /**
+     * 加载图片
+     * @param img img元素
+     * @param lazySrc 真正的图片地址
+     */
+    const loadImg: LoadImg = (img, lazySrc) => {
         img.src = lazySrc;
-        // const ele = event.target /* as HTMLElement */;
-        console.log({/* ele, */ img});
-        if (/* !ele */!img) { return; } /* setTimeout(() => { */
-        /* ele */img.style.opacity = '1' /* String(1); */;
-        /* Object.defineProperty( *//* ele. */img.loaded/* ', { value: */ = true /* }) */;
-        if (!/* ele. */img.parentNode) { return; }
-        /* ( *//* ele. */img.parentNode/*  as HTMLElement) */.style.background = 'transparent';
-        //     }
-        // }/* , 1000)} */
+        img.style.opacity = '1';
+        img.loaded = true;
+        if (!(img.parentNode instanceof HTMLDivElement)) { return; }
+        img.parentNode.style.background = 'transparent';
     }
 
-    const testSrc = img => {
+    /**
+     * 测试图片地址是否有效
+     * @param img img元素
+     */
+    const testSrc: TestSrc = img => {
         const lazySrc = img.getAttribute('lazy-src') ?? '';
         const imageForTest = new Image();
-        imageForTest.onload = (/* event */) => loadImg(/* event, */ img, lazySrc);
+        imageForTest.onload = () => loadImg(img, lazySrc);
         imageForTest.src = lazySrc;
     }
 
-    const judgeShowImg = img => {
-        const { top, bottom, height } = /* ( */img.parentNode/*  as HTMLElement) */?.getBoundingClientRect();
-        // console.log(
-        //     /* window.scrollY, 
-        //     img.offsetTop, */ 
-        //     img.getBoundingClientRect()/* .bottom */ /* > 0 */, 
-        //     window.innerHeight, 
-        //     img
-        // );
+    /**
+     * 判断是否到时候加载图片
+     * @param img img元素
+     */
+    const judgeShowImg: JudgeShowImg = img => {
+        if (!(img?.parentNode instanceof HTMLDivElement)) { return; }
+        const { top, bottom, height } = img.parentNode?.getBoundingClientRect?.() ?? {};
         const windowHeight = window.innerHeight;
         const thresholdHeight = height * (conf.threshold ?? 0);
         const topBaseline = top + thresholdHeight;
-        // console.log('baseline', img.id, {top, height, conf: conf.threshold})
         const bottomBaseline = bottom - thresholdHeight;
-        // console.log('judging', img.id, { return: topBaseline < windowHeight && bottomBaseline > 0 },
-        //     topBaseline, windowHeight, bottomBaseline)
         return topBaseline < windowHeight && bottomBaseline > 0;
     }
 
+    /**
+     * 有条件地加载图片
+     */
     const loadImgConditionally = () => {
-        // const imgList = Array.from(document.getElementsByTagName('img'));
-        // console.log('conditionally', imgList.map(i => i.id))
-        // imgList.forEach(img => {
-        // const {
-        //     id = props.id
-        // } = props;
-        const img = (document.getElementById(props.id) /* || { id: '' } */) as imgElement;
+        const img = (document.getElementById(props.id)) as ImgElement;
         if (
             !(img instanceof HTMLImageElement)
-                || /* Object.getOwnPropertyDescriptor( */img.loaded/* ')?.value */
+                || img.loaded
                 || !judgeShowImg(img)
         ) { return; }
-        // console.log({
-        //     loaded: Object.getOwnPropertyDescriptor(img, 'loaded')?.value,
-        //     img: img?.id
-        // });
         testSrc(img);
-        // });
     };
 
-    // console.log('constructing');
     useEffect(() => {
-        // console.log(props, 'effect');
-        window.addEventListener('load', () => {
-            // console.log('loaded');
-            loadImgConditionally();
-        });
-        window.addEventListener('scroll', () => {
-            // console.log('scrolled', window.scrollY)
-            loadImgConditionally();
-        });
-    });
+        window.addEventListener('load', loadImgConditionally);
+        window.addEventListener('scroll', loadImgConditionally);
+    }, []);
 
     return (
         <>

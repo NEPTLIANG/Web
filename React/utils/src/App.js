@@ -37,7 +37,7 @@ function App() {
             margin: '1000px auto'
           }}
           conf={{
-            threshold: 1
+            threshold: 0.3
           }}
         />
         <LazyImg
