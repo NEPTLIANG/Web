@@ -57,9 +57,9 @@ const countingSort = (arr, getKey) => {
     if (!Array.isArray(arr)) { return arr; }
     const hasSatelliteData = typeof getKey === 'function';
     const count = new Array(arr.length + 1).fill(0);
-    // console.log({arr})
+    console.log('=====>toCount', {arr})
     arr.forEach(element => {
-        // console.log({element})
+        // console.log('=====>counting', {element})
         const key = hasSatelliteData ? getKey(element) : element;
         return typeof count[key] !== 'undefined' ?
             count[key]++
@@ -78,13 +78,15 @@ const countingSort = (arr, getKey) => {
     arr.forEach(element => {
         const key = hasSatelliteData ? getKey(element) : element;
         // return result[count[key]--] = /* hasSatelliteData ?
-        return result[count[key - 1]++] = /* hasSatelliteData ?
+        console.log('=====>counting', key, count[key], element)
+        return result[count[key /* - 1 */]/* ++ */--] = /* hasSatelliteData ?
             element.satellite
             :  */
             element
         }
     );
     // result.shift();
+    console.log('===')
     return result;
 }
 
@@ -95,7 +97,7 @@ const radixSort = (nums, {
 }) => {
     const getDigitGetter = index => (
         num => {
-            // console.log(num)
+            console.log('=====>getter', num, index)
             return typeof getNum === 'function' && typeof setNum === 'function' ?
                 getNum(num)?.[index]
                 :
@@ -111,7 +113,7 @@ const radixSort = (nums, {
         setKey: setNum
     });
     let sortedNums = paddedNums;
-    // console.log({maxLen})
+    console.log('=====>toRad', {sortedNums})
     for (let index = maxLen - 1; index >= 0; index--) {
     // for (let index = 0; index < maxLen; index++) {
         const getKey = getDigitGetter(index);
@@ -142,15 +144,38 @@ var smallestTrimmedNumbers = function (nums, queries) {
         getRoundResult
     }), results)
     return queries.map(([order, length]) => {
-        console.log('===>', length, results/* .length */[length - 1], order /* - 1 */)
-        return results[length - 1][order /* - 1 */].index
+        console.log('===>', order, length, results/* .length */[length - 1])
+        let reference = results[length - 1][order /* - 1 */].index
+        for (let index = order - 1; index > 0; index--) {
+            if (results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length) !== results[length - 1][order].origin.slice(results[length - 1][index].origin.length - length)) { break; }
+            console.log('for', [
+                order, 
+                length, 
+                index, 
+                reference, 
+                results[length - 1], 
+                results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length)
+            ])
+            if (results[length - 1][index].index > reference) {
+                reference = results[length - 1][index].index;
+            }
+        }
+        for (let index = order + 1, len = results[length - 1].length; index < len; index++) {
+            if (results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length) !== results[length - 1][order].origin.slice(results[length - 1][index].origin.length - length)) { break; }
+            if (results[length - 1][index].index < reference) {
+                reference = results[length - 1][index].index;
+            }
+        }
+        console.log([reference, results[length - 1][order]])
+        return reference;
     })
 };
 // @lc code=end
 
 let nums, queries;
-nums = ["102","473","251","814"], queries = [[1,1],[2,3],[4,2],[1,2]]
+// nums = ["102","473","251","814"], queries = [[1,1],[2,3],[4,2],[1,2]]
 // nums = ["24","37","96","04"], queries = [[2,1],[2,2]]
+nums = ["24","37","23","04"], queries = [[2,1],[2,2]]
 console.log(smallestTrimmedNumbers(nums, queries));
 // smallestTrimmedNumbers(["24","37","96","04"]);
 // smallestTrimmedNumbers(["24","37","96","04"]);
