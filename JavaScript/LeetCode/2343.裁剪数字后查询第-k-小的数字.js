@@ -32,13 +32,14 @@ const padStrings = (list, {
 }) => {
     const hasSatelliteData = typeof getKey === 'function'
         && typeof setKey === 'function';
-    const keys = hasSatelliteData ? 
+    const keys = (hasSatelliteData ? 
         list.map(element => getKey(element))
         :
-        list;
+        list);
+    keys.splice(0, 1, -1);
     const max = Math.max(...keys);
-    // console.log({max})
     const maxLen = String(max).length;
+    console.log('=====>padding', {keys, maxLen})
     // console.log('padding', {getKey, setKey});
     return {
         list: hasSatelliteData ? 
@@ -75,7 +76,7 @@ const countingSort = (arr, getKey) => {
     }
     const result = [];
     console.log('===>mapping', count/* -- */)
-    arr.forEach(element => {
+    arr.reduceRight((_, element) => {
         const key = hasSatelliteData ? getKey(element) : element;
         // return result[count[key]--] = /* hasSatelliteData ?
         console.log('=====>counting', key, count[key], element)
@@ -83,8 +84,7 @@ const countingSort = (arr, getKey) => {
             element.satellite
             :  */
             element
-        }
-    );
+    }, 0);
     // result.shift();
     console.log('===')
     return result;
@@ -136,7 +136,10 @@ const radixSort = (nums, {
  */
 var smallestTrimmedNumbers = function (nums, queries) {
     const results = {};
-    const elements = nums.map((element, index) => new ElementsWithSatellite(element, index));
+    let elements = nums.map((element, index) => new ElementsWithSatellite(element, index));
+    const getIndex = element => element.index;
+    elements = countingSort(elements, getIndex);
+    console.log('=====>pre', elements)
     const getRoundResult = (index, result) => results[index] = result;
     console.log('radix output', radixSort(elements, {
         getNum: ElementsWithSatellite.getNum,
@@ -146,26 +149,26 @@ var smallestTrimmedNumbers = function (nums, queries) {
     return queries.map(([order, length]) => {
         console.log('===>', order, length, results/* .length */[length - 1])
         let reference = results[length - 1][order /* - 1 */].index
-        for (let index = order - 1; index > 0; index--) {
-            if (results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length) !== results[length - 1][order].origin.slice(results[length - 1][index].origin.length - length)) { break; }
-            console.log('for', [
-                order, 
-                length, 
-                index, 
-                reference, 
-                results[length - 1], 
-                results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length)
-            ])
-            if (results[length - 1][index].index > reference) {
-                reference = results[length - 1][index].index;
-            }
-        }
-        for (let index = order + 1, len = results[length - 1].length; index < len; index++) {
-            if (results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length) !== results[length - 1][order].origin.slice(results[length - 1][index].origin.length - length)) { break; }
-            if (results[length - 1][index].index < reference) {
-                reference = results[length - 1][index].index;
-            }
-        }
+        // for (let index = order - 1; index > 0; index--) {
+        //     if (results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length) !== results[length - 1][order].origin.slice(results[length - 1][index].origin.length - length)) { break; }
+        //     console.log('for', [
+        //         order, 
+        //         length, 
+        //         index, 
+        //         reference, 
+        //         results[length - 1], 
+        //         results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length)
+        //     ])
+        //     if (results[length - 1][index].index > reference) {
+        //         reference = results[length - 1][index].index;
+        //     }
+        // }
+        // for (let index = order + 1, len = results[length - 1].length; index < len; index++) {
+        //     if (results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length) !== results[length - 1][order].origin.slice(results[length - 1][index].origin.length - length)) { break; }
+        //     if (results[length - 1][index].index < reference) {
+        //         reference = results[length - 1][index].index;
+        //     }
+        // }
         console.log([reference, results[length - 1][order]])
         return reference;
     })
@@ -175,7 +178,8 @@ var smallestTrimmedNumbers = function (nums, queries) {
 let nums, queries;
 // nums = ["102","473","251","814"], queries = [[1,1],[2,3],[4,2],[1,2]]
 // nums = ["24","37","96","04"], queries = [[2,1],[2,2]]
-nums = ["24","37","23","04"], queries = [[2,1],[2,2]]
+// nums = ["24","37","23","04"], queries = [[2,1],[2,2]]
+nums = ["24","24","23","04"], queries = [[2,1],[2,2]]
 console.log(smallestTrimmedNumbers(nums, queries));
 // smallestTrimmedNumbers(["24","37","96","04"]);
 // smallestTrimmedNumbers(["24","37","96","04"]);
