@@ -6,68 +6,84 @@
 
 // @lc code=start
 class ElementsWithSatellite {
-    // key = 0;
     origin = 0;
     index = -1;
 
     constructor(originalValue, index) {
-        const value = +originalValue;
-        if (Number.isNaN(value)) { throw TypeError('Is not number'); }
-        this.origin = value;
-        // this.key = typeof getKey === 'function' ?
-        //     +getKey(originalValue)
-        //     :
-        //     value;
+        this.origin = originalValue;
         this.index = index;
     }
 
-    static getNum = element => element.origin;
-    static setNum = (element, num) => element.origin = num;
+    static getNum = element => element?.origin;
+    static setNum = (element, num) => {
+        if (!element instanceof ElementsWithSatellite) { return; }
+        element.origin = num;
+    }
 }
 
+/**
+ * 补零
+ * @param {Array} list 列表
+ * @param {object} options 选项
+ * @returns {object} 填充后的列表与列表项最大长度
+ */
 const padStrings = (list, {
     getKey,
     setKey,
     char = '0'
 }) => {
+    if (!Array.isArray(list)) { return { list }; }
     const hasSatelliteData = typeof getKey === 'function'
         && typeof setKey === 'function';
-    const keys = (hasSatelliteData ? 
+    const keys = hasSatelliteData ?
         list.map(element => getKey(element))
         :
-        list);
-    keys.splice(0, 1, -1);
-    const max = Math.max(...keys);
-    const maxLen = String(max).length;
-    console.log('=====>padding', {keys, maxLen})
-    // console.log('padding', {getKey, setKey});
+        list;
+    // const max = keys.reduce((max, current) => {
+    //     const maxLength = max.length;
+    //     const currentLength = current.length;
+    //     if (maxLength !== currentLength) {
+    //         return maxLength > currentLength ? max : current;
+    //     }
+    // })
+    // keys.splice(0, 1, -1);      //keys[0] 是 undefined，如果不填上，Math.max 会返回 NaN
+    // const max = Math.max(...keys);
+    // const maxLen = String(max)?.length;
+    const maxLen = keys[1].length;      //所有 nums[i].length 的长度 相同，所以不逐个判断了。记得跳过 keys[0]
     return {
         list: hasSatelliteData ? 
             list.map((element, index) => {
-                setKey(element, String(keys[index]).padStart?.(maxLen, char));
-                // console.log('padding', String(keys[index]).padStart(0), (char))
+                setKey(
+                    element,
+                    String(keys[index])
+                        ?.padStart?.(maxLen, char)
+                );
                 return element;
             })
             :
             list.map(string => string.padStart?.(maxLen, char)),
-        maxLen
+        maxLen,
     };
-}
+};
 
-const countingSort = (arr, getKey) => {
-    if (!Array.isArray(arr)) { return arr; }
+/**
+ * 计数排序
+ * @param {Array} array 列表
+ * @param {function} getKey 如果有卫星数据则通过该函数获取关键字
+ * @returns {Array} 排序后的数组
+ */
+const countingSort = (array, getKey) => {
+    if (!Array.isArray(array)) { return array; }
     const hasSatelliteData = typeof getKey === 'function';
-    const count = new Array(arr.length + 1).fill(0);
-    console.log('=====>toCount', {arr})
-    arr.forEach(element => {
-        // console.log('=====>counting', {element})
-        const key = hasSatelliteData ? getKey(element) : element;
+    const count = new Array(array.length + 1).fill(0);
+    array.forEach(element => {
+        const key = hasSatelliteData ?
+            getKey(element) : element;
         return typeof count[key] !== 'undefined' ?
             count[key]++
             :
             count[key] = 1
     });
-    // console.log('Range: ', sortMap.length);
     for (let index = 1, length = count.length; index <= length; index++) {
         typeof count[index] !== 'undefined' ?
             count[index] += count[index - 1]
@@ -75,55 +91,45 @@ const countingSort = (arr, getKey) => {
             count[index] = count[index - 1];
     }
     const result = [];
-    console.log('===>mapping', count/* -- */)
-    arr.reduceRight((_, element) => {
+    // for (let index = arr.length - 1; index >= 0; index--) {
+    array.reduceRight((_, element) => {
+        // const element = arr[index];
         const key = hasSatelliteData ? getKey(element) : element;
-        // return result[count[key]--] = /* hasSatelliteData ?
-        console.log('=====>counting', key, count[key], element)
-        return result[count[key /* - 1 */]/* ++ */--] = /* hasSatelliteData ?
-            element.satellite
-            :  */
-            element
+        result[count[key]--] = element;
     }, 0);
-    // result.shift();
-    console.log('===')
     return result;
 }
 
-const radixSort = (nums, {
+/**
+ * 基数排序
+ * @param {Array} array 列表
+ * @param {object} options 选项
+ * @returns {Array} 排序后的数组
+ */
+const radixSort = (array, {
     getNum,
     setNum,
     getRoundResult
 }) => {
     const getDigitGetter = index => (
         num => {
-            console.log('=====>getter', num, index)
             return typeof getNum === 'function' && typeof setNum === 'function' ?
                 getNum(num)?.[index]
                 :
-                num[index]
+                num[index];
         }
     );
-    console.log('round origin', {nums/* , paddedNums */})
     const {
         list: paddedNums,
         maxLen
-    } = padStrings(nums, {
+    } = padStrings(array, {
         getKey: getNum,
         setKey: setNum
     });
     let sortedNums = paddedNums;
-    console.log('=====>toRad', {sortedNums})
     for (let index = maxLen - 1; index >= 0; index--) {
-    // for (let index = 0; index < maxLen; index++) {
         const getKey = getDigitGetter(index);
-        // const arr = hasSatelliteData ?
-        //     arr.map(element => new ElementsWithSatellite(element, getKey))
-        //     :
-        //     arr;
-        // console.log('getter', index)
         sortedNums = countingSort(sortedNums, getKey);
-        console.log('====>round', index, sortedNums);
         getRoundResult?.(maxLen - 1 - index, sortedNums);
     }
     return sortedNums;
@@ -135,51 +141,25 @@ const radixSort = (nums, {
  * @return {number[]}
  */
 var smallestTrimmedNumbers = function (nums, queries) {
-    const results = {};
     let elements = nums.map((element, index) => new ElementsWithSatellite(element, index));
     const getIndex = element => element.index;
     elements = countingSort(elements, getIndex);
-    console.log('=====>pre', elements)
+    const results = {};
     const getRoundResult = (index, result) => results[index] = result;
-    console.log('radix output', radixSort(elements, {
+    radixSort(elements, {
         getNum: ElementsWithSatellite.getNum,
         setNum: ElementsWithSatellite.setNum,
-        getRoundResult
-    }), results)
-    return queries.map(([order, length]) => {
-        console.log('===>', order, length, results/* .length */[length - 1])
-        let reference = results[length - 1][order /* - 1 */].index
-        // for (let index = order - 1; index > 0; index--) {
-        //     if (results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length) !== results[length - 1][order].origin.slice(results[length - 1][index].origin.length - length)) { break; }
-        //     console.log('for', [
-        //         order, 
-        //         length, 
-        //         index, 
-        //         reference, 
-        //         results[length - 1], 
-        //         results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length)
-        //     ])
-        //     if (results[length - 1][index].index > reference) {
-        //         reference = results[length - 1][index].index;
-        //     }
-        // }
-        // for (let index = order + 1, len = results[length - 1].length; index < len; index++) {
-        //     if (results[length - 1][index].origin.slice(results[length - 1][index].origin.length - length) !== results[length - 1][order].origin.slice(results[length - 1][index].origin.length - length)) { break; }
-        //     if (results[length - 1][index].index < reference) {
-        //         reference = results[length - 1][index].index;
-        //     }
-        // }
-        console.log([reference, results[length - 1][order]])
-        return reference;
-    })
+        getRoundResult,
+    });
+    return queries.map(([order, length]) => results[length - 1][order].index);
 };
 // @lc code=end
 
-let nums, queries;
-// nums = ["102","473","251","814"], queries = [[1,1],[2,3],[4,2],[1,2]]
-// nums = ["24","37","96","04"], queries = [[2,1],[2,2]]
-// nums = ["24","37","23","04"], queries = [[2,1],[2,2]]
-nums = ["24","24","23","04"], queries = [[2,1],[2,2]]
-console.log(smallestTrimmedNumbers(nums, queries));
-// smallestTrimmedNumbers(["24","37","96","04"]);
-// smallestTrimmedNumbers(["24","37","96","04"]);
+// let nums, queries;
+// // nums = ["102","473","251","814"], queries = [[1,1],[2,3],[4,2],[1,2]]
+// // nums = ["24","37","96","04"], queries = [[2,1],[2,2]]
+// nums = ["89288488870527604910029","36097185739782752175822","66626740310751086142991","39210310199276100943112","27763774389382535382104","38417381130871656561097","88045540666254006395713","95788007927435793172832","15831923319620654311625","45043895456202186804606","87291364237858759125697","88163116582250002569968","00507332488046565482379","57170661333341274356658","06401271520738451116188","21731485952024837866860"];
+// queries = [[3,17],[10,22],[13,21],[12,16],[1,23],[10,19],[12,21],[10,5],[12,9],[12,10],[9,5],[12,8],[14,6],[5,10],[11,4],[15,15],[13,9],[1,19],[5,12],[10,15],[4,18],[4,3],[16,13],[6,19],[4,18],[2,6],[15,12]];
+// // nums = ["24","37","23","04"], queries = [[2,1],[2,2]]
+// // nums = ["24","24","23","04"], queries = [[2,1],[2,2]]
+// console.log(smallestTrimmedNumbers(nums, queries));
