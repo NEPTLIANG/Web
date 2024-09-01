@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    
+    <body>
+        <div id="content" class="content"></div>
+        <div>
+            <ul id="tabBox" class="tab-box"></ul>
+        </div>
+    </body>
+    
+    <script src="./index.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul,
+        li {
+            list-style: none;
+        }
+        a {
+            display: block;
+            text-decoration: none;
+            color: #000;
+        }
+        #content {
+            overflow: hidden;
+            background: pink;
+            margin: 0 auto;
+            width: 800px;
+        }
+        #content div {
+            height: 200px;
+            font-size: 40px;
+            line-height: 200px;
+            text-align: center;
+        }
+        #tabBox {
+            position: relative;
+            width: 50px;
+            position: fixed;
+            left: 0;
+            top: 50px;
+            /* top: 0px; */
+        }
+        #tabBox a {
+            text-align: center;
+            float: left;
+            width: 100px;
+            border: 1px solid #000;
+            height: 50px;
+            font-size: 20px;
+            line-height: 50px;
+        }
+        #tabBox li {
+            float: left;
+            user-select: none;
+            transition: margin .2s ease 0s;
+            display: block;
+            background: #fff;
+            margin-top: 0;
+        }
+    </style>
+</html>
