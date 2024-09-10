@@ -61,7 +61,7 @@ const hackWriteHead = (req, res) => {
     const primitiveWriteHead = res.writeHead;
     res.writeHead = function (...args) {
         const cookies = res.getHeader('Set-Cookie');
-        const sessionIdCookie = [SESSION_ID_KEY_IN_COOKIE, req.session.id];
+        const sessionIdCookie = `${SESSION_ID_KEY_IN_COOKIE}=${req.session.id}`;
         cookies = Array.isArray(cookies) ?
             cookies.concat(sessionIdCookie)
             :
@@ -182,3 +182,7 @@ const unsign = (
     secret
 ) => sign(sessionId, secret) === signature ?
     sessionId : false;
+
+export {
+    getSession,
+}

@@ -1,4 +1,7 @@
-const { queuedQueryPromises } = require('./utils');
+const {
+    queuedQueryPromises,
+    handleDuplicateUrlQuery,
+} = require('./utils');
 // import queuedQuery from "../../event-queue-query/index.js";
 
 const ORG_PATTERN = /^[a-zA-Z0-9_\-]{1,20}$/;
@@ -10,10 +13,7 @@ const ORG_PATTERN = /^[a-zA-Z0-9_\-]{1,20}$/;
 const getRoutes = async query => {
     // 如果查询字符串中的键出现多次，那么它的值会是一个数组
     if (Array.isArray(query.org)) {
-        return {
-            status: 400,
-            body: { message: '参数重复' },
-        };
+        query.org = handleDuplicateUrlQuery(query.org);
     }
     let sql = `
         select id, name, org, intro

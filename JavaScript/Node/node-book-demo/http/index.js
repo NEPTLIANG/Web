@@ -5,6 +5,7 @@ const url = require('url');
 // const path = require('path');
 
 const handleRouter = require('./router');
+const { handleFail } = require('./module/utils');
 
 //! debug
 // process.on('uncaughtException', error => {
@@ -20,7 +21,16 @@ const handleRouter = require('./router');
 http.createServer(async (req, res) => {
     const { method, /* url: urlString *//* , headers */ } = req;
     const { pathname, query } = url.parse(req.url, true);
-    const { status, body } = await handleRouter(method, pathname, query) || {};
+    let result;
+    try {
+        result = await handleRouter(method, pathname, query);
+    } catch (e) {
+        result = handleFail(e);
+    }
+    const {
+        status = 500,
+        body,
+    } = result || {};
     res.writeHead(status, {
         'Content-Type': 'text/plain',
     });
@@ -28,4 +38,4 @@ http.createServer(async (req, res) => {
 })
     .listen(80/* 443 *//* , '127.0.0.1' */);
 
-// console.log('Running');
+console.log('Running');
