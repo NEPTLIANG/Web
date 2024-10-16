@@ -1,4 +1,5 @@
 const {
+    Response,
     queuedQueryPromises,
     handleDuplicateUrlQuery,
 } = require('./utils');
@@ -13,7 +14,7 @@ const ORG_PATTERN = /^[a-zA-Z0-9_\-]{1,20}$/;
 const getRoutes = async query => {
     // 如果查询字符串中的键出现多次，那么它的值会是一个数组
     if (Array.isArray(query.org)) {
-        query.org = handleDuplicateUrlQuery(query.org);
+        query.org = handleDuplicateUrlQuery(query);
     }
     let sql = `
         select id, name, org, intro
@@ -32,10 +33,9 @@ const getRoutes = async query => {
         routes = await queuedQueryPromises(sql);
     } catch (e) {
         // throw e;
-        return {
-            status: 500,
-            body: [],
-        };
+        return new Response(500, {
+            message: '查询失败',
+        });
     }
     // queuedQuery(
     //     `select * 
@@ -46,10 +46,7 @@ const getRoutes = async query => {
     //         routes = result;
     //     },
     // );
-    return {
-        status: 200,
-        body: routes,
-    };
+    return new Response(200, routes);
 };
 
 /**
