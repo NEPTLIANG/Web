@@ -183,6 +183,6 @@ const unsign = (
 ) => sign(sessionId, secret) === signature ?
     sessionId : false;
 
-export {
+module.exports = {
     getSession,
 }

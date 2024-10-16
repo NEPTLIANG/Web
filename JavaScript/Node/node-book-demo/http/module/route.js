@@ -1,7 +1,7 @@
 const {
     Response,
     queuedQueryPromises,
-    handleDuplicateUrlQuery,
+    handleIfUrlQueryDuplicate,
 } = require('./utils');
 // import queuedQuery from "../../event-queue-query/index.js";
 
@@ -12,10 +12,7 @@ const ORG_PATTERN = /^[a-zA-Z0-9_\-]{1,20}$/;
  * @returns {object}
  */
 const getRoutes = async query => {
-    // 如果查询字符串中的键出现多次，那么它的值会是一个数组
-    if (Array.isArray(query.org)) {
-        query.org = handleDuplicateUrlQuery(query);
-    }
+    query.org = handleIfUrlQueryDuplicate(query, ['org']);
     let sql = `
         select id, name, org, intro
             from RealTimeBusQuery.route

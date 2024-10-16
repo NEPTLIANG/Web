@@ -34,13 +34,17 @@ const queuedQuery = (sql, callback) => {
     if (status === STATUS.PENDING) { return; }
     status = STATUS.PENDING;
     // 雪崩问题，就是在高访问量、大并发量的情况下缓存失效的情景
-    return execute(sql, (error, results) => {
-        status = STATUS.READY;
-        if (error) {
-            return proxy.emit(QUERY_ENDED, error);
-        }
-        proxy.emit(QUERY_ENDED, results);
-    });
+    try {
+        return execute(sql, (error, results) => {
+            status = STATUS.READY;
+            if (error) {
+                return proxy.emit(QUERY_ENDED, error);
+            }
+            proxy.emit(QUERY_ENDED, results);
+        });
+    } catch (e) {
+        proxy.emit(QUERY_ENDED, e);
+    }
 }
 
 // 测试
