@@ -52,9 +52,12 @@
  * 计数排序
  * @param {number[]} input 输入的数组
  * @param {object} param1 选项
+ *  - {boolean} descending 是否降序排序
  * @returns {number[]} 排序后的数组
  */
-const countingSort = (input, { descending }) => {
+const countingSort = (input, {
+    descending
+} = {}) => {
     const len = input.length;
     const map = new Array(len + 1).fill(0);
     const result = new Array(len + 1);
