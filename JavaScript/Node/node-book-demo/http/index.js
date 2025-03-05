@@ -32,7 +32,8 @@ http.createServer(async (req, res) => {
         body,
     } = result || {};
     res.writeHead(status, {
-        'Content-Type': 'text/plain',
+        'Access-Control-Allow-Origin': 'http://neptliang.site:3000',
+        'Content-Type': 'application/json',
     });
     res.end(JSON.stringify(body));
 })

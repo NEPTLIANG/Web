@@ -6,15 +6,12 @@ const { password } = require('./conf/_secret');
  * https://mariadb.com/kb/en/getting-started-with-the-nodejs-connector/
  */
 
-let pool;
-const getDbPool = () => {
-    pool = mariadb.createPool({
-        // socketPath: '/run/mysqld/mysqld.sock',
-        user: 'lmliang',
-        password,
-        connectionLimit: 5,
-    });
-};
+const pool = mariadb.createPool({
+    // socketPath: '/run/mysqld/mysqld.sock',
+    user: 'lmliang',
+    password,
+    connectionLimit: 5,
+});
 
 /**
  * 执行 SQL
@@ -26,7 +23,6 @@ const execute = async (sql, callback) => {
     let connection/* : mariadb.PoolConnection | null */ /* = null */;
     let rows;
     try {
-        getDbPool();
         connection = await pool.getConnection();
         rows = await connection.query(sql);
         // console.log('Queried', rows);   //测试事件队列
