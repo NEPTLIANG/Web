@@ -55,7 +55,7 @@ const bucketSort = nums => {
         bucket[index].push?.(num);
     });
     return bucket.map(array => insertionSort(array))
-        .reduce((previous, next) => previous?.concat(next));
+        .flat();
 };
 
 /**
