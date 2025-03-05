@@ -25,13 +25,14 @@ class ElementsWithSatellite {
  * 补零
  * @param {Array} list 列表
  * @param {object} options 选项
+ *  - {function} getKey 如果有卫星数据则通过该函数获取关键词
+ *  - {function} setKey 修改关键词
  * @returns {object} 填充后的列表与列表项最大长度
  */
 const padStrings = (list, {
     getKey,
     setKey,
-    char = '0'
-}) => {
+} = {}) => {
     if (!Array.isArray(list)) { return { list }; }
     const hasSatelliteData = typeof getKey === 'function'
         && typeof setKey === 'function';
@@ -49,19 +50,19 @@ const padStrings = (list, {
     // keys.splice(0, 1, -1);      //keys[0] 是 undefined，如果不填上，Math.max 会返回 NaN
     // const max = Math.max(...keys);
     // const maxLen = String(max)?.length;
-    const maxLen = keys[1].length;      //所有 nums[i].length 的长度 相同，所以不逐个判断了。记得跳过 keys[0]
+    const maxLen = keys[1].length;      //所有 nums[i].length 的长度相同，所以不逐个判断了。记得跳过 keys[0]
     return {
         list: hasSatelliteData ? 
             list.map((element, index) => {
                 setKey(
                     element,
                     String(keys[index])
-                        ?.padStart?.(maxLen, char)
+                        ?.padStart?.(maxLen, '0')
                 );
                 return element;
             })
             :
-            list.map(string => string.padStart?.(maxLen, char)),
+            list.map(string => string.padStart?.(maxLen, '0')),
         maxLen,
     };
 };
@@ -69,10 +70,13 @@ const padStrings = (list, {
 /**
  * 计数排序
  * @param {Array} array 列表
- * @param {function} getKey 如果有卫星数据则通过该函数获取关键字
+ * @param {object} param1 选项
+ *  - {function} getKey 如果有卫星数据则通过该函数获取关键词
  * @returns {Array} 排序后的数组
  */
-const countingSort = (array, getKey) => {
+const countingSort = (array, {
+    getKey
+} = {}) => {
     if (!Array.isArray(array)) { return array; }
     const hasSatelliteData = typeof getKey === 'function';
     const count = new Array(array.length + 1).fill(0);
@@ -104,27 +108,28 @@ const countingSort = (array, getKey) => {
  * 基数排序
  * @param {Array} array 列表
  * @param {object} options 选项
+ *  - {function} getKey 如果有卫星数据则通过该函数获取关键词
+ *  - {function} setKey 设置关键词
+ *  - {function} getRoundResult 获取每轮按位排序的结果
  * @returns {Array} 排序后的数组
  */
 const radixSort = (array, {
-    getNum,
-    setNum,
-    getRoundResult
+    getKey,
+    setKey,
+    getRoundResult,
 }) => {
     const getDigitGetter = index => (
-        num => {
-            return typeof getNum === 'function' && typeof setNum === 'function' ?
-                getNum(num)?.[index]
-                :
-                num[index];
-        }
+        num => typeof getKey === 'function' && typeof setKey === 'function' ?
+            getKey(num)?.[index]
+            :
+            num[index]
     );
     const {
         list: paddedNums,
-        maxLen
+        maxLen,
     } = padStrings(array, {
-        getKey: getNum,
-        setKey: setNum
+        getKey,
+        setKey,
     });
     let sortedNums = paddedNums;
     for (let index = maxLen - 1; index >= 0; index--) {
@@ -147,8 +152,8 @@ var smallestTrimmedNumbers = function (nums, queries) {
     const results = {};
     const getRoundResult = (index, result) => results[index] = result;
     radixSort(elements, {
-        getNum: ElementsWithSatellite.getNum,
-        setNum: ElementsWithSatellite.setNum,
+        getKey: ElementsWithSatellite.getNum,
+        setKey: ElementsWithSatellite.setNum,
         getRoundResult,
     });
     return queries.map(([order, length]) => results[length - 1][order].index);

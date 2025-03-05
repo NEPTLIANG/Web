@@ -1,5 +1,5 @@
 const DESIGN_WIDTH = 750;
-const REM_SIZE = 24;
+const REM_SIZE = 16;
 
 const computeResponsiveRem = () => {
     const { clientWidth } = document.documentElement;
