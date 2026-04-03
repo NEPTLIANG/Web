@@ -7,9 +7,22 @@ const RETRY_LIMIT = 3; //重试次数
 const RETRY_DELAY_MS = 500; //重试延迟
 const TIMEOUT_MS = 30000; //超时时间
 
-const WORKSPACE_PATH = "asserts/large-model-registration";
-const INPUT_FILE_PATH = `${WORKSPACE_PATH}/question-no-reject.json`;
-const OUTPUT_FILE_PATH = `${WORKSPACE_PATH}/results-no-reject.jsonl`;
+const ASSERT_WORKSPACE_PATH = "asserts/large-model-registration";
+const INPUT_FILE_PATH = `${ASSERT_WORKSPACE_PATH}/question-reject.json`; //输入文件路径，要求是一个包含问题的数组
+const OUTPUT_FILE_PATH = `${ASSERT_WORKSPACE_PATH}/results-reject.jsonl`;
+const PROMPT_TO_APPEND =
+  "你是纯文本输出助手，严格遵守：输出内容不得包含任何markdown、HTML或格式化符号（如*, _, #等），只输出原始文字。";
+const RESULT_VALIDATION_RULES = [
+  {
+    validator: (result) => !/(?<!‘)\*\*.*\*\*/.test(result) /* || console.log(result) */,
+    message: "输出了 markdown",
+  },
+];
+
+const LOG_GREEN_FOREGROUND = "\x1b[32m";
+const LOG_GRAY_FOREGROUND = process.stdout.isTTY ? "\x1b[2m" : "";
+const LOG_BOLD_FONT = "\x1b[1m";
+const LOG_STYLE_END = process.stdout.isTTY ? "\x1b[0m" : "";
 
 const request = async (question, index) => {
   const url = `${API_BASE}/chat-messages`;
@@ -69,7 +82,6 @@ const askWithRetry = async (question, index) => {
       lastError = error;
       console.error(
         `问题 [${index}] 第 ${attempt}/${RETRY_LIMIT} 次尝试失败：${error.message}（${question}）`,
-        question,
       );
       if (attempt < RETRY_LIMIT) {
         await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
@@ -92,7 +104,9 @@ const loadProcessedIndices = async () => {
     const indices = new Set();
     for (const line of lines) {
       const obj = JSON.parse(line);
-      if (obj.answer && obj.index) {
+      if (obj.answer && obj.index && RESULT_VALIDATION_RULES.every(({
+        validator
+      }) => validator(JSON.stringify(obj.answer)))) {
         indices.add(obj.index);
       }
     }
@@ -126,20 +140,35 @@ const runWithResume = async (
   const concurrencyRunner = async () => {
     while (nextQuestionIndex < questionCount) {
       const questionIdx = nextQuestionIndex++;
-      const { question, index } = questionList[questionIdx];
-      try {
-        console.log(question);
-        results[questionIdx] = await concurrencyWorker(question, index);
+      let { question, index } = questionList[questionIdx];
 
-        const line = JSON.stringify(results[questionIdx]) + "\n";
+      question = `${question}${PROMPT_TO_APPEND}`;
+      console.log(
+        `[${new Date().toLocaleString()}] ${index} 请求中${LOG_GRAY_FOREGROUND}：${question}${LOG_STYLE_END}`,
+      );
+      try {
+        const result = await concurrencyWorker(question, index);
+        let errorMessage = "";
+        if (
+          RESULT_VALIDATION_RULES.some(({ validator, message }) => {
+            errorMessage = message;
+            return !validator(result);
+          })
+        ) {
+          throw new Error(errorMessage);
+        }
+        results[questionIdx] = result;
+
+        const line = JSON.stringify(result) + "\n";
         await fs.appendFile(outputFile, line, "utf8");
         completedQuestionNumber++;
-        console.log(
-          `[${new Date().toLocaleString()}] ${completedQuestionNumber}/${questionCount} 完成`,
+        console.log(`${process.stdout.isTTY ? LOG_GREEN_FOREGROUND.concat(LOG_BOLD_FONT) : ""}[${
+          new Date().toLocaleString()
+        }] ${completedQuestionNumber}/${questionCount} 完成${LOG_STYLE_END}`,
         );
       } catch (error) {
         console.error(
-          `[${new Date().toLocaleString()}] ${questionIdx} 重试失败`,
+          `[${new Date().toLocaleString()}] ${questionIdx} 重试失败：${error.message}（${question}）`,
         );
       }
     }
@@ -154,10 +183,7 @@ const runWithResume = async (
 
 const main = async () => {
   const content = await fs.readFile(INPUT_FILE_PATH, "utf8");
-  const questionList = JSON.parse(content).map((question, i) => ({
-    question,
-    index: i + 1,
-  }));
+  const questionList = JSON.parse(content);
   if (!Array.isArray(questionList)) {
     throw new Error("文件内容不是数组");
   }

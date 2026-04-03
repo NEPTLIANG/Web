@@ -1,6 +1,16 @@
+/*
+ * @Author: luoming.liang neptliang@outlook.com
+ * @Date: 2026-03-25 14:33:37
+ * @LastEditors: luoming.liang neptliang@outlook.com
+ * @LastEditTime: 2026-04-03 15:01:57
+ * @FilePath: \knowledge-webc:\Users\MING\web\JavaScript\Node\dify-api\sort-results.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 const fs = require('fs').promises;
 
-const WORKSPACE_PATH = 'asserts/large-model-registration'
+const WORKSPACE_PATH = 'asserts/large-model-registration';
+const INPUT_FILE_PATH = `${WORKSPACE_PATH}/results-reject.jsonl`;
+const OUTPUT_FILE_PATH = `${WORKSPACE_PATH}/results-reject-sorted.jsonl`;
 
 /**
  * 处理结果：
@@ -13,15 +23,28 @@ const handleResult = async (inputFilePath, outputFilePath) => {
     const content = await fs.readFile(inputFilePath, 'utf8');
     const lineList = content.trim().split('\n').filter(Boolean);
     const originalResults = lineList.map(line => JSON.parse(line));
-    const successResults = originalResults.filter(result => result.answer);
-    successResults.sort((next, previous) => next.index - previous.index);
-    const sorted = successResults.map(line => JSON.stringify(line.answer)).join('\n');
+    const successResultList = originalResults.filter(
+        (result) => result.answer && !/(?<!‘)\*\*.*\*\*/.test(result.answer),
+    );
+    successResultList.sort((nextResult, previousResult) => {
+        const indexOrder = nextResult.index - previousResult.index;
+        if (indexOrder === 0) {
+            return [nextResult, previousResult]
+                .map((result) => new Date(result.timestamp).getTime())
+                .reduce((previous, next) => previous - next);
+        }
+        return indexOrder;
+    });
+    const sorted = [];
+    successResultList.forEach((line) => {
+        sorted[line.index] = JSON.stringify(/* { q: line.timestamp, */
+            line.answer,
+        /* } */);
+    });
+    const outputContent = sorted.join('\n');
 
-    await fs.writeFile(outputFilePath, sorted + '\n', 'utf8');
-    console.log(`已保存 ${successResults.length} 条成功结果`)
-}
+    await fs.writeFile(outputFilePath, outputContent + '\n', 'utf8');
+    console.log(`已保存 ${sorted.length} 条成功结果`);
+};
 
-handleResult(
-    `${WORKSPACE_PATH}/results-no-reject.jsonl`,
-    `${WORKSPACE_PATH}/results-no-reject-sorted.json`,
-);
+handleResult(INPUT_FILE_PATH, OUTPUT_FILE_PATH);
