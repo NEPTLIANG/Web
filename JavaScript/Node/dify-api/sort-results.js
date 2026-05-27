@@ -1,7 +1,7 @@
 /*
- * @Author: luoming.liang neptliang@outlook.com
+ * @Author: NeptLiang ming19980628@outlook.com
  * @Date: 2026-03-25 14:33:37
- * @LastEditors: luoming.liang neptliang@outlook.com
+ * @LastEditors: NeptLiang ming19980628@outlook.com
  * @LastEditTime: 2026-04-03 15:01:57
  * @FilePath: \knowledge-webc:\Users\MING\web\JavaScript\Node\dify-api\sort-results.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
@@ -9,8 +9,8 @@
 const fs = require('fs').promises;
 
 const WORKSPACE_PATH = 'asserts/large-model-registration';
-const INPUT_FILE_PATH = `${WORKSPACE_PATH}/results-reject.jsonl`;
-const OUTPUT_FILE_PATH = `${WORKSPACE_PATH}/results-reject-sorted.jsonl`;
+const INPUT_FILE_PATH = `${WORKSPACE_PATH}/results-code.jsonl`;
+const OUTPUT_FILE_PATH = `${WORKSPACE_PATH}/results-code-sorted.jsonl`;
 
 /**
  * 处理结果：

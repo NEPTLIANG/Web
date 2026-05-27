@@ -8,8 +8,8 @@ const RETRY_DELAY_MS = 500; //重试延迟
 const TIMEOUT_MS = 30000; //超时时间
 
 const ASSERT_WORKSPACE_PATH = "asserts/large-model-registration";
-const INPUT_FILE_PATH = `${ASSERT_WORKSPACE_PATH}/question-reject.json`; //输入文件路径，要求是一个包含问题的数组
-const OUTPUT_FILE_PATH = `${ASSERT_WORKSPACE_PATH}/results-reject.jsonl`;
+const INPUT_FILE_PATH = `${ASSERT_WORKSPACE_PATH}/question-add.json`; //输入文件路径，要求是一个包含问题的数组
+const OUTPUT_FILE_PATH = `${ASSERT_WORKSPACE_PATH}/results-add.jsonl`;
 const PROMPT_TO_APPEND =
   "你是纯文本输出助手，严格遵守：输出内容不得包含任何markdown、HTML或格式化符号（如*, _, #等），只输出原始文字。";
 const RESULT_VALIDATION_RULES = [
@@ -23,6 +23,8 @@ const LOG_GREEN_FOREGROUND = "\x1b[32m";
 const LOG_GRAY_FOREGROUND = process.stdout.isTTY ? "\x1b[2m" : "";
 const LOG_BOLD_FONT = "\x1b[1m";
 const LOG_STYLE_END = process.stdout.isTTY ? "\x1b[0m" : "";
+
+let startTime;
 
 const request = async (question, index) => {
   const url = `${API_BASE}/chat-messages`;
@@ -162,9 +164,8 @@ const runWithResume = async (
         const line = JSON.stringify(result) + "\n";
         await fs.appendFile(outputFile, line, "utf8");
         completedQuestionNumber++;
-        console.log(`${process.stdout.isTTY ? LOG_GREEN_FOREGROUND.concat(LOG_BOLD_FONT) : ""}[${
-          new Date().toLocaleString()
-        }] ${completedQuestionNumber}/${questionCount} 完成${LOG_STYLE_END}`,
+        console.log(`${process.stdout.isTTY ? LOG_GREEN_FOREGROUND.concat(LOG_BOLD_FONT) : ""}[${new Date().toLocaleString()
+          }] ${completedQuestionNumber}/${questionCount} 完成${LOG_STYLE_END}，已耗时 ${((Date.now() - startTime) / 1000).toFixed(2)} 秒`,
         );
       } catch (error) {
         console.error(
@@ -203,10 +204,9 @@ const main = async () => {
   if (pendingQuestionList.length === 0) {
     return console.log("所有问题已处理完毕");
   }
-  const startTime = Date.now();
+  startTime = Date.now();
   console.log(
-    `待处理问题数：${pendingQuestionList.length}，开始时间：${new Date().toString()}，共 ${
-      questionList.length
+    `待处理问题数：${pendingQuestionList.length}，开始时间：${new Date().toString()}，共 ${questionList.length
     } 个问题，并发数 ${CONCURRENCY_COUNT}`,
   );
 
